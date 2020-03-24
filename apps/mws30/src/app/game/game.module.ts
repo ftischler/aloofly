@@ -1,0 +1,34 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { GameRoutingModule } from './game-routing.module';
+import { GameComponent } from './game.component';
+import { MatListModule } from '@angular/material/list';
+import { GameJoinComponent } from './game-join/game-join.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from '../shared/shared.module';
+import { GameTableComponent } from './game-table/game-table.component';
+import { FirstRoundComponent } from './steps/first-round/first-round.component';
+
+@NgModule({
+  declarations: [
+    GameComponent,
+    GameJoinComponent,
+    GameTableComponent,
+    FirstRoundComponent
+  ],
+  imports: [
+    CommonModule,
+    GameRoutingModule,
+    SharedModule,
+    MatListModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule
+  ]
+})
+export class GameModule { }

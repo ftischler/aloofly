@@ -1,0 +1,15 @@
+<div *ngIf="game$ | async as game">
+  <h1>Spiel beitreten</h1>
+  <ng-container *ngIf="game.status === 'created'; else gameRunning">
+    <form [formGroup]="formGroup" (submit)="submit(game.id)">
+      <mat-form-field>
+        <input type="text" matInput placeholder="Spielername" formControlName="playerName">
+      </mat-form-field>
+      <br>
+      <button mat-raised-button>Spielen</button>
+    </form>
+  </ng-container>
+  <ng-template #gameRunning>
+    <p>Du kannst leider nicht mehr teilnehmen, das Spiel läuft bereits</p>
+  </ng-template>
+</div>

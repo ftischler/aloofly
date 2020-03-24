@@ -1,0 +1,38 @@
+<ng-container *ngIf="ctx$ | async as ctx">
+  <ng-container *ngIf="ctx.game.status === 'created'; else gameRunning">
+    <h1>MWS 30 #beschde</h1>
+    <h2>Hallo {{ctx.player.name}}</h2>
+    <div *ngIf="ctx.game | isAdmin:ctx.player">
+      <p>Versende diese URL an deine Mitspieler: {{ctx.game.url}}</p>
+    </div>
+    <br>
+    <div *ngIf="ctx.game?.players as players">
+      <ng-container *ngIf="players | objectValues | removeMyself: ctx.player as playersExlcudedMe">
+        <ng-container *ngIf="playersExlcudedMe.length; else noPlayers">
+          <p>Vorhandene Spieler:</p>
+          <mat-list>
+            <mat-list-item *ngFor="let player of playersExlcudedMe">
+              <span>{{player.name}}</span>
+              <span *ngIf="ctx.game | isAdmin: player">&nbsp;(Admin)</span>
+            </mat-list-item>
+          </mat-list>
+          <br>
+          <button
+            mat-raised-button
+            *ngIf="ctx.game | isAdmin:ctx.player; else waiting"
+            (click)="startGame(ctx.game.id)">Spiel starten</button>
+        </ng-container>
+        <ng-template #waiting>
+          <p>Warte bitte bis {{ctx.game.createdBy.name}} das Spiel startet</p>
+        </ng-template>
+      </ng-container>
+
+      <ng-template #noPlayers>
+        <p>Auf weitere Spieler warten...</p>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-template #gameRunning>
+    <mws30-game-table [ctx$]="ctx$"></mws30-game-table>
+  </ng-template>
+</ng-container>

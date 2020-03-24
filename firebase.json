@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "mws30",
+      "public": "dist/apps/mws30",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

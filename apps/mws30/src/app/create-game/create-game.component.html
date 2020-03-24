@@ -1,0 +1,9 @@
+<h1>MWS 30</h1>
+<h2>Neues Spiel anlegen</h2>
+<form [formGroup]="formGroup" (submit)="createGame()">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Spielername wählen" formControlName="playerName">
+  </mat-form-field>
+  <br>
+  <button mat-raised-button type="submit">Jetzt Spiel anlegen</button>
+</form>

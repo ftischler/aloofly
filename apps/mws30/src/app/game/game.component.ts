@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { GameService } from '../services/game.service';
 import { Game, GameContext, Player } from '@aloofly/mws30-models';
+import { RouterFacade } from '../+state/router.facade';
 
 @Component({
   selector: 'mws30-game',
@@ -12,14 +12,14 @@ import { Game, GameContext, Player } from '@aloofly/mws30-models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent {
-  gameId$: Observable<string> = this.activatedRoute.paramMap.pipe(
-    map(paramMap => paramMap.get('gameId')!),
-    filter<string>(Boolean)
+  gameId$: Observable<string> = this.routerFacade.routeParams$.pipe(
+    filter(Boolean),
+    map(({gameId}) => gameId)
   );
 
-  playerId$: Observable<string> = this.activatedRoute.paramMap.pipe(
-    map(paramMap => paramMap.get('playerId')),
-    filter<string>(Boolean)
+  playerId$: Observable<string> = this.routerFacade.routeParams$.pipe(
+    filter(Boolean),
+    map(({playerId}) => playerId)
   );
 
   game$: Observable<Game> = this.gameId$.pipe(
@@ -42,7 +42,7 @@ export class GameComponent {
     map(([player, game]) => ({player, game}))
   );
 
-  constructor(private activatedRoute: ActivatedRoute, private gameService: GameService) { }
+  constructor(private routerFacade: RouterFacade, private gameService: GameService) { }
 
   async startGame(gameId: string): Promise<void> {
     await this.gameService.startGame(gameId);

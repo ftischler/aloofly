@@ -19,7 +19,7 @@
 
     <!-- Admin can now choose a starting player -->
     <ng-container *ngIf="ctx.player | isAdmin: ctx.game; else noAdmin">
-      <form [formGroup]="startPlayerGroup" (submit)="startRegularGame()">
+      <form [formGroup]="startPlayerGroup" (submit)="startRegularGame(ctx.game)">
         <mat-form-field>
           <mat-label>Wähle aus wer beginnt</mat-label>
           <mat-select formControlName="startPlayer">

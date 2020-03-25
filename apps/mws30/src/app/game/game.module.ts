@@ -14,6 +14,7 @@ import { GameTableComponent } from './game-table/game-table.component';
 import { FirstRoundComponent } from './game-steps/first-round/first-round.component';
 import { MatSelectModule } from '@angular/material/select';
 import { GameModelsModule } from '../game-models/game-models.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { GameModelsModule } from '../game-models/game-models.module';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    MatSnackBarModule,
     GameModelsModule
   ]
 })

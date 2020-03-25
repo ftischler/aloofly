@@ -6,6 +6,7 @@ import { GameService } from '../../services/game.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createPlayer } from '../../common/create-player';
 import { Game } from '@aloofly/mws30-models';
+import { RouterFacade } from '../../+state/router.facade';
 
 @Component({
   selector: 'mws30-game-join',
@@ -14,9 +15,9 @@ import { Game } from '@aloofly/mws30-models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameJoinComponent {
-  gameId$: Observable<string> = this.activatedRoute.paramMap.pipe(
-    map(paramMap => paramMap.get('gameId')!),
-    filter<string>(Boolean)
+  gameId$: Observable<string> = this.routerFacade.routeParams$.pipe(
+    filter(Boolean),
+    map(({gameId}) => gameId)
   );
 
   game$: Observable<Game> = this.gameId$.pipe(
@@ -28,7 +29,7 @@ export class GameJoinComponent {
     playerName: new FormControl('', Validators.maxLength(20))
   });
 
-  constructor(private activatedRoute: ActivatedRoute, private gameService: GameService, private router: Router) { }
+  constructor(private routerFacade: RouterFacade, private gameService: GameService, private router: Router) { }
 
   async submit(gameId: string): Promise<void> {
     const { playerName } = this.formGroup.value;

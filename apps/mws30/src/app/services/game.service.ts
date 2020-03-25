@@ -77,6 +77,8 @@ export class GameService {
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
       .update({startingPlayer});
+
+    await this.startTurn(game);
   }
 
   async startTurn(game: Game): Promise<void> {

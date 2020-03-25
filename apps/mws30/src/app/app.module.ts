@@ -14,7 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { GAME_CONTEXT_PROVIDER } from './common/game-context';
 import { EffectsModule } from '@ngrx/effects';
+import { GameEffects } from './effects/game.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCuSY8pKvqc7RJjgFptxGXeRPb5kXiefz4",
@@ -39,10 +43,12 @@ const firebaseConfig = {
     MatFormFieldModule,
     MatInputModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    StoreRouterConnectingModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreModule.forRoot({router: routerReducer}),
+    EffectsModule.forRoot([GameEffects])
   ],
-  providers: [],
+  providers: [GAME_CONTEXT_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

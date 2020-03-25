@@ -47,6 +47,7 @@
     "@ngrx/effects": "^9.0.0",
     "@ngrx/router-store": "^9.0.0",
     "@ngrx/store": "^8.0.0",
+    "@ngrx/store-devtools": "8.6.0",
     "@nrwl/angular": "9.1.2",
     "core-js": "^2.5.4",
     "firebase": ">= 5.5.7 <8",

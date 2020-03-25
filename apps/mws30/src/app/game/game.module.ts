@@ -15,13 +15,15 @@ import { FirstRoundComponent } from './game-steps/first-round/first-round.compon
 import { MatSelectModule } from '@angular/material/select';
 import { GameModelsModule } from '../game-models/game-models.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RegularRoundComponent } from './game-steps/regular-round/regular-round.component';
 
 @NgModule({
   declarations: [
     GameComponent,
     GameJoinComponent,
     GameTableComponent,
-    FirstRoundComponent
+    FirstRoundComponent,
+    RegularRoundComponent
   ],
   imports: [
     CommonModule,

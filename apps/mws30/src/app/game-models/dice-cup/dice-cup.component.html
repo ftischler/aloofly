@@ -1,6 +1,6 @@
 <ng-container *ngIf="dices">
   <p *ngIf="isRolling$ | async">Wait for it...</p>
-  <ng-container *ngIf="diceCupResult | async as resultDices; else roll">
+  <ng-container *ngIf="dices$ | async as resultDices; else roll">
     <mws30-dice *ngFor="let dice of resultDices" [dice]="dice"></mws30-dice>
   </ng-container>
   <ng-template #roll>

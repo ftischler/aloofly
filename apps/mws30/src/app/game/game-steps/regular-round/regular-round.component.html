@@ -1,0 +1,11 @@
+<ng-container *ngIf="ctx$ | async as ctx">
+  <div *ngIf="ctx | currentTurn; else wait">
+    <div class="picked-list" *ngIf="(ctx | currentTurn)?.dices | pickedDices as pickedDices">
+      <mws30-dice *ngFor="let pickedDice of pickedDices" [dice]="pickedDice"></mws30-dice>
+    </div>
+    <mws30-dice-cup *ngIf="(ctx | currentTurn)?.dices | unpickedDices as unpickedDices" [dices]="unpickedDices"></mws30-dice-cup>
+  </div>
+  <ng-template #wait>
+    <p>Warten auf eigenen Spielzug...</p>
+  </ng-template>
+</ng-container>

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { DB_KEY } from '../common/db-key';
 import { calculateInitialResult } from '../common/calculate-initial-result';
+import { createDices } from '../common/create-dices';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
@@ -76,19 +77,27 @@ export class GameService {
   async startRegularGame(game: Game, startingPlayer: Player): Promise<void> {
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
-      .update({startingPlayer});
+      .update({currentPlayer: startingPlayer});
 
     await this.startTurn(game);
   }
 
   async startTurn(game: Game): Promise<void> {
-    const { startingPlayer, turnNumber } = game;
+    const { startingPlayer, turnNumber: oldTurnNumber } = game;
+    const turnNumber = oldTurnNumber + 1;
 
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
       .update({
         currentPlayer: startingPlayer,
-        turnNumber: turnNumber + 1
+        turnNumber
       });
+
+    await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${startingPlayer!.id}/turns`).push({
+      dices: createDices(),
+      currentScore: 0,
+      attacks: [],
+      turnNumber
+    });
   }
 }

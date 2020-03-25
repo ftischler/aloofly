@@ -6,10 +6,11 @@ import { IsAdminPipe } from './is-admin.pipe';
 import { IsFirstRoundPipe } from './is-first-round.pipe';
 import { HasScorePipe } from './has-score.pipe';
 import { AllTurnsDonePipe } from './all-turns-done.pipe';
-import { DiceCupViewComponent } from '../game-models/dice-cup-view/dice-cup-view.component';
-import { DiceCupViewDialogComponent } from '../game-models/dialogs/dice-cup-view-dialog/dice-cup-view-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { CurrentTurnPipe } from './current-turn.pipe';
+import { PickedDicesPipe } from './picked-dices.pipe';
+import { UnpickedDicesPipe } from './unpicked-dices.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,10 @@ import { MatButtonModule } from '@angular/material/button';
     IsAdminPipe,
     IsFirstRoundPipe,
     HasScorePipe,
-    AllTurnsDonePipe
+    AllTurnsDonePipe,
+    CurrentTurnPipe,
+    PickedDicesPipe,
+    UnpickedDicesPipe
   ],
   imports: [
     CommonModule,
@@ -31,7 +35,10 @@ import { MatButtonModule } from '@angular/material/button';
     IsAdminPipe,
     IsFirstRoundPipe,
     HasScorePipe,
-    AllTurnsDonePipe
+    AllTurnsDonePipe,
+    CurrentTurnPipe,
+    PickedDicesPipe,
+    UnpickedDicesPipe
   ]
 })
 export class SharedModule { }

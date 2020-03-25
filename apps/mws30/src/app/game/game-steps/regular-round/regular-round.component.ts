@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GameContext } from '@aloofly/mws30-models';
+import { Dices, GameContext } from '@aloofly/mws30-models';
+import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'mws30-regular-round',
@@ -9,5 +10,9 @@ import { GameContext } from '@aloofly/mws30-models';
 })
 export class RegularRoundComponent {
   @Input() ctx$: Observable<GameContext>;
-  constructor() { }
+  constructor(private gameService: GameService) { }
+
+  async saveIntermediateResult(ctx: GameContext, currentTurnId: string, dices: Dices): Promise<void> {
+    await this.gameService.saveIntermediateResult(ctx, currentTurnId, dices);
+  }
 }

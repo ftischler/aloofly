@@ -9,9 +9,11 @@ import { AllTurnsDonePipe } from './all-turns-done.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrentTurnPipe } from './current-turn.pipe';
-import { PickedDicesPipe } from './picked-dices.pipe';
-import { UnpickedDicesPipe } from './unpicked-dices.pipe';
 import { TurnsRunningPipe } from './turns-running.pipe';
+import { CurrentTurnIdPipe } from './current-turn-id';
+import { CurrentPlayerPipe } from './current-player.pipe';
+import { ObjectKeysPipe } from './object-keys.pipe';
+import { HasRolledPipe } from './has-rolled.pipe';
 
 @NgModule({
   declarations: [
@@ -22,9 +24,11 @@ import { TurnsRunningPipe } from './turns-running.pipe';
     HasScorePipe,
     AllTurnsDonePipe,
     CurrentTurnPipe,
-    PickedDicesPipe,
-    UnpickedDicesPipe,
-    TurnsRunningPipe
+    TurnsRunningPipe,
+    CurrentTurnIdPipe,
+    CurrentPlayerPipe,
+    ObjectKeysPipe,
+    HasRolledPipe
   ],
   imports: [
     CommonModule,
@@ -39,9 +43,11 @@ import { TurnsRunningPipe } from './turns-running.pipe';
     HasScorePipe,
     AllTurnsDonePipe,
     CurrentTurnPipe,
-    PickedDicesPipe,
-    UnpickedDicesPipe,
-    TurnsRunningPipe
+    TurnsRunningPipe,
+    CurrentTurnIdPipe,
+    CurrentPlayerPipe,
+    ObjectKeysPipe,
+    HasRolledPipe
   ]
 })
 export class SharedModule { }

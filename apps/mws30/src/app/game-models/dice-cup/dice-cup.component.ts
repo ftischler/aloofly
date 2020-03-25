@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output, SimpleChanges
+} from '@angular/core';
 import { Dice, Dices } from '@aloofly/mws30-models';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { delay, map, takeUntil, tap } from 'rxjs/operators';
@@ -16,7 +25,7 @@ const DICE_SHOW_DELAY = 0;
   exportAs: 'diceCup',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DiceCupComponent implements OnInit, OnDestroy {
+export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   @Input() dices: Dices = createDices();
   @Output() diceCupResult = new EventEmitter<Dices>();
   @Output() dicePicked = new EventEmitter<Dices>();
@@ -41,12 +50,27 @@ export class DiceCupComponent implements OnInit, OnDestroy {
     ).subscribe(this.diceCupResult);
   }
 
+  ngOnChanges(changes:SimpleChanges): void {
+    this.dices$.next(this.dices);
+  }
+
   rollDices(): void {
     this.diceRoller.next(this.dices);
   }
 
-  pickDice(dice: Dice): void {
+  pickDice(dice: Dice, diceKey: string): void {
+    const pickedDice: Dice = {
+      ...dice,
+      picked: !dice.picked
+    };
 
+    const newDices: Dices = {
+      ...this.dices,
+      [diceKey]: pickedDice
+    };
+
+    this.dicePicked.next(newDices);
+    this.dices$.next(newDices);
   }
 
   ngOnDestroy(): void {

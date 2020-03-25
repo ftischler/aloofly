@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Dices, Game, GameContext, Player } from '@aloofly/mws30-models';
+import { Dices, Game, GameContext } from '@aloofly/mws30-models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../../../services/game.service';
-import { getPlayerById } from '../../../common/get-player-by-id';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -29,10 +28,10 @@ export class FirstRoundComponent {
       return;
     }
 
-    const startingPlayer: Player | undefined = getPlayerById(game, this.startPlayerGroup.value.startPlayer);
+    const startingPlayerId: string = this.startPlayerGroup.value.startPlayer;
 
-    if (startingPlayer) {
-      await this.gameService.startRegularGame(game, startingPlayer);
+    if (startingPlayerId) {
+      await this.gameService.startRegularGame(game, startingPlayerId);
     } else {
       this.matSnackBar.open('Da ist leider etwas schief gelaufen. Versuche es bitte erneut.', 'Okay');
     }

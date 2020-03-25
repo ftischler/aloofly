@@ -1,12 +1,19 @@
 <ng-container *ngIf="ctx$ | async as ctx">
-  <div *ngIf="ctx | currentTurn; else wait">
-    <div class="picked-list" *ngIf="(ctx | currentTurn)?.dices | pickedDices as pickedDices">
-      <mws30-dice *ngFor="let pickedDice of pickedDices | objectValues" [dice]="pickedDice"></mws30-dice>
-    </div>
-    <mws30-dice-cup *ngIf="(ctx | currentTurn)?.dices | unpickedDices as unpickedDices"
-                    [dices]="unpickedDices"></mws30-dice-cup>
+  <div *ngIf="ctx.game | currentTurn: ctx.player as currentTurn; else wait">
+    <ng-container *ngIf="ctx.game | currentTurnId: ctx.player as currentTurnId">
+      <mws30-dice-cup *ngIf="currentTurn?.dices as dices"
+                      [dices]="dices"
+                      (diceCupResult)="saveIntermediateResult(ctx, currentTurnId, $event)"
+                      (dicePicked)="saveIntermediateResult(ctx, currentTurnId, $event)"></mws30-dice-cup>
+    </ng-container>
   </div>
   <ng-template #wait>
     <p>Warten auf eigenen Spielzug...</p>
+    <ng-container *ngIf="ctx.game | currentPlayer as currentPlayer">
+      <p>{{currentPlayer.name}} würfelt gerade</p>
+      <ng-container *ngIf="ctx.game | currentTurn: currentPlayer as currentPlayer">
+        <mws30-dice-cup-view [dices]="currentPlayer.dices"></mws30-dice-cup-view>
+      </ng-container>
+    </ng-container>
   </ng-template>
 </ng-container>

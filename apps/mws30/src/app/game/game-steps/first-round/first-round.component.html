@@ -9,7 +9,7 @@
 
   <ng-template #gameIsRunning>
 
-    <mws30-dice-cup-view *ngIf="ctx | currentTurn as currentTurn" [dices]="currentTurn.dices | objectValues"></mws30-dice-cup-view>
+    <mws30-dice-cup-view *ngIf="ctx.game | currentTurn:ctx.player as currentTurn" [dices]="currentTurn.dices"></mws30-dice-cup-view>
 
     <!-- All Player while game is running -->
     <ng-container *ngIf="ctx.game | turnsRunning; else turnsDone">

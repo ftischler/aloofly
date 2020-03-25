@@ -6,15 +6,15 @@ export interface Game {
   id: string;
   status: 'created' | 'running' | 'finished';
   players: Players;
-  loser?: Player;
+  loserPlayerId?: string;
   createdAt: number;
-  createdBy: Player;
+  createdBy: string;
   payPalDonationLink?: string;
   url?: string;
   chat?: ChatMessage[];
   turnNumber: number;
-  startingPlayer?: Player;
-  currentPlayer?: Player;
+  startingPlayerId?: string;
+  currentPlayerId?: string;
 }
 
 export interface Players {
@@ -46,7 +46,7 @@ export interface Dices {
   [key: string]: Dice;
 }
 
-export type DiceValue = 1 | 2 | 3 | 4 | 5 | 6;
+export type DiceValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface Dice {
   value: DiceValue;

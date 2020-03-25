@@ -1,7 +1,9 @@
 <div *ngFor="let player of players">
-  <p>{{player.name}}
+  <p>{{player.name}}: &nbsp;&nbsp;
     <ng-container *ngIf="player.turns as turns; else empty">
-      <span *ngFor="let turn of turns | objectValues">{{turn.currentScore}}</span>
+      <button mat-stroked-button
+              *ngFor="let turn of turns | objectValues"
+              (click)="openDiceView(turn.dices)">{{turn.currentScore}}</button>
     </ng-container>
     <ng-template #empty>
       <span>-</span>

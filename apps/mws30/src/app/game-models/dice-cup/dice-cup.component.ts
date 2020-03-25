@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnI
 import { Dice } from '@aloofly/mws30-models';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { delay, map, takeUntil, tap } from 'rxjs/operators';
-import { rollDices } from '../../../common/roll-dices';
-import { createDices } from '../../../common/create-dices';
+import { rollDices } from '../../common/roll-dices';
+import { createDices } from '../../common/create-dices';
 
 // one second
 const DICE_ROLL_DELAY = 1 * 1000;

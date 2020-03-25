@@ -2,7 +2,7 @@
 <h2>Neues Spiel anlegen</h2>
 <form [formGroup]="formGroup" (submit)="createGame()">
   <mat-form-field>
-    <input matInput type="text" placeholder="Spielername wählen" formControlName="playerName">
+    <input matInput type="text" placeholder="Spielername wählen" formControlName="playerName" maxlength="20">
   </mat-form-field>
   <br>
   <button mat-raised-button type="submit">Jetzt Spiel anlegen</button>

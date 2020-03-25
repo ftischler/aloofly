@@ -53,6 +53,10 @@ export class GameService {
   async setInitialResult({player, game}: GameContext, dices: Dice[]): Promise<void> {
     const currentScore: number = calculateInitialResult(dices);
 
+    await this.angularFireDatabase.object<Game>(`/${DB_KEY}/${game.id}`).update({
+      currentPlayer: player
+    });
+
     await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`).push(
       {
         dices,
@@ -67,5 +71,22 @@ export class GameService {
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${gameId}`)
       .update({status: 'running'});
+  }
+
+  async startRegularGame(game: Game, startingPlayer: Player): Promise<void> {
+    await this.angularFireDatabase
+      .object<Game>(`/${DB_KEY}/${game.id}`)
+      .update({startingPlayer});
+  }
+
+  async startTurn(game: Game): Promise<void> {
+    const { startingPlayer, turnNumber } = game;
+
+    await this.angularFireDatabase
+      .object<Game>(`/${DB_KEY}/${game.id}`)
+      .update({
+        currentPlayer: startingPlayer,
+        turnNumber: turnNumber + 1
+      });
   }
 }

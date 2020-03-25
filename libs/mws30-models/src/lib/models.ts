@@ -13,6 +13,7 @@ export interface Game {
   url?: string;
   chat?: ChatMessage[];
   turnNumber: number;
+  startingPlayer?: Player;
   currentPlayer?: Player;
 }
 

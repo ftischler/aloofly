@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../../services/game.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createPlayer } from '../../common/create-player';
 import { Game } from '@aloofly/mws30-models';
 
@@ -25,7 +25,7 @@ export class GameJoinComponent {
   );
 
   formGroup = new FormGroup({
-    playerName: new FormControl('')
+    playerName: new FormControl('', Validators.maxLength(20))
   });
 
   constructor(private activatedRoute: ActivatedRoute, private gameService: GameService, private router: Router) { }

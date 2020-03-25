@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Player } from '@aloofly/mws30-models';
+import { Dice, Player } from '@aloofly/mws30-models';
+import { MatDialog } from '@angular/material/dialog';
+import { DiceCupViewDialogComponent } from '../dialogs/dice-cup-view-dialog/dice-cup-view-dialog.component';
 
 @Component({
   selector: 'mws30-notepad',
@@ -9,4 +11,12 @@ import { Player } from '@aloofly/mws30-models';
 })
 export class NotepadComponent {
   @Input() players: Player[];
+
+  constructor(private matDialog: MatDialog) { }
+
+  openDiceView(dices: Dice[]): void {
+    this.matDialog.open(DiceCupViewDialogComponent, {
+      data: dices
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -8,7 +8,8 @@ import { Game, GameContext, Player } from '@aloofly/mws30-models';
 @Component({
   selector: 'mws30-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent {
   gameId$: Observable<string> = this.activatedRoute.paramMap.pipe(

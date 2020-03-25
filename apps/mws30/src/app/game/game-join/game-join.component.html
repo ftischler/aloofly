@@ -3,7 +3,7 @@
   <ng-container *ngIf="game.status === 'created'; else gameRunning">
     <form [formGroup]="formGroup" (submit)="submit(game.id)">
       <mat-form-field>
-        <input type="text" matInput placeholder="Spielername" formControlName="playerName">
+        <input type="text" matInput placeholder="Spielername" formControlName="playerName" maxlength="20">
       </mat-form-field>
       <br>
       <button mat-raised-button>Spielen</button>

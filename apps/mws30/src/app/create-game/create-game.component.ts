@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { createRandomId } from '../common/create-random-id';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../services/game.service';
 import { Player } from '@aloofly/mws30-models';
 import { createPlayer } from '../common/create-player';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class CreateGameComponent {
   formGroup = new FormGroup({
-    playerName: new FormControl('')
+    playerName: new FormControl('', Validators.maxLength(20))
   });
 
   constructor(private gameService: GameService, private router: Router) { }

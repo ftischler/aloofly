@@ -1,0 +1,43 @@
+<ng-container *ngIf="ctx$ | async as ctx">
+  <!-- All players while game is not started -->
+  <div *ngIf="ctx.game.status === 'created'">
+    <p>Auf andere Spiele warten</p>
+  </div>
+
+  <!-- All Player while game is running -->
+  <div *ngIf="!(ctx.game | allTurnsDone); else turnDone">
+    <p>Würfelt eure Leben zu Beginn aus</p>
+    <div>
+      <mws30-dice-cup (diceCupResult)="initialResult(ctx, $event)"></mws30-dice-cup>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Turn done -->
+  <ng-template #turnDone>
+
+    <!-- Admin can now choose a starting player -->
+    <ng-container *ngIf="ctx.player | isAdmin: ctx.game; else noAdmin">
+      <form [formGroup]="startPlayerGroup" (submit)="startRegularGame()">
+        <mat-form-field>
+          <mat-label>Wähle aus wer beginnt</mat-label>
+          <mat-select formControlName="startPlayer">
+            <mat-option
+              *ngFor="let player of ctx.game.players | objectValues"
+              [value]="player.id">{{player.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="accent" type="submit">Spiel starten</button>
+      </form>
+    </ng-container>
+
+    <!-- Other players have to wait -->
+    <ng-template #noAdmin>
+      <p>Warten bis der Admin das Spiel startet</p>
+    </ng-template>
+
+  </ng-template>
+
+</ng-container>

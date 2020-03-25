@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Dice } from '@aloofly/mws30-models';
+import { Dice, Dices } from '@aloofly/mws30-models';
 
 @Component({
   selector: 'mws30-dice-cup-view-dialog',
@@ -10,7 +10,7 @@ import { Dice } from '@aloofly/mws30-models';
 })
 export class DiceCupViewDialogComponent {
   constructor(private matDialogRef: MatDialogRef<DiceCupViewDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public dices: Dice[]) { }
+              @Inject(MAT_DIALOG_DATA) public dices: Dices) { }
 
   close(): void {
     this.matDialogRef.close();

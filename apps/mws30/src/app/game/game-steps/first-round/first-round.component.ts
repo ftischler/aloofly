@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Dice, Game, GameContext, Player } from '@aloofly/mws30-models';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Dices, Game, GameContext, Player } from '@aloofly/mws30-models';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../../../services/game.service';
 import { getPlayerById } from '../../../common/get-player-by-id';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,16 +15,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class FirstRoundComponent {
   @Input() ctx$: Observable<GameContext>;
   startPlayerGroup = new FormGroup({
-    startPlayer: new FormControl()
+    startPlayer: new FormControl('', Validators.required)
   });
 
   constructor(private gameService: GameService, private matSnackBar: MatSnackBar) { }
 
-  async initialResult(ctx: GameContext, dices: Dice[]): Promise<void> {
+  async setInitialResult(ctx: GameContext, dices: Dices): Promise<void> {
     await this.gameService.setInitialResult(ctx, dices);
   }
 
   async startRegularGame(game: Game): Promise<void> {
+    if (this.startPlayerGroup.invalid) {
+      return;
+    }
+
     const startingPlayer: Player | undefined = getPlayerById(game, this.startPlayerGroup.value.startPlayer);
 
     if (startingPlayer) {

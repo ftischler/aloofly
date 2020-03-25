@@ -1,33 +1,40 @@
 <ng-container *ngIf="ctx$ | async as ctx">
+
   <h2>Leben auswürfeln</h2>
+
   <!-- All players while game is not started -->
-  <div *ngIf="ctx.game.status === 'created'; else game">
+  <div *ngIf="ctx.game.status === 'created'; else gameIsRunning">
     <p>Auf andere Spiele warten...</p>
   </div>
 
-  <ng-template #game>
-    <mws30-dice-cup-view *ngIf="ctx | currentTurn" [dices]="(ctx | currentTurn).dices"></mws30-dice-cup-view>
+  <ng-template #gameIsRunning>
+
+    <mws30-dice-cup-view *ngIf="ctx | currentTurn as currentTurn" [dices]="currentTurn.dices | objectValues"></mws30-dice-cup-view>
 
     <!-- All Player while game is running -->
-    <ng-container *ngIf="!(ctx.game | allTurnsDone); else turnsDone">
+    <ng-container *ngIf="ctx.game | turnsRunning; else turnsDone">
+
       <!-- Player is finished -->
       <ng-container *ngIf="ctx.player | hasScore:ctx.game; else yourTurn">
         <p>Auf andere Spieler warten...</p>
       </ng-container>
+
       <!-- Players turn -->
       <ng-template #yourTurn>
-        <mws30-dice-cup (diceCupResult)="initialResult(ctx, $event)"></mws30-dice-cup>
+        <mws30-dice-cup (diceCupResult)="setInitialResult(ctx, $event)"></mws30-dice-cup>
       </ng-template>
+
     </ng-container>
 
     <!-- Turns done -->
     <ng-template #turnsDone>
+
       <!-- Admin can now choose a starting player -->
       <ng-container *ngIf="ctx.player | isAdmin: ctx.game; else noAdmin">
         <form [formGroup]="startPlayerGroup" (submit)="startRegularGame(ctx.game)">
           <mat-form-field>
             <mat-label>Wähle aus wer beginnt</mat-label>
-            <mat-select formControlName="startPlayer">
+            <mat-select formControlName="startPlayer" required>
               <mat-option
                 *ngFor="let player of ctx.game.players | objectValues"
                 [value]="player.id">{{player.name}}</mat-option>
@@ -45,5 +52,7 @@
       </ng-template>
 
     </ng-template>
+
   </ng-template>
+
 </ng-container>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Dice, Game, GameContext, Player, Players, Turn } from '@aloofly/mws30-models';
+import { Dice, Dices, Game, GameContext, Player, Players, Turn } from '@aloofly/mws30-models';
 import { createGame } from '../common/create-game';
 
 import 'firebase/database';
@@ -51,7 +51,7 @@ export class GameService {
       .update({...player, playerCount});
   }
 
-  async setInitialResult({player, game}: GameContext, dices: Dice[]): Promise<void> {
+  async setInitialResult({player, game}: GameContext, dices: Dices): Promise<void> {
     const currentScore: number = calculateInitialResult(dices);
 
     await this.angularFireDatabase.object<Game>(`/${DB_KEY}/${game.id}`).update({
@@ -63,7 +63,7 @@ export class GameService {
         dices,
         turnNumber: 0,
         currentScore,
-        attacks: []
+        attacks: {}
       }
     );
   }
@@ -75,15 +75,21 @@ export class GameService {
   }
 
   async startRegularGame(game: Game, startingPlayer: Player): Promise<void> {
+    const newGame = {
+      ...game,
+      currentPlayer: startingPlayer,
+      startingPlayer
+    };
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
-      .update({currentPlayer: startingPlayer});
+      .update(newGame);
 
-    await this.startTurn(game);
+    await this.startTurn(newGame);
   }
 
   async startTurn(game: Game): Promise<void> {
     const { startingPlayer, turnNumber: oldTurnNumber } = game;
+
     const turnNumber = oldTurnNumber + 1;
 
     await this.angularFireDatabase
@@ -96,7 +102,7 @@ export class GameService {
     await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${startingPlayer!.id}/turns`).push({
       dices: createDices(),
       currentScore: 0,
-      attacks: [],
+      attacks: {},
       turnNumber
     });
   }

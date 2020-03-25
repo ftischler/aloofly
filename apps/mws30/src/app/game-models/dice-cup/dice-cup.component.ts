@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Dice } from '@aloofly/mws30-models';
+import { Dice, Dices } from '@aloofly/mws30-models';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { delay, map, takeUntil, tap } from 'rxjs/operators';
 import { rollDices } from '../../common/roll-dices';
@@ -17,14 +17,15 @@ const DICE_SHOW_DELAY = 0;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DiceCupComponent implements OnInit, OnDestroy {
-  @Input() dices: Dice[] = createDices();
-  @Output() diceCupResult = new EventEmitter<Dice[]>();
+  @Input() dices: Dices = createDices();
+  @Output() diceCupResult = new EventEmitter<Dices>();
+  @Output() dicePicked = new EventEmitter<Dices>();
 
-  dices$ = new ReplaySubject<Dice[]>(1);
+  dices$ = new ReplaySubject<Dices>(1);
 
   isRolling$ = new BehaviorSubject<boolean>(false);
 
-  private diceRoller = new Subject<Dice[]>();
+  private diceRoller = new Subject<Dices>();
 
   private destroy$ = new Subject<void>();
 
@@ -42,6 +43,10 @@ export class DiceCupComponent implements OnInit, OnDestroy {
 
   rollDices(): void {
     this.diceRoller.next(this.dices);
+  }
+
+  pickDice(dice: Dice): void {
+
   }
 
   ngOnDestroy(): void {

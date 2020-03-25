@@ -1,11 +1,22 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Dice } from '@aloofly/mws30-models';
+import { Dices } from '@aloofly/mws30-models';
 
 @Pipe({
   name: 'unpickedDices'
 })
 export class UnpickedDicesPipe implements PipeTransform {
-  transform(dices: Dice[]): Dice[] {
-    return dices.filter(dice => !dice.picked);
+  transform(dices: Dices): Dices {
+    let newDices: Dices = {};
+
+    for (const key in dices) {
+      if (dices.hasOwnProperty(key) && !dices[key].picked) {
+        newDices = {
+          ...newDices,
+          [key]: dices[key]
+        };
+      }
+    }
+
+    return newDices;
   }
 }

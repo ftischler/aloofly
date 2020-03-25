@@ -37,9 +37,13 @@ export interface Turns {
 
 export interface Turn {
   turnNumber: number;
-  dices: Dice[];
+  dices: Dices;
   currentScore: number;
-  attacks?: Attack[];
+  attacks?: Attacks;
+}
+
+export interface Dices {
+  [key: string]: Dice;
 }
 
 export type DiceValue = 1 | 2 | 3 | 4 | 5 | 6;
@@ -47,6 +51,10 @@ export type DiceValue = 1 | 2 | 3 | 4 | 5 | 6;
 export interface Dice {
   value: DiceValue;
   picked: boolean;
+}
+
+export interface Attacks {
+  [key: string]: Attack;
 }
 
 export interface Attack {
@@ -58,5 +66,3 @@ interface ChatMessage {
   sentAt: number;
   sentFrom: Player;
 }
-
-export type PartialWithId<T> = Partial<T> & {id: string};

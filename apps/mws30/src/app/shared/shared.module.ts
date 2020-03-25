@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CurrentTurnPipe } from './current-turn.pipe';
 import { PickedDicesPipe } from './picked-dices.pipe';
 import { UnpickedDicesPipe } from './unpicked-dices.pipe';
+import { TurnsRunningPipe } from './turns-running.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UnpickedDicesPipe } from './unpicked-dices.pipe';
     AllTurnsDonePipe,
     CurrentTurnPipe,
     PickedDicesPipe,
-    UnpickedDicesPipe
+    UnpickedDicesPipe,
+    TurnsRunningPipe
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { UnpickedDicesPipe } from './unpicked-dices.pipe';
     AllTurnsDonePipe,
     CurrentTurnPipe,
     PickedDicesPipe,
-    UnpickedDicesPipe
+    UnpickedDicesPipe,
+    TurnsRunningPipe
   ]
 })
 export class SharedModule { }

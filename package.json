@@ -44,6 +44,8 @@
     "@nestjs/common": "^6.8.3",
     "@nestjs/core": "^6.8.3",
     "@nestjs/platform-express": "^6.8.3",
+    "@ngrx/effects": "^9.0.0",
+    "@ngrx/store": "^8.0.0",
     "@nrwl/angular": "9.1.2",
     "core-js": "^2.5.4",
     "firebase": ">= 5.5.7 <8",

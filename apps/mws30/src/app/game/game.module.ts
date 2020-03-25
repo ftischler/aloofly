@@ -12,13 +12,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '../shared/shared.module';
 import { GameTableComponent } from './game-table/game-table.component';
 import { FirstRoundComponent } from './steps/first-round/first-round.component';
+import { MatSelectModule } from '@angular/material/select';
+import { DiceCupComponent } from './steps/dice-cup/dice-cup.component';
+import { GameModelsModule } from '../game-models/game-models.module';
 
 @NgModule({
   declarations: [
     GameComponent,
     GameJoinComponent,
     GameTableComponent,
-    FirstRoundComponent
+    FirstRoundComponent,
+    DiceCupComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,9 @@ import { FirstRoundComponent } from './steps/first-round/first-round.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    GameModelsModule
   ]
 })
 export class GameModule { }

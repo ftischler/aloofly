@@ -2,7 +2,7 @@
   <ng-container *ngIf="ctx.game.status === 'created'; else gameRunning">
     <h1>MWS 30 #beschde</h1>
     <h2>Hallo {{ctx.player.name}}</h2>
-    <div *ngIf="ctx.game | isAdmin:ctx.player">
+    <div *ngIf="ctx.player | isAdmin: ctx.game">
       <p>Versende diese URL an deine Mitspieler: {{ctx.game.url}}</p>
     </div>
     <br>
@@ -13,13 +13,13 @@
           <mat-list>
             <mat-list-item *ngFor="let player of playersExlcudedMe">
               <span>{{player.name}}</span>
-              <span *ngIf="ctx.game | isAdmin: player">&nbsp;(Admin)</span>
+              <span *ngIf="player | isAdmin: ctx.game">&nbsp;(Admin)</span>
             </mat-list-item>
           </mat-list>
           <br>
           <button
             mat-raised-button
-            *ngIf="ctx.game | isAdmin:ctx.player; else waiting"
+            *ngIf="ctx.player | isAdmin: ctx.game; else waiting"
             (click)="startGame(ctx.game.id)">Spiel starten</button>
         </ng-container>
         <ng-template #waiting>

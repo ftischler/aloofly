@@ -250,6 +250,7 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "apps/mws30/src/assets/dice.min.css",
               "apps/mws30/src/styles.scss"
             ],
             "scripts": []

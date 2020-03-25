@@ -11,9 +11,9 @@ export interface Game {
   createdBy: Player;
   payPalDonationLink?: string;
   url?: string;
-  chat: ChatMessage[];
-  round: number;
-  currentTurn?: Player;
+  chat?: ChatMessage[];
+  turnNumber: number;
+  currentPlayer?: Player;
 }
 
 export interface Players {
@@ -25,27 +25,26 @@ export interface Player {
   playerCount: number;
   name: string;
   active: boolean;
-  moves: Move[];
+  turns?: Turns;
   initialScore?: number;
   currentScore?: number;
 }
 
-export interface Move {
-  moveNumber: number;
-  dices: Dices;
-  currentScore: number;
-  attacks: Attack[];
+export interface Turns {
+  [key: string]: Turn;
 }
 
-export interface Dices {
-  [key: string]: Dice;
+export interface Turn {
+  turnNumber: number;
+  dices: Dice[];
+  currentScore: number;
+  attacks?: Attack[];
 }
 
 export type DiceValue = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface Dice {
-  id: string;
-  value?: DiceValue;
+  value: DiceValue;
   picked: boolean;
 }
 

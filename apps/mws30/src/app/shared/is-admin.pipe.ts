@@ -5,7 +5,7 @@ import { Game, Player } from '@aloofly/mws30-models';
   name: 'isAdmin'
 })
 export class IsAdminPipe implements PipeTransform {
-  transform(game: Game, player: Player): boolean {
+  transform(player: Player, game: Game): boolean {
     return game.createdBy.id === player.id;
   }
 }

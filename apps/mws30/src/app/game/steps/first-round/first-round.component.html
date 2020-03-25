@@ -1,1 +1,18 @@
-<p>first-round works!</p>
+<ng-container *ngIf="ctx$ | async as ctx">
+  <div>
+    <p>Würfelt eure Leben zu Beginn aus</p>
+    <div>
+      <mws30-dice-cup (diceCupResult)="initialResult(ctx, $event)"></mws30-dice-cup>
+    </div>
+  </div>
+
+  <form *ngIf="(ctx.player | isAdmin: ctx.game) && (ctx.player | hasScore: ctx.game)" [formGroup]="startPlayerGroup" (submit)="startRegularGame()">
+    <mat-form-field>
+      <mat-label>Wähle aus wer beginnt</mat-label>
+      <mat-select formControlName="startPlayer">
+        <mat-option *ngFor="let player of ctx.game.players | objectValues" [value]="player.id">{{player.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button type="submit"></button>
+  </form>
+</ng-container>

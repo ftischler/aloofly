@@ -1,0 +1,10 @@
+<div *ngFor="let player of players">
+  <p>{{player.name}}
+    <ng-container *ngIf="player.turns as turns; else empty">
+      <span *ngFor="let turn of turns | objectValues">{{turn.currentScore}}</span>
+    </ng-container>
+    <ng-template #empty>
+      <span>-</span>
+    </ng-template>
+  </p>
+</div>

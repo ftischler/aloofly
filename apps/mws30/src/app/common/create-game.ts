@@ -12,6 +12,6 @@ export function createGame(gameId: string, player: Player): Partial<Game> {
     url: `${environment.url}/game/${gameId}`,
     status: 'created',
     chat: [],
-    round: 0
+    turnNumber: 0
   };
 }

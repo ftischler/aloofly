@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Game, Games, Player, Players } from '@aloofly/mws30-models';
+import { Dice, Game, GameContext, Player, Players, Turn } from '@aloofly/mws30-models';
 import { createGame } from '../common/create-game';
 
 import 'firebase/database';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { DB_KEY } from '../common/db-key';
+import { calculateInitialResult } from '../common/calculate-initial-result';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
@@ -47,6 +48,19 @@ export class GameService {
     await this.angularFireDatabase
       .object<Player>(`/${DB_KEY}/${gameId}/players/${player.id}`)
       .update({...player, playerCount});
+  }
+
+  async setInitialResult({player, game}: GameContext, dices: Dice[]): Promise<void> {
+    const currentScore: number = calculateInitialResult(dices);
+
+    await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`).push(
+      {
+        dices,
+        turnNumber: 0,
+        currentScore,
+        attacks: []
+      }
+    );
   }
 
   async startGame(gameId: string): Promise<void> {

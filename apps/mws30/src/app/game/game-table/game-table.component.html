@@ -1,10 +1,15 @@
 <ng-container *ngIf="ctx$ | async as ctx">
   <h1 *ngIf="ctx.player as player">Hallo {{player.name}}</h1>
   <aside *ngIf="ctx.game as game">
-    <mat-list>
-      <mat-list *ngIf="game.players | objectValues | removeMyself: ctx.player as playersExlcudedMe">
-        <mat-list-item *ngFor="let player of playersExlcudedMe">{{player.name}}</mat-list-item>
-      </mat-list>
-    </mat-list>
+    <ng-container *ngIf="game.players | objectValues as players">
+      <mws30-notepad [players]="players"></mws30-notepad>
+    </ng-container>
   </aside>
+  <main>
+    <ng-container *ngIf="ctx.game | isFirstRound; else gameRunning">
+      <mws30-first-round [ctx$]="ctx$"></mws30-first-round>
+    </ng-container>
+    <ng-template #gameRunning>
+    </ng-template>
+  </main>
 </ng-container>

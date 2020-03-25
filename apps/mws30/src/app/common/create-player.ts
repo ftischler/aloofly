@@ -5,7 +5,6 @@ export function createPlayer(name: string): Player {
   return {
     active: false,
     id: createRandomId(),
-    moves: [],
     name,
     playerCount: 0
   };

@@ -14,6 +14,9 @@ import { CurrentTurnIdPipe } from './current-turn-id';
 import { CurrentPlayerPipe } from './current-player.pipe';
 import { ObjectKeysPipe } from './object-keys.pipe';
 import { HasRolledPipe } from './has-rolled.pipe';
+import { ChosenDicesPipe } from './chosen-dices.pipe';
+import { CanRollAgainPipe } from './can-roll-again.pipe';
+import { TurnFinishedPipe } from './turn-finished.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { HasRolledPipe } from './has-rolled.pipe';
     CurrentTurnIdPipe,
     CurrentPlayerPipe,
     ObjectKeysPipe,
-    HasRolledPipe
+    HasRolledPipe,
+    ChosenDicesPipe,
+    CanRollAgainPipe,
+    TurnFinishedPipe
   ],
   imports: [
     CommonModule,
@@ -47,7 +53,10 @@ import { HasRolledPipe } from './has-rolled.pipe';
     CurrentTurnIdPipe,
     CurrentPlayerPipe,
     ObjectKeysPipe,
-    HasRolledPipe
+    HasRolledPipe,
+    ChosenDicesPipe,
+    CanRollAgainPipe,
+    TurnFinishedPipe
   ]
 })
 export class SharedModule { }

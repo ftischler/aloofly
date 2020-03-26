@@ -21,7 +21,7 @@
 
       <!-- Players turn -->
       <ng-template #yourTurn>
-        <mws30-dice-cup (diceCupResult)="setInitialResult(ctx, $event)"></mws30-dice-cup>
+        <mws30-dice-cup [isFirstTurn]="true" (diceCupResult)="setInitialResult(ctx, $event)"></mws30-dice-cup>
       </ng-template>
 
     </ng-container>

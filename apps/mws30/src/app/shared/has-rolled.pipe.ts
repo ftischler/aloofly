@@ -6,6 +6,6 @@ import { Dices } from '@aloofly/mws30-models';
 })
 export class HasRolledPipe implements PipeTransform {
   transform(dices: Dices): boolean {
-    return !!( dices && Object.values(dices).reduce((acc, {value}) => acc + value, 0));
+    return !!(dices && Object.values(dices).reduce((acc, {value}) => acc + value, 0));
   }
 }

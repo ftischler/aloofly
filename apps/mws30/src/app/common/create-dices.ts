@@ -4,6 +4,7 @@ import { createRandomId } from './create-random-id';
 export function createDice(): Dice {
   return {
     picked: false,
+    chosen: false,
     value: 0
   };
 }

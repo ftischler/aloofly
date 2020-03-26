@@ -10,9 +10,10 @@ import { GameService } from '../../../services/game.service';
 })
 export class RegularRoundComponent {
   @Input() ctx$: Observable<GameContext>;
+
   constructor(private gameService: GameService) { }
 
-  async saveIntermediateResult(ctx: GameContext, currentTurnId: string, dices: Dices): Promise<void> {
-    await this.gameService.saveIntermediateResult(ctx, currentTurnId, dices);
+  async saveIntermediateResult(ctx: GameContext, currentTurnId: string, currentDices: Dices, allDices: Dices): Promise<void> {
+    await this.gameService.saveIntermediateResult(ctx, currentTurnId, {...allDices, ...currentDices});
   }
 }

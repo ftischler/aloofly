@@ -1,16 +1,30 @@
-<p *ngIf="isRolling$ | async">Wait for it...</p>
-<ng-container *ngIf="dices$ | async | hasRolled; else roll">
-  <ng-container *ngFor="let diceKey of dices$ | async | objectKeys">
-    <ng-container *ngIf="dices[diceKey] as resultDice">
-      <mws30-dice [dice]="resultDice"
-                  (click)="pickDice(resultDice, diceKey)"
-                  [class.picked]="resultDice.picked">
-      </mws30-dice>
-    </ng-container>
-  </ng-container>
-</ng-container>
-<ng-template #roll>
-  <br>
-  <button mat-raised-button (click)="rollDices()">Jetzt würfeln</button>
-</ng-template>
+<p *ngIf="isRolling$ | async; else notRolling">Wait for it...</p>
 
+<ng-template #notRolling>
+
+  <div class="dice-container" *ngIf="rolledDices$ | async as rolledDices;">
+    <ng-container *ngFor="let diceKey of rolledDices | objectKeys">
+      <ng-container *ngIf="dices[diceKey] as resultDice">
+        <mws30-dice [dice]="resultDice"
+                    (click)="pickDice(resultDice, diceKey)"
+                    [class.picked]="resultDice.picked">
+        </mws30-dice>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <button mat-raised-button *ngIf="dices | turnFinished; else gameRunning">
+    Runde schließen
+  </button>
+
+  <ng-template #gameRunning>
+    <button mat-raised-button *ngIf="!(dices | hasRolled)" (click)="rollDices()">
+      Jetzt würfeln
+    </button>
+
+    <button mat-raised-button *ngIf="!isFirstTurn && dices | canRollAgain" (click)="keepChosenDices(dices)">
+      Erneut würfeln
+    </button>
+  </ng-template>
+
+</ng-template>

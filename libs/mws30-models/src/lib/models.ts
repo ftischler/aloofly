@@ -51,6 +51,7 @@ export type DiceValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export interface Dice {
   value: DiceValue;
   picked: boolean;
+  chosen: boolean;
 }
 
 export interface Attacks {

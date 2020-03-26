@@ -1,19 +1,36 @@
 <ng-container *ngIf="ctx$ | async as ctx">
+
+  <!-- Spieler ist am Zug -->
   <div *ngIf="ctx.game | currentTurn: ctx.player as currentTurn; else wait">
     <ng-container *ngIf="ctx.game | currentTurnId: ctx.player as currentTurnId">
-      <mws30-dice-cup *ngIf="currentTurn?.dices as dices"
-                      [dices]="dices"
-                      (diceCupResult)="saveIntermediateResult(ctx, currentTurnId, $event)"
-                      (dicePicked)="saveIntermediateResult(ctx, currentTurnId, $event)"></mws30-dice-cup>
+      <div class="chosen-ones">
+        <mws30-dice-cup-view [dices]="currentTurn?.dices | chosenDices"></mws30-dice-cup-view>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="dices">
+        <mws30-dice-cup *ngIf="currentTurn?.dices | chosenDices: false as dices"
+                        [dices]="dices"
+                        (diceCupResult)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)"
+                        (dicePicked)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)"></mws30-dice-cup>
+      </div>
     </ng-container>
   </div>
+
+  <!-- Spieler wartet und schaut zu -->
   <ng-template #wait>
     <p>Warten auf eigenen Spielzug...</p>
     <ng-container *ngIf="ctx.game | currentPlayer as currentPlayer">
       <p>{{currentPlayer.name}} würfelt gerade</p>
       <ng-container *ngIf="ctx.game | currentTurn: currentPlayer as currentPlayer">
-        <mws30-dice-cup-view [dices]="currentPlayer.dices"></mws30-dice-cup-view>
+        <div class="chosen-ones">
+          <mws30-dice-cup-view [dices]="currentPlayer?.dices | chosenDices"></mws30-dice-cup-view>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="dices">
+          <mws30-dice-cup-view [dices]="currentPlayer.dices | chosenDices: false"></mws30-dice-cup-view>
+        </div>
       </ng-container>
     </ng-container>
   </ng-template>
+
 </ng-container>

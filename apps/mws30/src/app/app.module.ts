@@ -23,15 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCuSY8pKvqc7RJjgFptxGXeRPb5kXiefz4",
-  authDomain: "mws30-c74b1.firebaseapp.com",
-  databaseURL: "https://mws30-c74b1.firebaseio.com",
-  projectId: "mws30-c74b1",
-  storageBucket: "mws30-c74b1.appspot.com",
-  messagingSenderId: "880463604190",
-  appId: "1:880463604190:web:329d414cf0928beb6e554f"
-};
+import firebaseConfig from '../../firebase.config.json';
 
 @NgModule({
   declarations: [AppComponent, CreateGameComponent],

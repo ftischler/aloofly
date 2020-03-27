@@ -1,19 +1,21 @@
 <div *ngFor="let player of players">
-  <p>{{player.name}}: &nbsp;&nbsp;
-    <ng-container *ngIf="player.turns as turns; else empty">
-      <ng-container *ngFor="let turn of turns | objectValues">
-        <button *ngIf="turn.currentScore; else noScore"
-                mat-stroked-button
-                (click)="openDiceView(turn.dices)">
-          {{turn.currentScore}}
-        </button>
-        <ng-template #noScore>
-          <button mat-stroked-button>...</button>
-        </ng-template>
+  <p [class.active]="player.active">
+    <strong>{{player.name}}: &nbsp;&nbsp;
+      <ng-container *ngIf="player.turns as turns; else empty">
+        <ng-container *ngFor="let turn of turns | objectValues">
+          <button *ngIf="turn.currentScore; else noScore"
+                  mat-stroked-button
+                  (click)="openDiceView(turn.dices)">
+            {{turn.currentScore}}
+          </button>
+          <ng-template #noScore>
+            <button mat-stroked-button>...</button>
+          </ng-template>
+        </ng-container>
       </ng-container>
-    </ng-container>
-    <ng-template #empty>
-      <span>-</span>
-    </ng-template>
+      <ng-template #empty>
+        <span>-</span>
+      </ng-template>
+    </strong>
   </p>
 </div>

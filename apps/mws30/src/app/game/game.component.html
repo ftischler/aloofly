@@ -1,11 +1,14 @@
 <ng-container *ngIf="ctx$ | async as ctx">
   <ng-container *ngIf="ctx.game.status === 'created'; else gameRunning">
-    <h1>MWS 30 #beschde</h1>
     <h2>Hallo {{ctx.player.name}}</h2>
     <div *ngIf="ctx.player | isAdmin: ctx.game">
       <p>Versende diese URL an deine Mitspieler:</p>
       <a [routerLink]="" [cdkCopyToClipboard]="ctx.game.url" class="copy-link"
-         (copied)="copiedLink()">{{ctx.game.url}}
+         (copied)="copiedLink()">
+        <strong>
+          <mat-icon>content_copy</mat-icon>
+          <span>{{ctx.game.url}}</span>
+        </strong>
       </a>
       <br>
       <br>

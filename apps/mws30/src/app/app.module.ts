@@ -19,6 +19,9 @@ import { GAME_CONTEXT_PROVIDER } from './common/game-context';
 import { EffectsModule } from '@ngrx/effects';
 import { GameEffects } from './effects/game.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCuSY8pKvqc7RJjgFptxGXeRPb5kXiefz4",
@@ -45,8 +48,11 @@ const firebaseConfig = {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    StoreModule.forRoot({router: routerReducer}),
-    EffectsModule.forRoot([GameEffects])
+    StoreModule.forRoot({ router: routerReducer }),
+    EffectsModule.forRoot([GameEffects]),
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [GAME_CONTEXT_PROVIDER],
   bootstrap: [AppComponent]

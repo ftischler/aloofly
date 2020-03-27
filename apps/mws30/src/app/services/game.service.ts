@@ -85,6 +85,7 @@ export class GameService {
       currentPlayerId: startingPlayerId,
       startingPlayerId: startingPlayerId
     };
+
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
       .update(newGame);
@@ -92,19 +93,25 @@ export class GameService {
     await this.startTurn(newGame);
   }
 
-  async startTurn(game: Game): Promise<void> {
-    const { startingPlayerId, turnNumber: oldTurnNumber } = game;
+  async startTurn(game: Game, playerId: string = game.startingPlayerId!): Promise<void> {
+    const { turnNumber: oldTurnNumber } = game;
 
     const turnNumber = oldTurnNumber + 1;
 
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
       .update({
-        currentPlayerId: startingPlayerId,
+        currentPlayerId: playerId,
         turnNumber
       });
 
-    await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${startingPlayerId}/turns`).push({
+    await this.angularFireDatabase
+      .object<Player>(`/${DB_KEY}/${game.id}/players/${playerId}`)
+      .update({
+        active: true
+      });
+
+    await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${playerId}/turns`).push({
       dices: createDices(),
       currentScore: 0,
       attacks: {},
@@ -125,9 +132,11 @@ export class GameService {
     await this.angularFireDatabase
       .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
       .update(currentTurnId, turn);
+  }
 
+  async closeTurn({game, player}: GameContext, currentTurnId: string, turn: Turn): Promise<void> {
     await this.angularFireDatabase
       .object<Player>(`/${DB_KEY}/${game.id}/players/${player.id}`)
-      .update({currentScore: turn.currentScore});
+      .update({currentScore: turn.currentScore, active: false});
   }
 }

@@ -17,6 +17,7 @@ import { GameModelsModule } from '../game-models/game-models.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RegularRoundComponent } from './game-steps/regular-round/regular-round.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatSelectModule,
     MatSnackBarModule,
     GameModelsModule,
-    ClipboardModule
+    ClipboardModule,
+    MatIconModule
   ]
 })
 export class GameModule { }

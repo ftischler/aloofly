@@ -1,4 +1,6 @@
-<p *ngIf="isRolling | async; else notRolling">Wait for it...</p>
+<p *ngIf="isRolling | async; else notRolling">
+  <strong>Wait for it...</strong>
+</p>
 
 <ng-template #notRolling>
 
@@ -12,19 +14,21 @@
       </ng-container>
     </ng-container>
   </div>
-
-  <button mat-raised-button *ngIf="dices | turnFinished; else gameRunning" (click)="closeRound()">
-    Runde schließen
-  </button>
-
-  <ng-template #gameRunning>
+  <ng-container *ngIf="(dices | chosenDices: false | objectValues).length > 0">
     <button mat-raised-button *ngIf="!(dices | hasRolled)" (click)="rollDices()">
       Jetzt würfeln
     </button>
 
-    <button mat-raised-button *ngIf="!isFirstTurn && dices | canRollAgain" (click)="keepChosenDices(dices)">
-      Erneut würfeln
+    <button mat-raised-button *ngIf="dices | allPicked; else dicesInGame"
+            (click)="takePickedDicesAndCloseRound(dices)">
+      Würfel nehmen
     </button>
-  </ng-template>
+
+    <ng-template #dicesInGame>
+      <button mat-raised-button *ngIf="!isFirstTurn && dices | canRollAgain" (click)="keepPickedDices(dices)">
+        Erneut würfeln
+      </button>
+    </ng-template>
+  </ng-container>
 
 </ng-template>

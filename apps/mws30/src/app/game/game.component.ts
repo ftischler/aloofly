@@ -52,6 +52,6 @@ export class GameComponent {
   }
 
   copiedLink(): void {
-    this.matSnackBar.open('Der Text wurde in die Zwischenablage kopiert', 'Okay', {duration: 500});
+    this.matSnackBar.open('Der Text wurde in die Zwischenablage kopiert', 'Okay', {duration: 1500});
   }
 }

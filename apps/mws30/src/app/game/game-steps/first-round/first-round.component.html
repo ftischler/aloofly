@@ -4,7 +4,7 @@
 
   <!-- All players while game is not started -->
   <div *ngIf="ctx.game.status === 'created'; else gameIsRunning">
-    <p>Auf andere Spiele warten...</p>
+    <p><strong>Auf andere Spiele warten...</strong></p>
   </div>
 
   <ng-template #gameIsRunning>
@@ -16,7 +16,7 @@
 
       <!-- Player is finished -->
       <ng-container *ngIf="ctx.player | hasScore:ctx.game; else yourTurn">
-        <p>Auf andere Spieler warten...</p>
+        <p><strong>Auf andere Spieler warten...</strong></p>
       </ng-container>
 
       <!-- Players turn -->
@@ -48,7 +48,7 @@
       <!-- Other players have to wait -->
       <ng-template #noAdmin>
         <br>
-        <p>Warten bis der Admin das Spiel startet</p>
+        <p><strong>Warten bis der Admin das Spiel startet</strong></p>
       </ng-template>
 
     </ng-template>

@@ -17,6 +17,7 @@ import { objectToKeyValues } from '../../common/object-to-key-values';
 import { keyValuesToObject } from '../../common/key-values-to-object';
 import { randomDiceValue } from '../../common/random-dice-value';
 import { resetDices } from '../../common/reset-dices';
+import { KeyValue } from '@angular/common';
 
 // one second
 const DICE_ROLL_DELAY = 1.5 * 1000;
@@ -36,7 +37,7 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   @Output() dicePicked = new EventEmitter<Dices>();
 
   @Output() isRolling = new EventEmitter<boolean>();
-  @Output() roundClosed = new EventEmitter<boolean>();
+  @Output() roundClosed = new EventEmitter<Dices>();
 
   rolledDices$ = new ReplaySubject<Dices | undefined>(1);
 
@@ -79,7 +80,7 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
     this.dicePicked.next(newDices);
   }
 
-  keepChosenDices(dices: Dices): void {
+  keepPickedDices(dices: Dices, rollDelay: boolean = true): void {
     const newDices: Dices = keyValuesToObject(
       objectToKeyValues(dices).map(({ key, value: dice }) => ({
         key,
@@ -90,12 +91,32 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
       }))
     );
 
-    this.diceCupResult.next(resetDices(newDices));
-    this.diceRoller.next(newDices);
+    if (rollDelay) {
+      this.diceCupResult.next(resetDices(newDices));
+      this.diceRoller.next(newDices);
+    } else {
+      this.diceCupResult.next(newDices);
+      this.rolledDices$.next(newDices);
+    }
   }
 
-  closeRound(): void {
-    this.roundClosed.next(true);
+  takePickedDicesAndCloseRound(dices: Dices): void {
+    const unChosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(dices)
+      .filter(({ value }) => !value.chosen);
+
+    const newDices: Dices = keyValuesToObject(unChosenDices.map(({ key, value: dice }) => {
+      return {
+        key,
+        value: {
+          ...dice,
+          picked: true,
+          chosen: true
+        }
+      };
+    }));
+
+    this.rolledDices$.next(newDices);
+    this.roundClosed.next(newDices);
   }
 
   ngOnDestroy(): void {

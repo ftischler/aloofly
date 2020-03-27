@@ -9,7 +9,7 @@ export function createGame(gameId: string, player: Player): Partial<Game> {
     players: {
       [player.id]: player
     },
-    url: `${environment.url}/game/${gameId}`,
+    url: `${environment.url}/${gameId}`,
     status: 'created',
     chat: [],
     turnNumber: 0

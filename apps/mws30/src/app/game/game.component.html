@@ -3,13 +3,22 @@
     <h1>MWS 30 #beschde</h1>
     <h2>Hallo {{ctx.player.name}}</h2>
     <div *ngIf="ctx.player | isAdmin: ctx.game">
-      <p>Versende diese URL an deine Mitspieler: {{ctx.game.url}}</p>
+      <p>Versende diese URL an deine Mitspieler:</p>
+      <a [routerLink]="" [cdkCopyToClipboard]="ctx.game.url" class="copy-link"
+         (copied)="copiedLink()">{{ctx.game.url}}
+      </a>
+      <br>
+      <br>
+      <p>
+        Versende bitte nur diese URL und halte deine persönliche URL in deiner Browser-Addresszeile geheim.
+        Mit dieser kannst du jederzeit dem Spiel wieder beitreten.
+      </p>
     </div>
     <br>
     <div *ngIf="ctx.game?.players as players">
       <ng-container *ngIf="players | objectValues | removeMyself: ctx.player as playersExlcudedMe">
         <ng-container *ngIf="playersExlcudedMe.length; else noPlayers">
-          <p>Vorhandene Spieler:</p>
+          <p><strong>Vorhandene Spieler:</strong></p>
           <mat-list>
             <mat-list-item *ngFor="let player of playersExlcudedMe">
               <span>{{player.name}}</span>
@@ -23,12 +32,12 @@
             (click)="startGame(ctx.game.id)">Spiel starten</button>
         </ng-container>
         <ng-template #waiting>
-          <p>Warte bitte bis {{ctx.game.createdBy.name}} das Spiel startet</p>
+          <p><strong>Warte bitte bis das Spiel startet</strong></p>
         </ng-template>
       </ng-container>
 
       <ng-template #noPlayers>
-        <p>Auf weitere Spieler warten...</p>
+        <p><strong>Auf weitere Spieler warten...</strong></p>
       </ng-template>
     </div>
   </ng-container>

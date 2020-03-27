@@ -1,4 +1,4 @@
-<p *ngIf="isRolling$ | async; else notRolling">Wait for it...</p>
+<p *ngIf="isRolling | async; else notRolling">Wait for it...</p>
 
 <ng-template #notRolling>
 
@@ -13,7 +13,7 @@
     </ng-container>
   </div>
 
-  <button mat-raised-button *ngIf="dices | turnFinished; else gameRunning">
+  <button mat-raised-button *ngIf="dices | turnFinished; else gameRunning" (click)="closeRound()">
     Runde schließen
   </button>
 

@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { GameService } from '../services/game.service';
 import { Game, GameContext, Player } from '@aloofly/mws30-models';
 import { RouterFacade } from '../+state/router.facade';
+import { DOCUMENT } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'mws30-game',
@@ -42,9 +44,14 @@ export class GameComponent {
     map(([player, game]) => ({player, game}))
   );
 
-  constructor(private routerFacade: RouterFacade, private gameService: GameService) { }
+  constructor(private routerFacade: RouterFacade, private gameService: GameService,
+              private matSnackBar: MatSnackBar) { }
 
   async startGame(gameId: string): Promise<void> {
     await this.gameService.startGame(gameId);
+  }
+
+  copiedLink(): void {
+    this.matSnackBar.open('Der Text wurde in die Zwischenablage kopiert', 'Okay', {duration: 500});
   }
 }

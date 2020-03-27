@@ -1,7 +1,7 @@
 import { Dices } from '@aloofly/mws30-models';
 import { randomDiceValue } from './random-dice-value';
 
-export function rollDices(dices: Dices): Dices {
+export function resetDices(dices: Dices): Dices {
   let newDices: Dices = {};
 
   for (const key in dices) {
@@ -10,7 +10,7 @@ export function rollDices(dices: Dices): Dices {
         ...newDices,
         [key]: {
           ...dices[key],
-          value: (dices[key].picked || dices[key].chosen) ? dices[key].value : randomDiceValue()
+          value: (dices[key].picked || dices[key].chosen) ? dices[key].value : 0
         }
       };
     }

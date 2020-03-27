@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createPlayer } from '../../common/create-player';
@@ -37,6 +37,6 @@ export class GameJoinComponent {
 
     await this.gameService.joinGame(gameId, player);
 
-    await this.router.navigate(['game', gameId, player.id]);
+    await this.router.navigate([gameId, player.id]);
   }
 }

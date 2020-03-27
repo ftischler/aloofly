@@ -39,6 +39,8 @@ export interface Turn {
   turnNumber: number;
   dices: Dices;
   currentScore: number;
+  isRolling: boolean;
+  attacksWith?: number;
   attacks?: Attacks;
 }
 
@@ -51,6 +53,7 @@ export type DiceValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export interface Dice {
   value: DiceValue;
   picked: boolean;
+  pickedCount: number;
   chosen: boolean;
 }
 

@@ -58,12 +58,17 @@ export class GameService {
       currentPlayerId: player.id
     });
 
+    await this.angularFireDatabase.object<Player>(`/${DB_KEY}/${game.id}/players/${player.id}`).update({
+      currentScore
+    });
+
     await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`).push(
       {
         dices,
         turnNumber: 0,
         currentScore,
-        attacks: {}
+        attacks: {},
+        isRolling: false
       }
     );
   }
@@ -103,6 +108,7 @@ export class GameService {
       dices: createDices(),
       currentScore: 0,
       attacks: {},
+      isRolling: false,
       turnNumber
     });
   }
@@ -113,5 +119,15 @@ export class GameService {
     await this.angularFireDatabase
       .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
       .update(turnId, { dices });
+  }
+
+  async saveTurn({game, player}: GameContext, currentTurnId: string, turn: Turn): Promise<void> {
+    await this.angularFireDatabase
+      .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
+      .update(currentTurnId, turn);
+
+    await this.angularFireDatabase
+      .object<Player>(`/${DB_KEY}/${game.id}/players/${player.id}`)
+      .update({currentScore: turn.currentScore});
   }
 }

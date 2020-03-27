@@ -6,10 +6,10 @@
       <div class="chosen-ones">
         <mws30-dice-cup-view [dices]="currentTurn?.dices | chosenDices"></mws30-dice-cup-view>
       </div>
-      <mat-divider></mat-divider>
       <div class="dices">
         <mws30-dice-cup *ngIf="currentTurn?.dices | chosenDices: false as dices"
                         [dices]="dices"
+                        (roundClosed)="closeRound(ctx, currentTurnId, currentTurn, currentTurn.dices)"
                         (diceCupResult)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)"
                         (dicePicked)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)"></mws30-dice-cup>
       </div>
@@ -25,7 +25,6 @@
         <div class="chosen-ones">
           <mws30-dice-cup-view [dices]="currentPlayer?.dices | chosenDices"></mws30-dice-cup-view>
         </div>
-        <mat-divider></mat-divider>
         <div class="dices">
           <mws30-dice-cup-view [dices]="currentPlayer.dices | chosenDices: false"></mws30-dice-cup-view>
         </div>

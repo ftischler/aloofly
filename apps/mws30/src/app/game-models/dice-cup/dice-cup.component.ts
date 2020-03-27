@@ -15,9 +15,11 @@ import { rollDices } from '../../common/roll-dices';
 import { createDices } from '../../common/create-dices';
 import { objectToKeyValues } from '../../common/object-to-key-values';
 import { keyValuesToObject } from '../../common/key-values-to-object';
+import { randomDiceValue } from '../../common/random-dice-value';
+import { resetDices } from '../../common/reset-dices';
 
 // one second
-const DICE_ROLL_DELAY = 1 * 1000;
+const DICE_ROLL_DELAY = 1.5 * 1000;
 const DICE_SHOW_DELAY = 0;
 
 @Component({
@@ -33,9 +35,11 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   @Output() diceCupResult = new EventEmitter<Dices>();
   @Output() dicePicked = new EventEmitter<Dices>();
 
+  @Output() isRolling = new EventEmitter<boolean>();
+  @Output() roundClosed = new EventEmitter<boolean>();
+
   rolledDices$ = new ReplaySubject<Dices | undefined>(1);
 
-  isRolling$ = new Subject<boolean>();
 
   private diceRoller = new Subject<Dices>();
 
@@ -43,12 +47,12 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.diceRoller.pipe(
-      tap(() => this.isRolling$.next(true)),
+      tap(() => this.isRolling.next(true)),
       delay(DICE_ROLL_DELAY),
       map(rollDices),
       tap(dices => this.rolledDices$.next(dices)),
       delay(DICE_SHOW_DELAY),
-      tap(() => this.isRolling$.next(false)),
+      tap(() => this.isRolling.next(false)),
       takeUntil(this.destroy$)
     ).subscribe(this.diceCupResult);
   }
@@ -77,15 +81,21 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
 
   keepChosenDices(dices: Dices): void {
     const newDices: Dices = keyValuesToObject(
-      objectToKeyValues(dices).map(({ key, value }) => ({
+      objectToKeyValues(dices).map(({ key, value: dice }) => ({
         key,
         value: {
-          ...value,
-          chosen: value.picked
+          ...dice,
+          chosen: dice.picked
         }
       }))
     );
-    this.diceCupResult.next(newDices);
+
+    this.diceCupResult.next(resetDices(newDices));
+    this.diceRoller.next(newDices);
+  }
+
+  closeRound(): void {
+    this.roundClosed.next(true);
   }
 
   ngOnDestroy(): void {

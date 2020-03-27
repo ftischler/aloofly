@@ -8,7 +8,7 @@ const routes: Routes = [
     component: CreateGameComponent
   },
   {
-    path: 'game',
+    path: '',
     loadChildren: () => import('./game/game.module').then(m => m.GameModule)
   },
   {

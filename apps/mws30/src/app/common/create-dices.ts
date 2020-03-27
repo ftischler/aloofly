@@ -5,7 +5,8 @@ export function createDice(): Dice {
   return {
     picked: false,
     chosen: false,
-    value: 0
+    value: 0,
+    pickedCount: 0
   };
 }
 

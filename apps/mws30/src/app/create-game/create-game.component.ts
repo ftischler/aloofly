@@ -26,6 +26,6 @@ export class CreateGameComponent {
 
     await this.gameService.createGame(gameId, player);
 
-    await this.router.navigate(['/game', gameId, player.id]);
+    await this.router.navigate([gameId, player.id]);
   }
 }

@@ -1,5 +1,5 @@
 <ng-container *ngIf="ctx$ | async as ctx">
-  <h1 *ngIf="ctx.player as player">Hallo {{player.name}} 🎲</h1>
+  <h1 *ngIf="ctx.player as player">Hallo {{ player.name }} 🎲</h1>
   <aside *ngIf="ctx.game as game">
     <ng-container *ngIf="game.players | objectValues as players">
       <mws30-notepad [ctx]="ctx"></mws30-notepad>
@@ -15,17 +15,43 @@
       </ng-template>
     </ng-container>
     <ng-template #playerLost>
-      <ng-container *ngIf="ctx.player.id === ctx.game.loserPlayerId; else otherPlayerLost">
+      <ng-container
+        *ngIf="ctx.player.id === ctx.game.loserPlayerId; else otherPlayerLost">
         <h2>☠️ Du Lappen hast verloren! ☠️</h2>
-        <p>Bitte zahle jetzt eine Runde. Danach kannst du das Spiel neustarten. 🍻</p>
-        <ng-container *ngIf="ctx.game.nameOfKneipeOrWirt as nameOfKneipeOrWirt">
-          <p>Zahle nun {{ctx.game.amountPerDrink * (ctx.game.players | objectValues).length}} an {{nameOfKneipeOrWirt}}.</p>
+        <ng-container *ngIf="ctx.game.isPayed; else notPayed">
+          <p>Danke für deine Spende {{ctx.game.nameOfKneipeOrWirt}} wird sich freuen!</p>
+          <br>
+          <button mat-raised-button (click)="restartGame(ctx)">Neustarten</button>
         </ng-container>
-        <button mat-raised-button (click)="restartGame(ctx)">Neustarten</button>
+        <ng-template #notPayed>
+          <p>
+            Bitte zahle jetzt eine Runde. Danach kannst du das Spiel neustarten.
+            🍻
+          </p>
+          <ng-container *ngIf="ctx.game.nameOfKneipeOrWirt as nameOfKneipeOrWirt">
+            <ng-container *ngIf="ctx.game.amountPerDrink * (ctx.game.players | objectValues).length as amount">
+              <br>
+              <p>
+                <strong>
+                Zahle nun {{ amount }}€
+                an {{ nameOfKneipeOrWirt }}.
+                </strong>
+              </p>
+              <br>
+              <button mat-raised-button (click)="openPayPalLink(ctx.game, amount)">Jetzt via PayPal bezahlen</button>
+            </ng-container>
+          </ng-container>
+        </ng-template>
       </ng-container>
       <ng-template #otherPlayerLost>
-        <h2>☠️ {{ctx.game.players[ctx.game.loserPlayerId].name}} hat das Spiel verloren ☠️</h2>
-        <p>Bitte warte bis er eine Runde gezahlt hat. Danach kann weitergespielt werden. 🍺🍷🥃</p>
+        <h2>
+          ☠️ {{ ctx.game.players[ctx.game.loserPlayerId].name }} hat das Spiel
+          verloren ☠️
+        </h2>
+        <p>
+          Bitte warte bis er eine Runde gezahlt hat. Danach kann weitergespielt
+          werden. 🍺🍷🥃
+        </p>
       </ng-template>
     </ng-template>
   </main>

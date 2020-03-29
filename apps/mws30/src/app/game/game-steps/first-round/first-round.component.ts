@@ -17,7 +17,10 @@ export class FirstRoundComponent {
     startPlayer: new FormControl('', Validators.required)
   });
 
-  constructor(private gameService: GameService, private matSnackBar: MatSnackBar) { }
+  constructor(
+    private gameService: GameService,
+    private matSnackBar: MatSnackBar
+  ) {}
 
   async setInitialResult(ctx: GameContext, dices: Dices): Promise<void> {
     await this.gameService.setInitialResult(ctx, dices);
@@ -33,7 +36,10 @@ export class FirstRoundComponent {
     if (startingPlayerId) {
       await this.gameService.startRegularGame(game, startingPlayerId);
     } else {
-      this.matSnackBar.open('Da ist leider etwas schief gelaufen. Versuche es bitte erneut.', 'Okay');
+      this.matSnackBar.open(
+        'Da ist leider etwas schief gelaufen. Versuche es bitte erneut.',
+        'Okay'
+      );
     }
   }
 }

@@ -8,6 +8,11 @@ import { getCurrentTurn } from '../common/get-current-turn';
 export class HasScorePipe implements PipeTransform {
   transform(player: Player, game: Game): boolean {
     const currentTurn = getCurrentTurn(game, player);
-    return !!(player && player.turns && currentTurn && currentTurn.currentScore);
+    return !!(
+      player &&
+      player.turns &&
+      currentTurn &&
+      currentTurn.currentScore
+    );
   }
 }

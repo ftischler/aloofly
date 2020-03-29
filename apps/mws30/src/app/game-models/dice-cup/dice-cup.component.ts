@@ -6,7 +6,8 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Output, SimpleChanges
+  Output,
+  SimpleChanges
 } from '@angular/core';
 import { Dice, Dices, Player } from '@aloofly/mws30-models';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
@@ -48,15 +49,17 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.diceRoller.pipe(
-      tap(() => this.isRolling.next(true)),
-      delay(DICE_ROLL_DELAY),
-      map(rollDices),
-      tap(dices => this.rolledDices$.next(dices)),
-      delay(DICE_SHOW_DELAY),
-      tap(() => this.isRolling.next(false)),
-      takeUntil(this.destroy$)
-    ).subscribe(this.diceCupResult);
+    this.diceRoller
+      .pipe(
+        tap(() => this.isRolling.next(true)),
+        delay(DICE_ROLL_DELAY),
+        map(rollDices),
+        tap(dices => this.rolledDices$.next(dices)),
+        delay(DICE_SHOW_DELAY),
+        tap(() => this.isRolling.next(false)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(this.diceCupResult);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -106,38 +109,44 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   takePickedDicesAndCloseRound(dices: Dices): void {
-    const unChosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(dices)
-      .filter(({ value }) => !value.chosen);
+    const unChosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(
+      dices
+    ).filter(({ value }) => !value.chosen);
 
-    const newDices: Dices = keyValuesToObject(unChosenDices.map(({ key, value: dice }) => {
-      return {
-        key,
-        value: {
-          ...dice,
-          picked: true,
-          chosen: true
-        }
-      };
-    }));
+    const newDices: Dices = keyValuesToObject(
+      unChosenDices.map(({ key, value: dice }) => {
+        return {
+          key,
+          value: {
+            ...dice,
+            picked: true,
+            chosen: true
+          }
+        };
+      })
+    );
 
     this.rolledDices$.next(newDices);
     this.roundClosed.next(newDices);
   }
 
   takePickedAttackDicesAndCloseRound(dices: Dices, attack: number): void {
-    const unChosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(dices)
-      .filter(({ value }) => !value.chosen && value.value === attack);
+    const unChosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(
+      dices
+    ).filter(({ value }) => !value.chosen && value.value === attack);
 
-    const newDices: Dices = keyValuesToObject(unChosenDices.map(({ key, value: dice }) => {
-      return {
-        key,
-        value: {
-          ...dice,
-          picked: true,
-          chosen: true
-        }
-      };
-    }));
+    const newDices: Dices = keyValuesToObject(
+      unChosenDices.map(({ key, value: dice }) => {
+        return {
+          key,
+          value: {
+            ...dice,
+            picked: true,
+            chosen: true
+          }
+        };
+      })
+    );
 
     this.rolledDices$.next(newDices);
     this.roundClosed.next(newDices);

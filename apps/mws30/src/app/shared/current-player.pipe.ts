@@ -6,7 +6,9 @@ import { Game, Player } from '@aloofly/mws30-models';
 })
 export class CurrentPlayerPipe implements PipeTransform {
   transform(game: Game): Player | undefined {
-    const playerId: string | undefined = Object.keys(game.players).find(key => key === game.currentPlayerId);
+    const playerId: string | undefined = Object.keys(game.players).find(
+      key => key === game.currentPlayerId
+    );
     return playerId ? game.players[playerId] : undefined;
   }
 }

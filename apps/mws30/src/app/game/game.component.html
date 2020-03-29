@@ -1,38 +1,50 @@
 <ng-container *ngIf="ctx$ | async as ctx">
   <ng-container *ngIf="ctx.game.status === 'created'; else gameRunning">
-    <h2>Hallo {{ctx.player.name}}</h2>
+    <h2>Hallo {{ ctx.player.name }}</h2>
     <div *ngIf="ctx.player | isAdmin: ctx.game">
       <p>Versende diese URL an deine Mitspieler:</p>
-      <a [routerLink]="" [cdkCopyToClipboard]="ctx.game.url" class="copy-link"
-         (copied)="copiedLink()">
+      <a
+        [routerLink]=""
+        [cdkCopyToClipboard]="ctx.game.url"
+        class="copy-link"
+        (copied)="copiedLink()"
+      >
         <strong>
           <mat-icon>content_copy</mat-icon>
-          <span>{{ctx.game.url}}</span>
+          <span>{{ ctx.game.url }}</span>
         </strong>
       </a>
-      <br>
-      <br>
+      <br />
+      <br />
       <p>
-        Versende bitte nur diese URL und halte deine persönliche URL in deiner Browser-Addresszeile geheim. &thinsp;
-        Mit dieser kannst du jederzeit dem Spiel wieder beitreten.
+        Versende bitte nur diese URL und halte deine persönliche URL in deiner
+        Browser-Addresszeile geheim. &thinsp; Mit dieser kannst du jederzeit dem
+        Spiel wieder beitreten.
       </p>
     </div>
-    <br>
+    <br />
     <div *ngIf="ctx.game?.players as players">
-      <ng-container *ngIf="players | objectValues | removeMyself: ctx.player as playersExlcudedMe">
+      <ng-container
+        *ngIf="
+          players | objectValues | removeMyself: ctx.player as playersExlcudedMe
+        "
+      >
         <ng-container *ngIf="playersExlcudedMe.length; else noPlayers">
           <p><strong>Vorhandene Spieler:</strong></p>
           <mat-list>
             <mat-list-item *ngFor="let player of playersExlcudedMe">
-              <span>{{player.name}}</span>
+              <span>{{ player.name }}</span>
               <span *ngIf="player | isAdmin: ctx.game">&nbsp;(Admin)</span>
             </mat-list-item>
           </mat-list>
-          <br>
+          <br />
           <button
             mat-raised-button
             *ngIf="ctx.player | isAdmin: ctx.game; else waiting"
-            (click)="startGame(ctx.game.id)">Spiel starten</button>
+            (click)="startGame(ctx.game.id)"
+          >
+            Spiel starten
+          </button>
         </ng-container>
         <ng-template #waiting>
           <p><strong>Warte bitte bis das Spiel startet</strong></p>

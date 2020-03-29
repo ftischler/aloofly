@@ -33,4 +33,4 @@ import { MatDialogModule } from '@angular/material/dialog';
     DiceCupViewDialogComponent
   ]
 })
-export class GameModelsModule { }
+export class GameModelsModule {}

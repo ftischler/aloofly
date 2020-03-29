@@ -15,32 +15,69 @@ import { getAttackValue } from '../../../common/get-attack-value';
 export class RegularRoundComponent {
   @Input() ctx$: Observable<GameContext>;
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService) {}
 
-  async saveIntermediateResult(ctx: GameContext, currentTurnId: string, currentDices: Dices, allDices: Dices): Promise<void> {
-    await this.gameService.saveIntermediateResult(ctx, currentTurnId, {...allDices, ...currentDices});
+  async saveIntermediateResult(
+    ctx: GameContext,
+    currentTurnId: string,
+    currentDices: Dices,
+    allDices: Dices
+  ): Promise<void> {
+    await this.gameService.saveIntermediateResult(ctx, currentTurnId, {
+      ...allDices,
+      ...currentDices
+    });
   }
 
-  async setAttack(ctx: GameContext, currentTurnId: string, currentTurn: Turn, currentDices: Dices, allDices: Dices): Promise<void> {
-    const dices: Dices = {...allDices, ...currentDices};
+  async setAttack(
+    ctx: GameContext,
+    currentTurnId: string,
+    currentTurn: Turn,
+    currentDices: Dices,
+    allDices: Dices
+  ): Promise<void> {
+    const dices: Dices = { ...allDices, ...currentDices };
     const diceValues: number = getDicesValue(dices);
     const attacksWith: number = diceValues - 30;
-    await this.gameService.saveTurn(ctx, currentTurnId,  {...currentTurn, dices, attacksWith})
+    await this.gameService.saveTurn(ctx, currentTurnId, {
+      ...currentTurn,
+      dices,
+      attacksWith
+    });
   }
 
-  async closeAttack(ctx: GameContext, currentTurnId: string, currentTurn: Turn, currentDices: Dices, allDices: Dices, attackedPlayer: Player): Promise<void> {
-    const newDices: Dices = {...allDices, ...currentDices};
+  async closeAttack(
+    ctx: GameContext,
+    currentTurnId: string,
+    currentTurn: Turn,
+    currentDices: Dices,
+    allDices: Dices,
+    attackedPlayer: Player
+  ): Promise<void> {
+    const newDices: Dices = { ...allDices, ...currentDices };
     await this.gameService.saveIntermediateResult(ctx, currentTurnId, newDices);
-    await this.gameService.closeAttack(ctx, attackedPlayer, getAttackValue(newDices), currentTurn);
+    await this.gameService.closeAttack(
+      ctx,
+      attackedPlayer,
+      getAttackValue(newDices),
+      currentTurn
+    );
   }
 
-  async closeRegularRound(ctx: GameContext, currentTurnId: string, currentTurn: Turn, dices: Dices): Promise<void> {
+  async closeRegularRound(
+    ctx: GameContext,
+    currentTurnId: string,
+    currentTurn: Turn,
+    dices: Dices
+  ): Promise<void> {
     const oldScore: number = ctx.player.currentScore!;
     const attacksWith: number = currentTurn.attacksWith!;
-    const currentScore: number = attacksWith > 0 ? oldScore : oldScore + attacksWith;
+    const currentScore: number =
+      attacksWith > 0 ? oldScore : oldScore + attacksWith;
     const nextPlayerId: string = getNextPlayer(ctx).id;
 
-    const attackingPlayer: Partial<Turn> = attacksWith > 0 ? {attackingPlayerId: nextPlayerId} : {};
+    const attackingPlayer: Partial<Turn> =
+      attacksWith > 0 ? { attackingPlayerId: nextPlayerId } : {};
 
     const newTurn: Turn = {
       ...currentTurn,
@@ -50,7 +87,7 @@ export class RegularRoundComponent {
       attacksWith
     };
 
-    await this.gameService.saveTurn(ctx, currentTurnId,  newTurn);
+    await this.gameService.saveTurn(ctx, currentTurnId, newTurn);
 
     if (newTurn.attacksWith !== undefined && newTurn.attacksWith > 0) {
       await this.gameService.saveTurn(ctx, currentTurnId, {

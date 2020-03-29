@@ -23,6 +23,7 @@ export interface Game {
   turnNumber: number;
   startingPlayerId?: string;
   currentPlayerId?: string;
+  isPayed: boolean;
 }
 
 export interface Players {

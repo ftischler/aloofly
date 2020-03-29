@@ -1,15 +1,23 @@
 <div *ngFor="let player of ctx.game.players | objectValues">
-  <p [class.active]="player.active" [class.attacked]="(ctx.game | attackedPlayer: ctx.player)?.id === player.id">
-    <strong>{{player.name}}: &nbsp;&nbsp;
+  <p
+    [class.active]="player.active"
+    [class.attacked]="(ctx.game | attackedPlayer: ctx.player)?.id === player.id"
+  >
+    <strong
+      >{{ player.name }}: &nbsp;&nbsp;
       <ng-container *ngIf="player.turns as turns; else empty">
         <ng-container *ngFor="let turn of turns | objectValues">
-          <button *ngIf="turn.currentScore > 0; else noScore"
-                  mat-stroked-button
-                  (click)="openDiceView(turn.dices)">
-            {{turn.currentScore}}
+          <button
+            *ngIf="turn.currentScore > 0; else noScore"
+            mat-stroked-button
+            (click)="openDiceView(turn.dices)"
+          >
+            {{ turn.currentScore }}
           </button>
           <ng-template #noScore>
-            <button mat-stroked-button *ngIf="turn.currentScore === 0">...</button>
+            <button mat-stroked-button *ngIf="turn.currentScore === 0">
+              ...
+            </button>
             <button mat-stroked-button *ngIf="turn.currentScore < 0">☠️</button>
           </ng-template>
         </ng-container>

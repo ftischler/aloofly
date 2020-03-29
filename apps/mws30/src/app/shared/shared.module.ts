@@ -48,11 +48,7 @@ import { AllChosenPipe } from './all-chosen.pipe';
     FilterDicesPipe,
     AllChosenPipe
   ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule
-  ],
+  imports: [CommonModule, MatDialogModule, MatButtonModule],
   exports: [
     ObjectValuesPipe,
     RemoveMyselfPipe,
@@ -77,4 +73,4 @@ import { AllChosenPipe } from './all-chosen.pipe';
     AllChosenPipe
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

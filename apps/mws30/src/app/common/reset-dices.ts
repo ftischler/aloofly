@@ -10,7 +10,7 @@ export function resetDices(dices: Dices): Dices {
         ...newDices,
         [key]: {
           ...dices[key],
-          value: (dices[key].picked || dices[key].chosen) ? dices[key].value : 0
+          value: dices[key].picked || dices[key].chosen ? dices[key].value : 0
         }
       };
     }

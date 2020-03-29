@@ -9,7 +9,10 @@ import { KeyValue } from '@angular/common';
 export class CanRollAgainPipe implements PipeTransform {
   transform(dices: Dices): boolean {
     const keyValue: Array<KeyValue<string, Dice>> = objectToKeyValues(dices);
-    const pickedDicesCount = keyValue.reduce((acc, {value}) => value.picked ? acc + 1 : acc, 0);
-    return !!keyValue.length &&  pickedDicesCount > 0 && pickedDicesCount < 6;
+    const pickedDicesCount = keyValue.reduce(
+      (acc, { value }) => (value.picked ? acc + 1 : acc),
+      0
+    );
+    return !!keyValue.length && pickedDicesCount > 0 && pickedDicesCount < 6;
   }
 }

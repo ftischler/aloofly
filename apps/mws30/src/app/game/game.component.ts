@@ -16,12 +16,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class GameComponent {
   gameId$: Observable<string> = this.routerFacade.routeParams$.pipe(
     filter(Boolean),
-    map(({gameId}) => gameId)
+    map(({ gameId }) => gameId)
   );
 
   playerId$: Observable<string> = this.routerFacade.routeParams$.pipe(
     filter(Boolean),
-    map(({playerId}) => playerId)
+    map(({ playerId }) => playerId)
   );
 
   game$: Observable<Game> = this.gameId$.pipe(
@@ -33,25 +33,32 @@ export class GameComponent {
     this.gameId$,
     this.playerId$
   ]).pipe(
-    switchMap(([gameId, playerId]) => this.gameService.getPlayer(gameId, playerId)),
+    switchMap(([gameId, playerId]) =>
+      this.gameService.getPlayer(gameId, playerId)
+    ),
     filter<Player>(Boolean)
   );
 
   ctx$: Observable<GameContext> = combineLatest([
     this.player$,
     this.game$
-  ]).pipe(
-    map(([player, game]) => ({player, game}))
-  );
+  ]).pipe(map(([player, game]) => ({ player, game })));
 
-  constructor(private routerFacade: RouterFacade, private gameService: GameService,
-              private matSnackBar: MatSnackBar) { }
+  constructor(
+    private routerFacade: RouterFacade,
+    private gameService: GameService,
+    private matSnackBar: MatSnackBar
+  ) {}
 
   async startGame(gameId: string): Promise<void> {
     await this.gameService.startGame(gameId);
   }
 
   copiedLink(): void {
-    this.matSnackBar.open('Der Text wurde in die Zwischenablage kopiert', 'Okay', {duration: 1500});
+    this.matSnackBar.open(
+      'Der Text wurde in die Zwischenablage kopiert',
+      'Okay',
+      { duration: 1500 }
+    );
   }
 }

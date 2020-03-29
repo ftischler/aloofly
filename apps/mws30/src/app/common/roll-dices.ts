@@ -10,7 +10,10 @@ export function rollDices(dices: Dices): Dices {
         ...newDices,
         [key]: {
           ...dices[key],
-          value: (dices[key].picked || dices[key].chosen) ? dices[key].value : randomDiceValue()
+          value:
+            dices[key].picked || dices[key].chosen
+              ? dices[key].value
+              : randomDiceValue()
         }
       };
     }

@@ -1,5 +1,4 @@
 <ng-container *ngIf="ctx$ | async as ctx">
-
   <!-- Spieler ist am Zug -->
   <div *ngIf="ctx.game | currentTurn: ctx.player as currentTurn; else wait">
     <ng-container *ngIf="ctx.game | currentTurnId: ctx.player as currentTurnId">
@@ -9,35 +8,79 @@
             <p><strong>Herausgelegte Würfel</strong></p>
             <mws30-dice-cup-view [dices]="chosenOnes"></mws30-dice-cup-view>
           </div>
-          <p>Score: {{chosenOnes | diceValues}}</p>
+          <p>Score: {{ chosenOnes | diceValues }}</p>
         </ng-container>
-        <div class="dices" *ngIf="currentTurn?.dices | chosenDices: false as activeDices">
-          <p *ngIf="activeDices | hasRolled"><strong>Würfel im Becher</strong></p>
-          <mws30-dice-cup [dices]="activeDices"
-                          (roundClosed)="setAttack(ctx, currentTurnId, currentTurn, $event, currentTurn.dices)"
-                          (diceCupResult)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)"
-                          (dicePicked)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)">
+        <div
+          class="dices"
+          *ngIf="currentTurn?.dices | chosenDices: false as activeDices"
+        >
+          <p *ngIf="activeDices | hasRolled">
+            <strong>Würfel im Becher</strong>
+          </p>
+          <mws30-dice-cup
+            [dices]="activeDices"
+            (roundClosed)="
+              setAttack(
+                ctx,
+                currentTurnId,
+                currentTurn,
+                $event,
+                currentTurn.dices
+              )
+            "
+            (diceCupResult)="
+              saveIntermediateResult(
+                ctx,
+                currentTurnId,
+                $event,
+                currentTurn.dices
+              )
+            "
+            (dicePicked)="
+              saveIntermediateResult(
+                ctx,
+                currentTurnId,
+                $event,
+                currentTurn.dices
+              )
+            "
+          >
           </mws30-dice-cup>
         </div>
 
-        <button mat-raised-button *ngIf="currentTurn.attacksWith !== undefined"
-                (click)="closeRegularRound(ctx, currentTurnId, currentTurn, currentTurn.dices)">
-        <span *ngIf="currentTurn.attacksWith > 0">
-          Mit {{currentTurn.attacksWith}} angreifen
-        </span>
+        <button
+          mat-raised-button
+          *ngIf="currentTurn.attacksWith !== undefined"
+          (click)="
+            closeRegularRound(
+              ctx,
+              currentTurnId,
+              currentTurn,
+              currentTurn.dices
+            )
+          "
+        >
+          <span *ngIf="currentTurn.attacksWith > 0">
+            Mit {{ currentTurn.attacksWith }} angreifen
+          </span>
           <span *ngIf="currentTurn.attacksWith === 0">
-          Runde mit 30 abschließen
-        </span>
+            Runde mit 30 abschließen
+          </span>
           <span *ngIf="currentTurn.attacksWith < 0">
-          Selbst {{currentTurn.attacksWith | abs}} abziehen
-        </span>
+            Selbst {{ currentTurn.attacksWith | abs }} abziehen
+          </span>
         </button>
       </ng-container>
 
       <ng-container *ngIf="currentTurn.attackingPlayerId">
-
-        <p class="fight medium" *ngIf="ctx.game | attackedPlayer: ctx.player as attackedPlayer">
-          <strong>Angriff auf {{attackedPlayer.name}} mit {{currentTurn.attacksWith}} ⚔️️</strong>
+        <p
+          class="fight medium"
+          *ngIf="ctx.game | attackedPlayer: ctx.player as attackedPlayer"
+        >
+          <strong
+            >Angriff auf {{ attackedPlayer.name }} mit
+            {{ currentTurn.attacksWith }} ⚔️️</strong
+          >
         </p>
 
         <ng-container *ngIf="currentTurn?.dices | chosenDices as chosenOnes">
@@ -45,17 +88,49 @@
             <p><strong>Herausgelegte Würfel</strong></p>
             <mws30-dice-cup-view [dices]="chosenOnes"></mws30-dice-cup-view>
           </div>
-          <p>Score: {{chosenOnes | diceValues}}</p>
+          <p>Score: {{ chosenOnes | diceValues }}</p>
         </ng-container>
-        <div class="dices" *ngIf="currentTurn?.dices | chosenDices: false as activeDices">
-          <p *ngIf="activeDices | hasRolled"><strong>Würfel im Becher</strong></p>
-          <ng-container *ngIf="ctx.game | attackedPlayer: ctx.player as attackedPlayer">
-            <mws30-dice-cup [attack]="currentTurn.attacksWith"
-                            [attackOn]="attackedPlayer"
-                            [dices]="activeDices"
-                            (roundClosed)="closeAttack(ctx, currentTurnId, currentTurn, $event, currentTurn.dices, attackedPlayer)"
-                            (diceCupResult)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)"
-                            (dicePicked)="saveIntermediateResult(ctx, currentTurnId, $event, currentTurn.dices)">
+        <div
+          class="dices"
+          *ngIf="currentTurn?.dices | chosenDices: false as activeDices"
+        >
+          <p *ngIf="activeDices | hasRolled">
+            <strong>Würfel im Becher</strong>
+          </p>
+          <ng-container
+            *ngIf="ctx.game | attackedPlayer: ctx.player as attackedPlayer"
+          >
+            <mws30-dice-cup
+              [attack]="currentTurn.attacksWith"
+              [attackOn]="attackedPlayer"
+              [dices]="activeDices"
+              (roundClosed)="
+                closeAttack(
+                  ctx,
+                  currentTurnId,
+                  currentTurn,
+                  $event,
+                  currentTurn.dices,
+                  attackedPlayer
+                )
+              "
+              (diceCupResult)="
+                saveIntermediateResult(
+                  ctx,
+                  currentTurnId,
+                  $event,
+                  currentTurn.dices
+                )
+              "
+              (dicePicked)="
+                saveIntermediateResult(
+                  ctx,
+                  currentTurnId,
+                  $event,
+                  currentTurn.dices
+                )
+              "
+            >
             </mws30-dice-cup>
           </ng-container>
         </div>
@@ -66,36 +141,58 @@
   <!-- Spieler wartet und schaut zu -->
   <ng-template #wait>
     <ng-container *ngIf="ctx.game | currentPlayer as currentPlayer">
-      <p class="big"><strong>{{currentPlayer.name}} würfelt gerade</strong></p>
-      <ng-container *ngIf="ctx.game | currentTurn: currentPlayer as currentTurn">
-
+      <p class="big">
+        <strong>{{ currentPlayer.name }} würfelt gerade</strong>
+      </p>
+      <ng-container
+        *ngIf="ctx.game | currentTurn: currentPlayer as currentTurn"
+      >
         <ng-container *ngIf="currentTurn.attacksWith as attacksWith">
-          <p class="fight medium" *ngIf="ctx.game | attackedPlayer: currentPlayer as attackedPlayer">
+          <p
+            class="fight medium"
+            *ngIf="ctx.game | attackedPlayer: currentPlayer as attackedPlayer"
+          >
             <strong>
-              Angriff auf {{attackedPlayer.id === ctx.player.id ? 'dich' : attackedPlayer.name}} mit {{attacksWith}} ⚔️
+              Angriff auf
+              {{
+                attackedPlayer.id === ctx.player.id
+                  ? 'dich'
+                  : attackedPlayer.name
+              }}
+              mit {{ attacksWith }} ⚔️
             </strong>
           </p>
         </ng-container>
 
         <ng-container *ngIf="currentTurn?.dices | chosenDices as chosenOnes">
           <div class="chosen-ones">
-            <p *ngIf="(chosenOnes | objectValues).length"><strong>Herausgelegte Würfel</strong></p>
-            <mws30-dice-cup-view [dices]="currentTurn?.dices | chosenDices"
-                                 [attack]="currentTurn.attacksWith"
-                                 [attackOn]="ctx.game | attackedPlayer: currentPlayer">
+            <p *ngIf="(chosenOnes | objectValues).length">
+              <strong>Herausgelegte Würfel</strong>
+            </p>
+            <mws30-dice-cup-view
+              [dices]="currentTurn?.dices | chosenDices"
+              [attack]="currentTurn.attacksWith"
+              [attackOn]="ctx.game | attackedPlayer: currentPlayer"
+            >
             </mws30-dice-cup-view>
           </div>
         </ng-container>
-        <div class="dices" *ngIf="currentTurn.dices | chosenDices: false as activeDices">
-          <p *ngIf="activeDices | hasRolled"><strong>Würfel im Becher</strong></p>
-          <mws30-dice-cup-view [dices]="activeDices"
-                               [showPicked]="true"
-                               [attack]="currentTurn.attacksWith"
-                               [attackOn]="ctx.game | attackedPlayer: currentPlayer">
+        <div
+          class="dices"
+          *ngIf="currentTurn.dices | chosenDices: false as activeDices"
+        >
+          <p *ngIf="activeDices | hasRolled">
+            <strong>Würfel im Becher</strong>
+          </p>
+          <mws30-dice-cup-view
+            [dices]="activeDices"
+            [showPicked]="true"
+            [attack]="currentTurn.attacksWith"
+            [attackOn]="ctx.game | attackedPlayer: currentPlayer"
+          >
           </mws30-dice-cup-view>
         </div>
       </ng-container>
     </ng-container>
   </ng-template>
-
 </ng-container>

@@ -25,9 +25,7 @@
               "apps/aloofly/src/favicon.ico",
               "apps/aloofly/src/assets"
             ],
-            "styles": [
-              "apps/aloofly/src/styles.scss"
-            ],
+            "styles": ["apps/aloofly/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -86,10 +84,7 @@
               "apps/aloofly/tsconfig.app.json",
               "apps/aloofly/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/aloofly/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/aloofly/**"]
           }
         },
         "test": {
@@ -124,13 +119,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/aloofly-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/aloofly-e2e/**"
-            ]
+            "tsConfig": ["apps/aloofly-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/aloofly-e2e/**"]
           }
         }
       }
@@ -148,9 +138,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -179,10 +167,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
           }
         },
         "test": {
@@ -208,10 +193,7 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/api-interfaces/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
           }
         },
         "test": {
@@ -313,10 +295,7 @@
               "apps/mws30/tsconfig.app.json",
               "apps/mws30/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/mws30/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/mws30/**"]
           }
         },
         "test": {
@@ -355,13 +334,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/mws30-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/mws30-e2e/**"
-            ]
+            "tsConfig": ["apps/mws30-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/mws30-e2e/**"]
           }
         }
       }
@@ -379,10 +353,7 @@
               "libs/mws30-models/tsconfig.lib.json",
               "libs/mws30-models/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/mws30-models/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/mws30-models/**"]
           }
         },
         "test": {

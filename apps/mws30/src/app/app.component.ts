@@ -1,4 +1,10 @@
-import { ApplicationRef, ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';

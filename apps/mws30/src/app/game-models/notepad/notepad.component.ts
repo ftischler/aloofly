@@ -12,7 +12,7 @@ import { DiceCupViewDialogComponent } from '../dialogs/dice-cup-view-dialog/dice
 export class NotepadComponent {
   @Input() ctx: GameContext;
 
-  constructor(private matDialog: MatDialog) { }
+  constructor(private matDialog: MatDialog) {}
 
   openDiceView(dices: Dices): void {
     if (Object.values(dices).length) {

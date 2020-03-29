@@ -9,7 +9,10 @@ export class CurrentTurnIdPipe implements PipeTransform {
     let turnId: string | undefined;
 
     for (const key in player.turns) {
-      if (player.turns.hasOwnProperty(key) && player.turns[key].turnNumber === game.turnNumber) {
+      if (
+        player.turns.hasOwnProperty(key) &&
+        player.turns[key].turnNumber === game.turnNumber
+      ) {
         turnId = key;
         break;
       }

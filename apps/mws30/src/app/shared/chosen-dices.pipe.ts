@@ -9,8 +9,9 @@ import { keyValuesToObject } from '../common/key-values-to-object';
 })
 export class ChosenDicesPipe implements PipeTransform {
   transform(dices: Dices, chosen: boolean = true): Dices {
-    const chosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(dices)
-      .filter(({value}) => value.chosen === chosen);
+    const chosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(
+      dices
+    ).filter(({ value }) => value.chosen === chosen);
     return keyValuesToObject(chosenDices);
   }
 }

@@ -6,6 +6,6 @@ import { Player } from '@aloofly/mws30-models';
 })
 export class RemoveMyselfPipe implements PipeTransform {
   transform(players: Player[], player: Player): Player[] {
-    return players.filter(({id}) => id !== player.id);
+    return players.filter(({ id }) => id !== player.id);
   }
 }

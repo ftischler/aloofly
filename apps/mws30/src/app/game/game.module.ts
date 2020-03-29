@@ -43,4 +43,4 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ]
 })
-export class GameModule { }
+export class GameModule {}

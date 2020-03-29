@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Dices, Game, GameContext, Player, Players, Turn } from '@aloofly/mws30-models';
+import {
+  Dices,
+  DrinkOptions,
+  Game,
+  GameContext,
+  Player,
+  Players,
+  Turn
+} from '@aloofly/mws30-models';
 import { createGame } from '../common/create-game';
 
 import 'firebase/database';
@@ -14,23 +22,25 @@ import { keyValuesToObject } from '../common/key-values-to-object';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
-  constructor(private angularFireDatabase: AngularFireDatabase) {
-  }
+  constructor(private angularFireDatabase: AngularFireDatabase) {}
 
   getPlayer(gameId: string, playerId: string): Observable<Player> {
-    return this.getGame(gameId).pipe(
-      map(game => game.players[playerId])
-    );
+    return this.getGame(gameId).pipe(map(game => game.players[playerId]));
   }
 
   getGame(gameId: string): Observable<Game> {
-    return this.angularFireDatabase.object<Game>(`/${DB_KEY}/${gameId}`).valueChanges().pipe(
-      filter<Game>(Boolean)
-    );
+    return this.angularFireDatabase
+      .object<Game>(`/${DB_KEY}/${gameId}`)
+      .valueChanges()
+      .pipe(filter<Game>(Boolean));
   }
 
-  async createGame(gameId: string, player: Player): Promise<void> {
-    const game: Partial<Game> = createGame(gameId, player);
+  async createGame(
+    gameId: string,
+    player: Player,
+    drinkOptions?: DrinkOptions
+  ): Promise<void> {
+    const game: Partial<Game> = createGame(gameId, player, drinkOptions);
 
     await this.angularFireDatabase.object(DB_KEY).update({
       [gameId]: game
@@ -53,25 +63,32 @@ export class GameService {
       .update({ ...player, playerCount });
   }
 
-  async setInitialResult({ player, game }: GameContext, dices: Dices): Promise<void> {
+  async setInitialResult(
+    { player, game }: GameContext,
+    dices: Dices
+  ): Promise<void> {
     const currentScore: number = calculateInitialResult(dices);
 
-    await this.angularFireDatabase.object<Game>(`/${DB_KEY}/${game.id}`).update({
-      currentPlayerId: player.id
-    });
+    await this.angularFireDatabase
+      .object<Game>(`/${DB_KEY}/${game.id}`)
+      .update({
+        currentPlayerId: player.id
+      });
 
-    await this.angularFireDatabase.object<Player>(`/${DB_KEY}/${game.id}/players/${player.id}`).update({
-      currentScore
-    });
+    await this.angularFireDatabase
+      .object<Player>(`/${DB_KEY}/${game.id}/players/${player.id}`)
+      .update({
+        currentScore
+      });
 
-    await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`).push(
-      {
+    await this.angularFireDatabase
+      .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
+      .push({
         dices,
         turnNumber: 0,
         currentScore,
         isRolling: false
-      }
-    );
+      });
   }
 
   async startGame(gameId: string): Promise<void> {
@@ -94,7 +111,10 @@ export class GameService {
     await this.startTurn(newGame);
   }
 
-  async startTurn(game: Game, playerId: string = game.startingPlayerId!): Promise<void> {
+  async startTurn(
+    game: Game,
+    playerId: string = game.startingPlayerId!
+  ): Promise<void> {
     const { turnNumber: oldTurnNumber } = game;
 
     const turnNumber = oldTurnNumber + 1;
@@ -112,15 +132,21 @@ export class GameService {
         active: true
       });
 
-    await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${playerId}/turns`).push({
-      dices: createDices(),
-      currentScore: 0,
-      isRolling: false,
-      turnNumber
-    });
+    await this.angularFireDatabase
+      .list<Turn>(`/${DB_KEY}/${game.id}/players/${playerId}/turns`)
+      .push({
+        dices: createDices(),
+        currentScore: 0,
+        isRolling: false,
+        turnNumber
+      });
   }
 
-  async saveIntermediateResult(ctx: GameContext, turnId: string, dices: Dices): Promise<void> {
+  async saveIntermediateResult(
+    ctx: GameContext,
+    turnId: string,
+    dices: Dices
+  ): Promise<void> {
     const { game, player } = ctx;
 
     await this.angularFireDatabase
@@ -128,7 +154,11 @@ export class GameService {
       .update(turnId, { dices });
   }
 
-  async saveTurn(ctx: GameContext, currentTurnId: string, turn: Turn): Promise<void> {
+  async saveTurn(
+    ctx: GameContext,
+    currentTurnId: string,
+    turn: Turn
+  ): Promise<void> {
     const { game, player } = ctx;
 
     await this.angularFireDatabase
@@ -144,7 +174,12 @@ export class GameService {
       .update({ currentScore: turn.currentScore, active: false });
   }
 
-  async closeAttack(ctx: GameContext, attackOn: Player, attackValue: number, turn: Turn): Promise<void> {
+  async closeAttack(
+    ctx: GameContext,
+    attackOn: Player,
+    attackValue: number,
+    turn: Turn
+  ): Promise<void> {
     const { game, player } = ctx;
 
     await this.angularFireDatabase
@@ -184,23 +219,33 @@ export class GameService {
       });
   }
 
-  async restartGame({game, player}: GameContext): Promise<void> {
+  async restartGame({ game, player }: GameContext): Promise<void> {
     const gameId: string = game.id;
     const newGame: Partial<Game> = {
       ...createGame(gameId, player),
-      players: keyValuesToObject(objectToKeyValues(game.players).map(({key, value}, index) => ({
-        key,
-        value: {
-          ...value,
-          currentScore: 0,
-          turns: {},
-          playerCount: index
-        }
-      })))
+      createdBy: game.createdBy,
+      players: keyValuesToObject(
+        objectToKeyValues(game.players).map(({ key, value }, index) => ({
+          key,
+          value: {
+            ...value,
+            currentScore: 0,
+            turns: {},
+            playerCount: index,
+            active: false
+          }
+        }))
+      )
     };
 
     await this.angularFireDatabase.object(DB_KEY).update({
       [gameId]: newGame
     });
+  }
+
+  async payGame(game: Game): Promise<void> {
+    await this.angularFireDatabase
+      .object<Game>(`/${DB_KEY}/${game.id}`)
+      .update({isPayed: true});
   }
 }

@@ -9,8 +9,10 @@ import { Dice, Dices } from '@aloofly/mws30-models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DiceCupViewDialogComponent {
-  constructor(private matDialogRef: MatDialogRef<DiceCupViewDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public dices: Dices) { }
+  constructor(
+    private matDialogRef: MatDialogRef<DiceCupViewDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public dices: Dices
+  ) {}
 
   close(): void {
     this.matDialogRef.close();

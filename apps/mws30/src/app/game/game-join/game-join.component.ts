@@ -17,7 +17,7 @@ import { RouterFacade } from '../../+state/router.facade';
 export class GameJoinComponent {
   gameId$: Observable<string> = this.routerFacade.routeParams$.pipe(
     filter(Boolean),
-    map(({gameId}) => gameId)
+    map(({ gameId }) => gameId)
   );
 
   game$: Observable<Game> = this.gameId$.pipe(
@@ -29,7 +29,11 @@ export class GameJoinComponent {
     playerName: new FormControl('', Validators.maxLength(20))
   });
 
-  constructor(private routerFacade: RouterFacade, private gameService: GameService, private router: Router) { }
+  constructor(
+    private routerFacade: RouterFacade,
+    private gameService: GameService,
+    private router: Router
+  ) {}
 
   async submit(gameId: string): Promise<void> {
     const { playerName } = this.formGroup.value;

@@ -11,12 +11,12 @@ export function createDice(): Dice {
 }
 
 export function createDices(): Dices {
-  return ({
+  return {
     [createRandomId()]: createDice(),
     [createRandomId()]: createDice(),
     [createRandomId()]: createDice(),
     [createRandomId()]: createDice(),
     [createRandomId()]: createDice(),
     [createRandomId()]: createDice()
-  });
+  };
 }

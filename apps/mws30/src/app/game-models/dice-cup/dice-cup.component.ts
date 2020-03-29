@@ -8,7 +8,7 @@ import {
   OnInit,
   Output, SimpleChanges
 } from '@angular/core';
-import { Dice, Dices } from '@aloofly/mws30-models';
+import { Dice, Dices, Player } from '@aloofly/mws30-models';
 import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { delay, map, takeUntil, tap } from 'rxjs/operators';
 import { rollDices } from '../../common/roll-dices';
@@ -33,6 +33,8 @@ const DICE_SHOW_DELAY = 0;
 export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isFirstTurn = false;
   @Input() dices: Dices = createDices();
+  @Input() attack?: number;
+  @Input() attackOn?: Player;
   @Output() diceCupResult = new EventEmitter<Dices>();
   @Output() dicePicked = new EventEmitter<Dices>();
 
@@ -40,7 +42,6 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   @Output() roundClosed = new EventEmitter<Dices>();
 
   rolledDices$ = new ReplaySubject<Dices | undefined>(1);
-
 
   private diceRoller = new Subject<Dices>();
 
@@ -67,6 +68,10 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   pickDice(dice: Dice, diceKey: string): void {
+    if (this.attack && dice.value !== this.attack) {
+      return;
+    }
+
     const pickedDice: Dice = {
       ...dice,
       picked: !dice.picked
@@ -103,6 +108,25 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
   takePickedDicesAndCloseRound(dices: Dices): void {
     const unChosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(dices)
       .filter(({ value }) => !value.chosen);
+
+    const newDices: Dices = keyValuesToObject(unChosenDices.map(({ key, value: dice }) => {
+      return {
+        key,
+        value: {
+          ...dice,
+          picked: true,
+          chosen: true
+        }
+      };
+    }));
+
+    this.rolledDices$.next(newDices);
+    this.roundClosed.next(newDices);
+  }
+
+  takePickedAttackDicesAndCloseRound(dices: Dices, attack: number): void {
+    const unChosenDices: Array<KeyValue<string, Dice>> = objectToKeyValues(dices)
+      .filter(({ value }) => !value.chosen && value.value === attack);
 
     const newDices: Dices = keyValuesToObject(unChosenDices.map(({ key, value: dice }) => {
       return {

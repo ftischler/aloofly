@@ -9,6 +9,9 @@ import { filter, map, take } from 'rxjs/operators';
 import { DB_KEY } from '../common/db-key';
 import { calculateInitialResult } from '../common/calculate-initial-result';
 import { createDices } from '../common/create-dices';
+import { promisify } from 'util';
+import { objectToKeyValues } from '../common/object-to-key-values';
+import { keyValuesToObject } from '../common/key-values-to-object';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
@@ -67,7 +70,6 @@ export class GameService {
         dices,
         turnNumber: 0,
         currentScore,
-        attacks: {},
         isRolling: false
       }
     );
@@ -114,7 +116,6 @@ export class GameService {
     await this.angularFireDatabase.list<Turn>(`/${DB_KEY}/${game.id}/players/${playerId}/turns`).push({
       dices: createDices(),
       currentScore: 0,
-      attacks: {},
       isRolling: false,
       turnNumber
     });
@@ -128,15 +129,88 @@ export class GameService {
       .update(turnId, { dices });
   }
 
-  async saveTurn({game, player}: GameContext, currentTurnId: string, turn: Turn): Promise<void> {
+  async saveTurn(ctx: GameContext, currentTurnId: string, turn: Turn): Promise<void> {
+    const { game, player } = ctx;
+
     await this.angularFireDatabase
       .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
       .update(currentTurnId, turn);
   }
 
-  async closeTurn({game, player}: GameContext, currentTurnId: string, turn: Turn): Promise<void> {
+  async closeTurn(ctx: GameContext, turn: Turn): Promise<void> {
+    const { game, player } = ctx;
+
     await this.angularFireDatabase
       .object<Player>(`/${DB_KEY}/${game.id}/players/${player.id}`)
-      .update({currentScore: turn.currentScore, active: false});
+      .update({ currentScore: turn.currentScore, active: false });
+  }
+
+  async closeAttack(ctx: GameContext, attackOn: Player, attackValue: number, turn: Turn): Promise<void> {
+    const { game, player } = ctx;
+
+    await this.angularFireDatabase
+      .object<Player>(`/${DB_KEY}/${game.id}/players/${player.id}`)
+      .update({ active: false });
+
+    const newScore: number = attackOn.currentScore! - attackValue;
+
+    await this.angularFireDatabase
+      .object<Player>(`/${DB_KEY}/${game.id}/players/${attackOn.id}`)
+      .update({
+        currentScore: newScore
+      });
+
+    await this.angularFireDatabase
+      .list<Turn>(`/${DB_KEY}/${game.id}/players/${attackOn.id}/turns`)
+      .push({
+        currentScore: newScore,
+        turnNumber: -1,
+        isRolling: false,
+        dices: {}
+      });
+
+    if (newScore < 1) {
+      await this.looseGame(game, attackOn, newScore);
+    } else {
+      await this.closeTurn(ctx, turn);
+      await this.startTurn(game, attackOn.id);
+    }
+  }
+
+  async looseGame(game: Game, player: Player, endScore: number = -1): Promise<void> {
+    await this.angularFireDatabase
+      .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
+      .push({
+        currentScore: endScore,
+        dices: createDices(),
+        isRolling: false,
+        turnNumber: game.turnNumber
+      });
+
+    await this.angularFireDatabase
+      .object<Game>(`/${DB_KEY}/${game.id}`)
+      .update({
+        loserPlayerId: player.id
+      });
+  }
+
+  async restartGame({game, player}: GameContext): Promise<void> {
+    const gameId: string = game.id;
+    const newGame: Partial<Game> = {
+      ...createGame(gameId, player),
+      players: keyValuesToObject(objectToKeyValues(game.players).map(({key, value}, index) => ({
+        key,
+        value: {
+          ...value,
+          currentScore: 0,
+          turns: {},
+          playerCount: index
+        }
+      })))
+    };
+
+    await this.angularFireDatabase.object(DB_KEY).update({
+      [gameId]: newGame
+    });
   }
 }

@@ -1,16 +1,32 @@
 <ng-container *ngIf="ctx$ | async as ctx">
-  <h1 *ngIf="ctx.player as player">Hallo {{player.name}}</h1>
+  <h1 *ngIf="ctx.player as player">Hallo {{player.name}} 🎲</h1>
   <aside *ngIf="ctx.game as game">
     <ng-container *ngIf="game.players | objectValues as players">
-      <mws30-notepad [players]="players"></mws30-notepad>
+      <mws30-notepad [ctx]="ctx"></mws30-notepad>
     </ng-container>
   </aside>
   <main>
-    <ng-container *ngIf="ctx.game | isFirstRound; else gameRunning">
-      <mws30-first-round [ctx$]="ctx$"></mws30-first-round>
+    <ng-container *ngIf="!ctx.game.loserPlayerId; else playerLost">
+      <ng-container *ngIf="ctx.game | isFirstRound; else gameRunning">
+        <mws30-first-round [ctx$]="ctx$"></mws30-first-round>
+      </ng-container>
+      <ng-template #gameRunning>
+        <mws30-regular-round [ctx$]="ctx$"></mws30-regular-round>
+      </ng-template>
     </ng-container>
-    <ng-template #gameRunning>
-      <mws30-regular-round [ctx$]="ctx$"></mws30-regular-round>
+    <ng-template #playerLost>
+      <ng-container *ngIf="ctx.player.id === ctx.game.loserPlayerId; else otherPlayerLost">
+        <h2>☠️ Du Lappen hast verloren! ☠️</h2>
+        <p>Bitte zahle jetzt eine Runde. Danach kannst du das Spiel neustarten. 🍻</p>
+        <ng-container *ngIf="ctx.game.nameOfKneipeOrWirt as nameOfKneipeOrWirt">
+          <p>Zahle nun {{ctx.game.amountPerDrink * (ctx.game.players | objectValues).length}} an {{nameOfKneipeOrWirt}}.</p>
+        </ng-container>
+        <button mat-raised-button (click)="restartGame(ctx)">Neustarten</button>
+      </ng-container>
+      <ng-template #otherPlayerLost>
+        <h2>☠️ {{ctx.game.players[ctx.game.loserPlayerId].name}} hat das Spiel verloren ☠️</h2>
+        <p>Bitte warte bis er eine Runde gezahlt hat. Danach kann weitergespielt werden. 🍺🍷🥃</p>
+      </ng-template>
     </ng-template>
   </main>
 </ng-container>

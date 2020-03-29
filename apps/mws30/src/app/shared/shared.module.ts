@@ -19,6 +19,10 @@ import { CanRollAgainPipe } from './can-roll-again.pipe';
 import { TurnFinishedPipe } from './turn-finished.pipe';
 import { AbsPipe } from './abs.pipe';
 import { AllPickedPipe } from './all-picked.pipe';
+import { AttackedPlayerPipe } from './attacked-player.pipe';
+import { DiceValuesPipe } from './dice-values.pipe';
+import { FilterDicesPipe } from './filter-dices.pipe';
+import { AllChosenPipe } from './all-chosen.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { AllPickedPipe } from './all-picked.pipe';
     CanRollAgainPipe,
     TurnFinishedPipe,
     AbsPipe,
-    AllPickedPipe
+    AllPickedPipe,
+    AttackedPlayerPipe,
+    DiceValuesPipe,
+    FilterDicesPipe,
+    AllChosenPipe
   ],
   imports: [
     CommonModule,
@@ -62,7 +70,11 @@ import { AllPickedPipe } from './all-picked.pipe';
     CanRollAgainPipe,
     TurnFinishedPipe,
     AbsPipe,
-    AllPickedPipe
+    AllPickedPipe,
+    AttackedPlayerPipe,
+    DiceValuesPipe,
+    FilterDicesPipe,
+    AllChosenPipe
   ]
 })
 export class SharedModule { }

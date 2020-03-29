@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GameContext } from '@aloofly/mws30-models';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'mws30-game-table',
@@ -10,4 +11,10 @@ import { GameContext } from '@aloofly/mws30-models';
 })
 export class GameTableComponent {
   @Input() ctx$: Observable<GameContext>;
+
+  constructor(private gameService: GameService) { }
+
+  async restartGame(ctx: GameContext): Promise<void> {
+    await this.gameService.restartGame(ctx);
+  }
 }

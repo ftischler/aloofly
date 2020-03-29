@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Dice, Dices } from '@aloofly/mws30-models';
+import { Dice, Dices, Player } from '@aloofly/mws30-models';
 
 @Component({
   selector: 'mws30-dice-cup-view',
@@ -9,4 +9,6 @@ import { Dice, Dices } from '@aloofly/mws30-models';
 })
 export class DiceCupViewComponent {
   @Input() dices: Dices;
+  @Input() attack?: number;
+  @Input() attackOn?: Player;
 }

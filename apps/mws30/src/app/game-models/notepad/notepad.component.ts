@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Dices, Player } from '@aloofly/mws30-models';
+import { Dices, GameContext, Player } from '@aloofly/mws30-models';
 import { MatDialog } from '@angular/material/dialog';
 import { DiceCupViewDialogComponent } from '../dialogs/dice-cup-view-dialog/dice-cup-view-dialog.component';
 
@@ -10,7 +10,7 @@ import { DiceCupViewDialogComponent } from '../dialogs/dice-cup-view-dialog/dice
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotepadComponent {
-  @Input() players: Player[];
+  @Input() ctx: GameContext;
 
   constructor(private matDialog: MatDialog) { }
 

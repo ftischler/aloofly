@@ -5,7 +5,10 @@
 mws30-dice {
   font-size: 5vw;
   margin: 0.5vw;
-  cursor: pointer;
+
+  &.active {
+    cursor: pointer;
+  }
 
   &.picked {
     border: #ffff solid 1px;

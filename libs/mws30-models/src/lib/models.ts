@@ -2,6 +2,12 @@ export interface Games {
   [key: string]: Game;
 }
 
+export interface DrinkOptions {
+  amountPerDrink?: number;
+  nameOfKneipeOrWirt?: string;
+  payPalDonationLink?: string;
+}
+
 export interface Game {
   id: string;
   status: 'created' | 'running' | 'finished';
@@ -10,6 +16,8 @@ export interface Game {
   createdAt: number;
   createdBy: string;
   payPalDonationLink?: string;
+  nameOfKneipeOrWirt?: string;
+  amountPerDrink: number;
   url?: string;
   chat?: ChatMessage[];
   turnNumber: number;
@@ -41,7 +49,7 @@ export interface Turn {
   currentScore: number;
   isRolling: boolean;
   attacksWith?: number;
-  attacks?: Attacks;
+  attackingPlayerId?: string;
 }
 
 export interface Dices {
@@ -55,15 +63,6 @@ export interface Dice {
   picked: boolean;
   pickedCount: number;
   chosen: boolean;
-}
-
-export interface Attacks {
-  [key: string]: Attack;
-}
-
-export interface Attack {
-  target: Player;
-  amount: number;
 }
 
 interface ChatMessage {

@@ -1,5 +1,5 @@
 <div *ngFor="let player of ctx.game.players | objectValues">
-  <p [class.active]="player.active" [class.attacked]="(ctx | attackedPlayer)?.id === player.id">
+  <p [class.active]="player.active" [class.attacked]="(ctx.game | attackedPlayer: ctx.player)?.id === player.id">
     <strong>{{player.name}}: &nbsp;&nbsp;
       <ng-container *ngIf="player.turns as turns; else empty">
         <ng-container *ngFor="let turn of turns | objectValues">

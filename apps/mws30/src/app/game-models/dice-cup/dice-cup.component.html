@@ -1,7 +1,5 @@
-<p *ngIf="attackOn"><strong>Angriff auf {{attackOn.name}} mit {{attack}}</strong></p>
-
-<p *ngIf="isRolling | async; else notRolling">
-  <strong>Wait for it...</strong>
+<p class="medium" *ngIf="isRolling | async; else notRolling">
+  <strong>🎲 Wait for it 🎲</strong>
 </p>
 
 <ng-template #notRolling>
@@ -17,6 +15,7 @@
     </ng-container>
   </div>
   <ng-container *ngIf="(dices | chosenDices: false | objectValues).length > 0">
+    <br>
     <button mat-raised-button
             *ngIf="!(dices | hasRolled)"
             (click)="rollDices()">

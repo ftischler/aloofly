@@ -9,7 +9,6 @@ import { filter, map, take } from 'rxjs/operators';
 import { DB_KEY } from '../common/db-key';
 import { calculateInitialResult } from '../common/calculate-initial-result';
 import { createDices } from '../common/create-dices';
-import { promisify } from 'util';
 import { objectToKeyValues } from '../common/object-to-key-values';
 import { keyValuesToObject } from '../common/key-values-to-object';
 
@@ -170,23 +169,14 @@ export class GameService {
       });
 
     if (newScore < 1) {
-      await this.looseGame(game, attackOn, newScore);
+      await this.looseGame(game, attackOn);
     } else {
       await this.closeTurn(ctx, turn);
       await this.startTurn(game, attackOn.id);
     }
   }
 
-  async looseGame(game: Game, player: Player, endScore: number = -1): Promise<void> {
-    await this.angularFireDatabase
-      .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
-      .push({
-        currentScore: endScore,
-        dices: createDices(),
-        isRolling: false,
-        turnNumber: game.turnNumber
-      });
-
+  async looseGame(game: Game, player: Player): Promise<void> {
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
       .update({

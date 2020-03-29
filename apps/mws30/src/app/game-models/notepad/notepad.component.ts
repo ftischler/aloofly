@@ -15,8 +15,10 @@ export class NotepadComponent {
   constructor(private matDialog: MatDialog) { }
 
   openDiceView(dices: Dices): void {
-    this.matDialog.open(DiceCupViewDialogComponent, {
-      data: dices
-    });
+    if (Object.values(dices).length) {
+      this.matDialog.open(DiceCupViewDialogComponent, {
+        data: dices
+      });
+    }
   }
 }

@@ -64,16 +64,20 @@
     <ng-container *ngIf="ctx.game | currentPlayer as currentPlayer">
       <p><strong>{{currentPlayer.name}} würfelt gerade</strong></p>
       <ng-container *ngIf="ctx.game | currentTurn: currentPlayer as currentPlayer">
-        <div class="chosen-ones">
-          <p><strong>Herausgelegte Würfel</strong></p>
-          <mws30-dice-cup-view [dices]="currentPlayer?.dices | chosenDices"
-                               [attack]="currentPlayer.attacksWith" [attackOn]="ctx | attackedPlayer">
-          </mws30-dice-cup-view>
-        </div>
+        <ng-container *ngIf="currentPlayer?.dices | chosenDices as chosenOnes">
+          <div class="chosen-ones">
+            <p *ngIf="(chosenOnes | objectValues).length"><strong>Herausgelegte Würfel</strong></p>
+            <mws30-dice-cup-view [dices]="currentPlayer?.dices | chosenDices"
+                                 [attack]="currentPlayer.attacksWith" [attackOn]="ctx | attackedPlayer">
+            </mws30-dice-cup-view>
+          </div>
+        </ng-container>
         <div class="dices" *ngIf="currentPlayer.dices | chosenDices: false as activeDices">
           <p *ngIf="activeDices | hasRolled"><strong>Verbleibende Würfel</strong></p>
           <mws30-dice-cup-view [dices]="activeDices"
-                               [attack]="currentPlayer.attacksWith" [attackOn]="ctx | attackedPlayer">
+                               [showPicked]="true"
+                               [attack]="currentPlayer.attacksWith"
+                               [attackOn]="ctx | attackedPlayer">
           </mws30-dice-cup-view>
         </div>
         <ng-container *ngIf="currentPlayer.attacksWith as attacksWith">

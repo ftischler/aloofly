@@ -5,4 +5,8 @@
 mws30-dice {
   font-size: 5vw;
   margin: 0.5vw;
+
+  &.picked {
+    border: #ffff solid 1px;
+  }
 }

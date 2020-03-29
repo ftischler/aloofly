@@ -11,4 +11,5 @@ export class DiceCupViewComponent {
   @Input() dices: Dices;
   @Input() attack?: number;
   @Input() attackOn?: Player;
+  @Input() showPicked = false;
 }

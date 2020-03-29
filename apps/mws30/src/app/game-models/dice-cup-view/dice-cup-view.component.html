@@ -1,7 +1,8 @@
 <ng-container *ngIf="dices | objectValues as activeDices">
   <ng-container *ngIf="activeDices.length">
     <ng-container *ngIf="dices | hasRolled; else waitForIt">
-      <mws30-dice *ngFor="let dice of activeDices" [dice]="dice" [class.picked]="dice.picked && !dice.chosen"></mws30-dice>
+      <mws30-dice *ngFor="let dice of activeDices" [dice]="dice"
+                  [class.picked]="dice.picked && showPicked"></mws30-dice>
     </ng-container>
     <ng-template #waitForIt>
       <p><strong>Wait for it...</strong></p>

@@ -37,7 +37,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatSnackBarModule,
     GameModelsModule,
     ClipboardModule,
     MatIconModule

@@ -5,24 +5,26 @@
 <p>Hier werden alle deine Spiele gezeigt, die du auf diesem Gerät gespielt hast. Falls sie noch aktiv sind kannst du sie hier wieder aufnehmen.</p>
 <ng-container *ngIf="games$ | async; else loading">
   <ng-container *ngIf="gameContexts$ | async as ctxs; else noGames">
-    <mat-list>
-      <ng-container *ngFor="let ctx of ctxs">
-        <mat-list-item *ngIf="ctx.game.status !== 'finished'">
-          <p class="start-game" role="button" [routerLink]="['/', ctx.game.id, ctx.player.id]">
-            <span>🎲&nbsp;</span>
-            <span *ngIf="ctx.game.name; else noName">{{ctx.game.name}}</span>
-            <ng-template #noName>
-              <span>{{ctx.game.id}}</span>
-            </ng-template>
-            <span>&nbsp;- Spielername: {{ctx.player.name}}</span>
-          </p>
-          <button mat-icon-button
-                  [routerLink]="['/', ctx.game.id, ctx.player.id]">
-            <mat-icon>arrow_forward_ios</mat-icon>
-          </button>
-        </mat-list-item>
-      </ng-container>
-    </mat-list>
+    <ng-container *ngIf="ctxs.length; else noGames">
+      <mat-list>
+        <ng-container *ngFor="let ctx of ctxs">
+          <mat-list-item *ngIf="ctx.game.status !== 'finished'">
+            <p class="start-game" role="button" [routerLink]="['/', ctx.game.id, ctx.player.id]">
+              <span>🎲&nbsp;</span>
+              <span *ngIf="ctx.game.name; else noName">{{ctx.game.name}}</span>
+              <ng-template #noName>
+                <span>{{ctx.game.id}}</span>
+              </ng-template>
+              <span>&nbsp;- Spielername: {{ctx.player.name}}</span>
+            </p>
+            <button mat-icon-button
+                    [routerLink]="['/', ctx.game.id, ctx.player.id]">
+              <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+          </mat-list-item>
+        </ng-container>
+      </mat-list>
+    </ng-container>
   </ng-container>
   <ng-template #noGames>
     <p>Es sind noch keine Spiele vorhanden.</p>

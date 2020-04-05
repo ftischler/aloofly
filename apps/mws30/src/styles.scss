@@ -7,6 +7,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  --mat-divider-margin: 2em 0;
 }
 
 .big {
@@ -27,5 +28,11 @@ body {
   input[type="password"] {
     font-size: 16px;
   }
+
+  body {
+    --mat-divider-margin: 1em 0;
+  }
 }
+
+
 

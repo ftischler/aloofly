@@ -1,0 +1,26 @@
+@import "variables";
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+mws30-dice {
+  margin: 0.5vw;
+  border: transparent solid 1px;
+
+  $small-font: calc(100vw / 8);
+  $big-font: 8vw;
+
+  @media #{$mat-lt-xl} {
+    font-size: $small-font;
+  }
+
+  @media #{$mat-gt-xl} {
+    font-size: $big-font;
+  }
+
+  &.picked {
+    border: #fef5e3 solid 1px;
+  }
+}

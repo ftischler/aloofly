@@ -1,0 +1,33 @@
+.active {
+  color: var(--primary-color);
+}
+
+.attacked {
+  color: var(--warn-color);
+}
+
+.player-scores {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .player-name {
+    display: grid;
+    align-items: center;
+    width: 80px;
+    p {
+      width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+  }
+
+  .scores {
+    button {
+      margin: 1px;
+    }
+  }
+}

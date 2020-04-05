@@ -1,0 +1,253 @@
+{
+  "games": {
+    "y982nl91iyjw9ikptk3mrk": {
+      "createdAt": 1585495889847,
+      "createdBy": "orskov0t9iiexyytf1soso",
+      "currentPlayerId": "orskov0t9iiexyytf1soso",
+      "id": "y982nl91iyjw9ikptk3mrk",
+      "players": {
+        "orskov0t9iiexyytf1soso": {
+          "active": true,
+          "currentScore": 16,
+          "id": "orskov0t9iiexyytf1soso",
+          "name": "Florian",
+          "playerCount": 0,
+          "turns": {
+            "-M3av9vJ1vQ_DWWG4vNg": {
+              "currentScore": 18,
+              "dices": {
+                "6mdjod9tc83k95n97ksdsq": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 2
+                },
+                "dmv65x23xoti55kr1yslf": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 6
+                },
+                "el2ceo4q4xgz7eqnif81h": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 1
+                },
+                "exd91we1gyya6ygo534kl": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 3
+                },
+                "mfgnzphdl6lm3eajtbeo6g": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 5
+                },
+                "u59ke0vn6yyg9sumlo62": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 1
+                }
+              },
+              "isRolling": false,
+              "turnNumber": 0
+            },
+            "-M3avC8AGpEKykhHrskH": {
+              "attacksWith": -2,
+              "currentScore": 16,
+              "dices": {
+                "2u1hr8hd0p144nu7ggujz": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 3
+                },
+                "4em4ta392mxyga4fa77npl": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 6
+                },
+                "8g70ffdawthwsu40f7zkm": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 6
+                },
+                "erz7pbsc1vdg361kpywtt": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 5
+                },
+                "p3822a288zdexfzhs74js5": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 4
+                },
+                "x5z8g1eugun063ks9zqvb": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 4
+                }
+              },
+              "isRolling": false,
+              "turnNumber": 1
+            },
+            "-M3b3L2YbZn19W9UVA4P": {
+              "attackingPlayerId": "ymdt5mom1zobsfdlpr9ra9",
+              "attacksWith": 3,
+              "currentScore": 16,
+              "dices": {
+                "loif9ylkavsbpiw6ryjhg9": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 5
+                },
+                "mffwgjm2zvw0jdnxxgg2": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 6
+                },
+                "q4rloqpzuvslk6wh7stmp": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 2
+                },
+                "rr1s1ocvp8gnskqz1hhi": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 2
+                },
+                "s7v8mak7sonrsxkk94lh": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 3
+                },
+                "xl14zxfcyimtt6kiso4ja": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 2
+                }
+              },
+              "isRolling": false,
+              "turnNumber": 3
+            }
+          }
+        },
+        "ymdt5mom1zobsfdlpr9ra9": {
+          "active": false,
+          "currentScore": 18,
+          "id": "ymdt5mom1zobsfdlpr9ra9",
+          "name": "Danny",
+          "playerCount": 1,
+          "turns": {
+            "-M3avAmgcmts3T2gHiV0": {
+              "currentScore": 21,
+              "dices": {
+                "2sh2pqszrtq9h0palw3yg4": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 2
+                },
+                "62hlcepk6kcbhqe95xbxq": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 6
+                },
+                "ep3i44hnx749u7d641ogba": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 3
+                },
+                "sixrhdb8nec7i1m52xx6lf": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 6
+                },
+                "uo4no11bh7yfrg39n4ohj": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 2
+                },
+                "wjiq6rpdsfjs613isebq0l": {
+                  "chosen": false,
+                  "picked": false,
+                  "pickedCount": 0,
+                  "value": 2
+                }
+              },
+              "isRolling": false,
+              "turnNumber": 0
+            },
+            "-M3b3EObNWnUe-v-FkEK": {
+              "attacksWith": -3,
+              "currentScore": 18,
+              "dices": {
+                "2bx5ay790cmtiagnsxsruo": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 4
+                },
+                "dvf1pj52zeouqq7jx7inx": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 2
+                },
+                "lobnabqkrfndlrv1q5vkb": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 6
+                },
+                "mmlh1japihflshn9iqx4w": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 4
+                },
+                "po686lsc95fokimojyf7g": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 5
+                },
+                "qkr8epwyxwkid85edab0t": {
+                  "chosen": true,
+                  "picked": true,
+                  "pickedCount": 0,
+                  "value": 6
+                }
+              },
+              "isRolling": false,
+              "turnNumber": 2
+            }
+          }
+        }
+      },
+      "startingPlayerId": "orskov0t9iiexyytf1soso",
+      "status": "running",
+      "turnNumber": 3,
+      "url": "http://localhost:4200/y982nl91iyjw9ikptk3mrk"
+    }
+  }
+}

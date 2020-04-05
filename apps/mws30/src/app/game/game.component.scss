@@ -1,0 +1,17 @@
+.copy-link {
+  color: #0094ba;
+  display: flex;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  .mat-icon {
+    font-size: 14px;
+    position: relative;
+    left: 5px;
+    top: 1px;
+    font-weight: bolder;
+  }
+}

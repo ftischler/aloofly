@@ -1,0 +1,65 @@
+<ng-container *ngIf="ctx$ | async as ctx">
+  <h2>Leben auswürfeln</h2>
+
+  <!-- All players while game is not started -->
+  <div *ngIf="ctx.game.status === 'created'; else gameIsRunning">
+    <p><strong>Auf andere Spiele warten...</strong></p>
+  </div>
+
+  <ng-template #gameIsRunning>
+    <mws30-dice-cup-view
+      *ngIf="ctx.game | currentTurn: ctx.player as currentTurn"
+      [dices]="currentTurn.dices"
+    ></mws30-dice-cup-view>
+
+    <!-- All Player while game is running -->
+    <ng-container *ngIf="ctx.game | turnsRunning; else turnsDone">
+      <!-- Player is finished -->
+      <ng-container *ngIf="ctx.player | hasScore: ctx.game; else yourTurn">
+        <p><strong>Auf andere Spieler warten...</strong></p>
+      </ng-container>
+
+      <!-- Players turn -->
+      <ng-template #yourTurn>
+        <mws30-dice-cup
+          [isFirstTurn]="true"
+          (diceCupResult)="setInitialResult(ctx, $event)"
+        ></mws30-dice-cup>
+      </ng-template>
+    </ng-container>
+
+    <!-- Turns done -->
+    <ng-template #turnsDone>
+      <!-- Admin can now choose a starting player -->
+      <ng-container *ngIf="ctx.player | isAdmin: ctx.game; else noAdmin">
+        <mat-divider></mat-divider>
+        <form
+          [formGroup]="startPlayerGroup"
+          (submit)="startRegularGame(ctx.game)"
+        >
+          <mat-form-field>
+            <mat-label>Wähle aus wer beginnt</mat-label>
+            <mat-select formControlName="startPlayer" required>
+              <mat-option
+                *ngFor="let player of ctx.game.players | objectValues"
+                [value]="player.id"
+                >{{ player.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <br />
+          <button mat-stroked-button color="accent" type="submit">
+            Spiel starten
+          </button>
+        </form>
+      </ng-container>
+
+      <!-- Other players have to wait -->
+      <ng-template #noAdmin>
+        <mat-divider></mat-divider>
+        <br />
+        <p class="medium"><strong>Warten bis der Admin das Spiel startet</strong></p>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+</ng-container>

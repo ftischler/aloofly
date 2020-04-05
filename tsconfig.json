@@ -15,8 +15,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
-      "@aloofly/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@aloofly/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@aloofly/mws30-models": ["libs/mws30-models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

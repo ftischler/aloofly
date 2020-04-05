@@ -1,0 +1,16 @@
+button {
+  margin-bottom: 20px;
+
+  mat-icon {
+    margin-right: 5px;
+  }
+}
+
+.start-game {
+  cursor: pointer;
+
+  &:focus &:active {
+    border: none;
+    outline: none;
+  }
+}

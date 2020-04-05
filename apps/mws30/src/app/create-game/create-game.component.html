@@ -1,0 +1,68 @@
+<h2>Neues Spiel anlegen</h2>
+<form [formGroup]="formGroup" (submit)="createGame()">
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Name des Raums"
+      formControlName="roomName"
+      maxlength="20"
+      required
+    />
+    <mat-error>Bitte einen Namen ein</mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Spielername wählen"
+      formControlName="playerName"
+      maxlength="20"
+      required
+    />
+    <mat-error>Bitte gib einen Spielernamen ein</mat-error>
+  </mat-form-field>
+  <br />
+  <br />
+  <mat-checkbox formControlName="support" #checkbox>
+    Einen Gaststätte unterstützen
+  </mat-checkbox>
+  <br />
+  <ng-container *ngIf="checkbox.checked">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Name von Kneipe oder Wirt"
+        formControlName="nameOfKneipeOrWirt"
+        maxlength="20"
+      />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input
+        matInput
+        type="number"
+        placeholder="Spende pro Getränk in €"
+        formControlName="amountPerDrink"
+      />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Paypal.me-Link"
+        formControlName="payPalDonationLink"
+      />
+    </mat-form-field>
+  </ng-container>
+  <br />
+  <br />
+  <div class="actions">
+    <button mat-stroked-button color="accent" type="submit">Jetzt Spiel anlegen</button>
+    <button mat-stroked-button routerLink="/overview">Meine Spiele</button>
+    <button mat-stroked-button routerLink="/rules">Spielregeln anzeigen</button>
+  </div>
+</form>

@@ -23,6 +23,16 @@
     },
     "api-interfaces": {
       "tags": []
+    },
+    "mws30": {
+      "tags": []
+    },
+    "mws30-e2e": {
+      "tags": [],
+      "implicitDependencies": ["mws30"]
+    },
+    "mws30-models": {
+      "tags": []
     }
   }
 }

@@ -4,12 +4,14 @@ import { environment } from '../../environments/environment';
 export function createGame(
   gameId: string,
   player: Player,
+  name: string = '',
   drinkOptions: DrinkOptions = {}
 ): Partial<Game> {
   return {
     createdAt: Date.now(),
     createdBy: player.id,
     id: gameId,
+    name,
     players: {
       [player.id]: player
     },

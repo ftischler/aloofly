@@ -1,9 +1,9 @@
 .active {
-  color: mediumseagreen;
+  color: var(--primary-color);
 }
 
 .attacked {
-  color: crimson;
+  color: var(--warn-color);
 }
 
 .player-scores {

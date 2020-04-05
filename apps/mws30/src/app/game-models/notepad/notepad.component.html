@@ -3,14 +3,13 @@
     [class.active]="player.active"
     [class.attacked]="(ctx.game | attackedPlayer: ctx.player)?.id === player.id"
     class="player-scores">
-    <div class="player-name"><p><strong>{{ player.name }}</strong></p></div>
+    <div class="player-name"><p><strong><span>{{ player.name }}</span><span *ngIf="player.active">*</span></strong></p></div>
     <div class="scores" *ngIf="player.turns as turns;">
       <ng-container *ngFor="let turn of turns | objectValues | filterNotepadTurns">
         <button
           *ngIf="turn.currentScore > 0; else noScore"
           mat-stroked-button
-          (click)="openDiceView(turn.dices)"
-        >
+          (click)="openDiceView(turn.dices)">
           {{ turn.currentScore }}
         </button>
         <ng-template #noScore>

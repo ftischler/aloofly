@@ -10,6 +10,7 @@ export interface DrinkOptions {
 
 export interface Game {
   id: string;
+  name?: string;
   status: 'created' | 'running' | 'finished';
   players: Players;
   loserPlayerId?: string;

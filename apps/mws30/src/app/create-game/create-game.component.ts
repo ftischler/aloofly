@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CreateGameComponent {
   formGroup = new FormGroup({
+    roomName: new FormControl('', Validators.maxLength(20)),
     playerName: new FormControl('', [
       Validators.maxLength(20),
       Validators.required
@@ -29,7 +30,7 @@ export class CreateGameComponent {
 
   async createGame(): Promise<void> {
     const gameId: string = createRandomId();
-    const { playerName } = this.formGroup.value;
+    const { playerName, roomName: name } = this.formGroup.value;
     const player: Player = createPlayer(playerName);
 
     const {
@@ -54,7 +55,7 @@ export class CreateGameComponent {
     }
 
     if (this.formGroup.valid) {
-      await this.gameService.createGame(gameId, player, drinkOptions);
+      await this.gameService.createGame(gameId, player, name, drinkOptions);
       await this.router.navigate([gameId, player.id]);
     }
   }

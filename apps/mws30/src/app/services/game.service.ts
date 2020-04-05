@@ -41,9 +41,10 @@ export class GameService {
   async createGame(
     gameId: string,
     player: Player,
+    name: string = '',
     drinkOptions?: DrinkOptions
   ): Promise<void> {
-    const game: Partial<Game> = createGame(gameId, player, drinkOptions);
+    const game: Partial<Game> = createGame(gameId, player, name, drinkOptions);
 
     await this.angularFireDatabase.object(DB_KEY).update({
       [gameId]: game

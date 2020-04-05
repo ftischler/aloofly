@@ -1,6 +1,7 @@
 <ng-container *ngIf="ctx$ | async as ctx">
   <ng-container *ngIf="ctx.game.status === 'created'; else gameRunning">
     <h2>Hallo {{ ctx.player.name }}</h2>
+    <p *ngIf="ctx.game.name">Willkommen im Raum {{ctx.game.name}}</p>
     <div *ngIf="ctx.player | isAdmin: ctx.game">
       <p>Versende diese URL an deine Mitspieler:</p>
       <a
@@ -39,7 +40,8 @@
           </mat-list>
           <br />
           <button
-            mat-raised-button
+            mat-stroked-button
+            color="accent"
             *ngIf="ctx.player | isAdmin: ctx.game; else waiting"
             (click)="startGame(ctx.game.id)"
           >
@@ -47,7 +49,7 @@
           </button>
         </ng-container>
         <ng-template #waiting>
-          <p><strong>Warte bitte bis das Spiel startet</strong></p>
+          <p class="medium"><strong>Warte bitte bis das Spiel startet</strong></p>
         </ng-template>
       </ng-container>
 

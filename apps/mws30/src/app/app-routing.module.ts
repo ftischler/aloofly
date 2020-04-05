@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./create-game/create-game.module').then(m => m.CreateGameModule)
   },
   {
+    path: 'rules',
+    loadChildren: () => import('./rules/rules.module').then(m => m.RulesModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./game/game.module').then(m => m.GameModule)
   },

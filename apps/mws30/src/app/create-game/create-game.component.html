@@ -4,6 +4,17 @@
     <input
       matInput
       type="text"
+      placeholder="Name des Raums"
+      formControlName="roomName"
+      maxlength="20"
+    />
+    <mat-error>Bitte gib einen Spielernamen ein</mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
       placeholder="Spielername wählen"
       formControlName="playerName"
       maxlength="20"
@@ -14,7 +25,7 @@
   <br />
   <br />
   <mat-checkbox formControlName="support" #checkbox>
-    Einen Wirt unterstützen
+    Einen Gaststätte unterstützen
   </mat-checkbox>
   <br />
   <ng-container *ngIf="checkbox.checked">
@@ -48,5 +59,8 @@
   </ng-container>
   <br />
   <br />
-  <button mat-raised-button type="submit">Jetzt Spiel anlegen</button>
+  <div class="actions">
+    <button mat-stroked-button color="accent" type="submit">Jetzt Spiel anlegen</button>
+    <button mat-stroked-button routerLink="/rules">Spielregeln anzeigen</button>
+  </div>
 </form>

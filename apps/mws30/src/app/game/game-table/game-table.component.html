@@ -22,7 +22,7 @@
           <p>Danke für deine Spende {{ctx.game.nameOfKneipeOrWirt}} wird sich freuen!</p>
         </ng-container>
         <br>
-        <button mat-raised-button
+        <button mat-stroked-button
                 *ngIf="ctx.game.isPayed || !ctx.game.payPalDonationLink"
                 (click)="restartGame(ctx)">
           Neustarten
@@ -38,7 +38,7 @@
                 </strong>
               </p>
               <br>
-              <button mat-raised-button (click)="openPayPalLink(ctx.game, amount)">Jetzt via PayPal bezahlen</button>
+              <button mat-stroked-button (click)="openPayPalLink(ctx.game, amount)">Jetzt via PayPal bezahlen</button>
             </ng-container>
           </ng-container>
         </ng-template>

@@ -19,7 +19,7 @@
   <ng-container *ngIf="(dices | chosenDices: false | objectValues).length > 0">
     <br />
     <button
-      mat-raised-button
+      mat-stroked-button
       *ngIf="!(dices | hasRolled)"
       (click)="rollDices()"
     >
@@ -27,7 +27,7 @@
     </button>
 
     <button
-      mat-raised-button
+      mat-stroked-button
       *ngIf="dices | allPicked; else dicesInGame"
       (click)="takePickedDicesAndCloseRound(dices)"
     >
@@ -36,7 +36,7 @@
 
     <ng-template #dicesInGame>
       <button
-        mat-raised-button
+        mat-stroked-button
         *ngIf="!isFirstTurn && dices | canRollAgain"
         (click)="keepPickedDices(dices)"
       >
@@ -45,7 +45,7 @@
     </ng-template>
 
     <button
-      mat-raised-button
+      mat-stroked-button
       *ngIf="
         attack &&
         (dices | hasRolled) &&

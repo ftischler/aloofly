@@ -1,5 +1,5 @@
 <div *ngIf="game$ | async as game">
-  <h1>Spiel beitreten</h1>
+  <h1>Spiel beitreten <span *ngIf="game.name">im Raum {{game.name}}</span></h1>
   <ng-container *ngIf="game.status === 'created'; else gameRunning">
     <form [formGroup]="formGroup" (submit)="submit(game.id)">
       <mat-form-field>
@@ -12,7 +12,7 @@
         />
       </mat-form-field>
       <br />
-      <button mat-raised-button>Spielen</button>
+      <button mat-stroked-button color="accent">Beitreten</button>
     </form>
   </ng-container>
   <ng-template #gameRunning>

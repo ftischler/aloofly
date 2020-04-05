@@ -50,8 +50,7 @@ export class GameService {
       .object<Game>(`/${DB_KEY}/${gameId}`)
       .valueChanges()
       .pipe(
-        filter<Game>(Boolean),
-        debounceTime(50)
+        filter<Game>(Boolean)
       );
   }
 

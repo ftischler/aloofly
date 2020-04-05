@@ -1,10 +1,23 @@
+@import "variables";
+
 .dice-container {
   display: flex;
 }
 
 mws30-dice {
-  font-size: 8vw;
   margin: 0.5vw;
+  border: transparent solid 1px;
+
+  $small-font: calc(100vw / 8);
+  $big-font: 8vw;
+
+  @media #{$mat-lt-xl} {
+    font-size: $small-font;
+  }
+
+  @media #{$mat-gt-xl} {
+    font-size: $big-font;
+  }
 
   &.active {
     cursor: pointer;

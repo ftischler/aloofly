@@ -1,10 +1,10 @@
 <ng-container *ngIf="ctx$ | async as ctx">
   <h1 *ngIf="ctx.player as player">Hallo {{ player.name }} 🎲</h1>
-  <aside *ngIf="ctx.game as game">
-    <ng-container *ngIf="game.players | objectValues as players">
-      <mws30-notepad [ctx]="ctx"></mws30-notepad>
-    </ng-container>
-  </aside>
+  <mat-divider></mat-divider>
+  <ng-container *ngIf="ctx.game?.players as players">
+    <mws30-notepad *ngIf="players | objectValues" [ctx]="ctx"></mws30-notepad>
+  </ng-container>
+  <mat-divider></mat-divider>
   <main>
     <ng-container *ngIf="!ctx.game.loserPlayerId; else playerLost">
       <ng-container *ngIf="ctx.game | isFirstRound; else gameRunning">
@@ -17,17 +17,17 @@
     <ng-template #playerLost>
       <ng-container
         *ngIf="ctx.player.id === ctx.game.loserPlayerId; else otherPlayerLost">
-        <h2>☠️ Du Lappen hast verloren! ☠️</h2>
+        <h2>☠️ Du hast verloren! ☠️</h2>
         <ng-container *ngIf="ctx.game.isPayed; else notPayed">
           <p>Danke für deine Spende {{ctx.game.nameOfKneipeOrWirt}} wird sich freuen!</p>
-          <br>
-          <button mat-raised-button (click)="restartGame(ctx)">Neustarten</button>
         </ng-container>
+        <br>
+        <button mat-raised-button
+                *ngIf="ctx.game.isPayed || !ctx.game.payPalDonationLink"
+                (click)="restartGame(ctx)">
+          Neustarten
+        </button>
         <ng-template #notPayed>
-          <p>
-            Bitte zahle jetzt eine Runde. Danach kannst du das Spiel neustarten.
-            🍻
-          </p>
           <ng-container *ngIf="ctx.game.nameOfKneipeOrWirt as nameOfKneipeOrWirt">
             <ng-container *ngIf="ctx.game.amountPerDrink * (ctx.game.players | objectValues).length as amount">
               <br>
@@ -48,10 +48,16 @@
           ☠️ {{ ctx.game.players[ctx.game.loserPlayerId].name }} hat das Spiel
           verloren ☠️
         </h2>
-        <p>
-          Bitte warte bis er eine Runde gezahlt hat. Danach kann weitergespielt
-          werden. 🍺🍷🥃
+        <p *ngIf="ctx.game.payPalDonationLink; else noPayment">
+          Bitte warte bis er eine Runde gezahlt hat.
+          Danach kann weitergespielt werden. 🍺🍷🥃
         </p>
+        <ng-template #noPayment>
+          <p>
+            Bitte warte bis er die Niederlage verdaut hat.
+            Danach kann weitergespielt werden. 🍺🍷🥃
+          </p>
+        </ng-template>
       </ng-template>
     </ng-template>
   </main>

@@ -1,6 +1,9 @@
 <ng-container *ngIf="ctx$ | async as ctx">
   <!-- Spieler ist am Zug -->
   <div *ngIf="ctx.game | currentTurn: ctx.player as currentTurn; else wait">
+    <p class="big">
+      <strong>Du bist am Zug!</strong>
+    </p>
     <ng-container *ngIf="ctx.game | currentTurnId: ctx.player as currentTurnId">
       <ng-container *ngIf="!currentTurn.attackingPlayerId">
         <ng-container *ngIf="currentTurn?.dices | chosenDices as chosenOnes">
@@ -10,6 +13,7 @@
           </div>
           <p>Score: {{ chosenOnes | diceValues }}</p>
         </ng-container>
+        <mat-divider></mat-divider>
         <div
           class="dices"
           *ngIf="currentTurn?.dices | chosenDices: false as activeDices"
@@ -176,7 +180,9 @@
             >
             </mws30-dice-cup-view>
           </div>
+          <p>Score: {{ chosenOnes | diceValues }}</p>
         </ng-container>
+        <mat-divider></mat-divider>
         <div
           class="dices"
           *ngIf="currentTurn.dices | chosenDices: false as activeDices"

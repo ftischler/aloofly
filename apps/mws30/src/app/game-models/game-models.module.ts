@@ -9,6 +9,7 @@ import { DiceCupViewComponent } from './dice-cup-view/dice-cup-view.component';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     SharedModule,
     RouterModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule
   ],
   exports: [
     DiceComponent,

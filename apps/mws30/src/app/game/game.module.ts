@@ -11,11 +11,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '../shared/shared.module';
 import { GameTableComponent } from './game-table/game-table.component';
-import { FirstRoundComponent } from './game-steps/first-round/first-round.component';
+import { FirstRoundComponent } from './first-round/first-round.component';
 import { MatSelectModule } from '@angular/material/select';
 import { GameModelsModule } from '../game-models/game-models.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { RegularRoundComponent } from './game-steps/regular-round/regular-round.component';
+import { RegularRoundComponent } from './regular-round/regular-round.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatIconModule } from '@angular/material/icon';
 

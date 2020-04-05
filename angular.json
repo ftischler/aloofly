@@ -236,7 +236,12 @@
               "apps/mws30/src/assets/dice.min.css",
               "apps/mws30/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "apps/mws30/src/styles"
+              ]
+            }
           },
           "configurations": {
             "production": {

@@ -32,6 +32,7 @@
     <ng-template #turnsDone>
       <!-- Admin can now choose a starting player -->
       <ng-container *ngIf="ctx.player | isAdmin: ctx.game; else noAdmin">
+        <mat-divider></mat-divider>
         <form
           [formGroup]="startPlayerGroup"
           (submit)="startRegularGame(ctx.game)"
@@ -55,6 +56,7 @@
 
       <!-- Other players have to wait -->
       <ng-template #noAdmin>
+        <mat-divider></mat-divider>
         <br />
         <p><strong>Warten bis der Admin das Spiel startet</strong></p>
       </ng-template>

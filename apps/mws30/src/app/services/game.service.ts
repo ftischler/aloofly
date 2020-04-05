@@ -13,7 +13,7 @@ import { createGame } from '../common/create-game';
 
 import 'firebase/database';
 import { Observable } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { debounceTime, filter, map, take } from 'rxjs/operators';
 import { DB_KEY } from '../common/db-key';
 import { calculateInitialResult } from '../common/calculate-initial-result';
 import { createDices } from '../common/create-dices';
@@ -32,7 +32,10 @@ export class GameService {
     return this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${gameId}`)
       .valueChanges()
-      .pipe(filter<Game>(Boolean));
+      .pipe(
+        filter<Game>(Boolean),
+        debounceTime(50)
+      );
   }
 
   async createGame(

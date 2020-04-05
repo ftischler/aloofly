@@ -23,6 +23,7 @@ import { AttackedPlayerPipe } from './attacked-player.pipe';
 import { DiceValuesPipe } from './dice-values.pipe';
 import { FilterDicesPipe } from './filter-dices.pipe';
 import { AllChosenPipe } from './all-chosen.pipe';
+import { FilterNotepadTurnsPipe } from './filter-notepad-turns.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AllChosenPipe } from './all-chosen.pipe';
     AttackedPlayerPipe,
     DiceValuesPipe,
     FilterDicesPipe,
-    AllChosenPipe
+    AllChosenPipe,
+    FilterNotepadTurnsPipe
   ],
   imports: [CommonModule, MatDialogModule, MatButtonModule],
   exports: [
@@ -70,7 +72,8 @@ import { AllChosenPipe } from './all-chosen.pipe';
     AttackedPlayerPipe,
     DiceValuesPipe,
     FilterDicesPipe,
-    AllChosenPipe
+    AllChosenPipe,
+    FilterNotepadTurnsPipe
   ]
 })
 export class SharedModule {}

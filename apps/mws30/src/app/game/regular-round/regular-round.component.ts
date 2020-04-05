@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dice, Dices, GameContext, Player, Turn } from '@aloofly/mws30-models';
-import { GameService } from '../../../services/game.service';
-import { getDicesValue } from '../../../common/get-dices-value';
-import { getNextPlayer } from '../../../common/get-next-player';
-import { createDices } from '../../../common/create-dices';
-import { getAttackValue } from '../../../common/get-attack-value';
+import { GameService } from '../../services/game.service';
+import { getDicesValue } from '../../common/get-dices-value';
+import { getNextPlayer } from '../../common/get-next-player';
+import { createDices } from '../../common/create-dices';
+import { getAttackValue } from '../../common/get-attack-value';
 
 @Component({
   selector: 'mws30-regular-round',

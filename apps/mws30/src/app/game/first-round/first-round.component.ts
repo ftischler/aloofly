@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dices, Game, GameContext } from '@aloofly/mws30-models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../services/game.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

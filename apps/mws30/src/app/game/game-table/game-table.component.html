@@ -1,5 +1,8 @@
 <ng-container *ngIf="ctx$ | async as ctx">
-  <h1 *ngIf="ctx.player as player">Hallo {{ player.name }} 🎲</h1>
+  <h1 *ngIf="ctx.game.name; else noName">{{ctx.game.name}} 🎲</h1>
+  <ng-template #noName>
+    <h1>Hallo {{ ctx.player.name }} 🎲</h1>
+  </ng-template>
   <mat-divider></mat-divider>
   <ng-container *ngIf="ctx.game?.players as players">
     <mws30-notepad *ngIf="players | objectValues" [ctx]="ctx"></mws30-notepad>

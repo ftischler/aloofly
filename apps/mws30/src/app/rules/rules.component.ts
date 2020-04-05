@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'mws30-rules',
@@ -7,4 +8,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RulesComponent {
+  constructor(private location: Location) {
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
 }

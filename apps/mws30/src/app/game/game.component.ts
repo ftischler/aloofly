@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { GameService } from '../services/game.service';
 import { Game, GameContext, Player } from '@aloofly/mws30-models';
 import { RouterFacade } from '../+state/router.facade';
-import { DOCUMENT } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

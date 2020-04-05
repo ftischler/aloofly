@@ -82,7 +82,7 @@
           *ngIf="ctx.game | attackedPlayer: ctx.player as attackedPlayer"
         >
           <strong
-            >Angriff auf {{ attackedPlayer.name }} mit
+          >Angriff auf {{ attackedPlayer.name }} mit
             {{ currentTurn.attacksWith }} ⚔️️</strong
           >
         </p>
@@ -134,6 +134,14 @@
                   currentTurn.dices
                 )
               "
+              (restartAttack)="
+              restartAttack(
+                ctx,
+                currentTurnId,
+                $event,
+                currentTurn.dices
+                )
+              "
             >
             </mws30-dice-cup>
           </ng-container>
@@ -159,9 +167,9 @@
             <strong>
               Angriff auf
               {{
-                attackedPlayer.id === ctx.player.id
-                  ? 'dich'
-                  : attackedPlayer.name
+              attackedPlayer.id === ctx.player.id
+                ? 'dich'
+                : attackedPlayer.name
               }}
               mit {{ attacksWith }} ⚔️
             </strong>

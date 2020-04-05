@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import {
-  Dices,
-  DrinkOptions,
-  Game,
-  GameContext,
-  Player,
-  Players,
-  Turn
-} from '@aloofly/mws30-models';
+import { Dices, DrinkOptions, Game, GameContext, Games, Player, Players, Turn } from '@aloofly/mws30-models';
 import { createGame } from '../common/create-game';
 
 import 'firebase/database';
@@ -19,10 +11,35 @@ import { calculateInitialResult } from '../common/calculate-initial-result';
 import { createDices } from '../common/create-dices';
 import { objectToKeyValues } from '../common/object-to-key-values';
 import { keyValuesToObject } from '../common/key-values-to-object';
+import { LocalStorage, MWS30_PLAYER_ID } from '../common/local-storage';
+import { createPlayer } from '../common/create-player';
+import { getGameContexts } from '../common/get-game-contexts';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
-  constructor(private angularFireDatabase: AngularFireDatabase) {}
+  constructor(private angularFireDatabase: AngularFireDatabase, private localStorage: LocalStorage) {}
+
+  getGames(): Observable<Games | null> {
+    return this.angularFireDatabase.object<Games>('games').valueChanges();
+  }
+
+  getGameContexts(): Observable<GameContext[]> {
+    return this.getGames().pipe(
+      filter<Games>(Boolean),
+      map(games => getGameContexts(games, this.localStorage.getItem(MWS30_PLAYER_ID) || undefined))
+    );
+  }
+
+  createPlayer(playerName): Player {
+    const id: string | undefined = this.localStorage.getItem(MWS30_PLAYER_ID) || undefined;
+    const player: Player = createPlayer(playerName, id);
+
+    if (!id) {
+      this.localStorage.setItem(MWS30_PLAYER_ID, player.id);
+    }
+
+    return player;
+  }
 
   getPlayer(gameId: string, playerId: string): Observable<Player> {
     return this.getGame(gameId).pipe(map(game => game.players[playerId]));
@@ -153,6 +170,8 @@ export class GameService {
   ): Promise<void> {
     const { game, player } = ctx;
 
+    console.log(dices);
+
     await this.angularFireDatabase
       .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
       .update(turnId, { dices });
@@ -219,7 +238,8 @@ export class GameService {
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
       .update({
-        loserPlayerId: player.id
+        loserPlayerId: player.id,
+        status: 'finished'
       });
   }
 
@@ -228,6 +248,7 @@ export class GameService {
     const newGame: Partial<Game> = {
       ...createGame(gameId, player),
       createdBy: game.createdBy,
+      status: 'running',
       players: keyValuesToObject(
         objectToKeyValues(game.players).map(({ key, value }, index) => ({
           key,

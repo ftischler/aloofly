@@ -37,7 +37,8 @@ export class GameJoinComponent {
 
   async submit(gameId: string): Promise<void> {
     const { playerName } = this.formGroup.value;
-    const player = createPlayer(playerName);
+
+    const player = this.gameService.createPlayer(playerName);
 
     await this.gameService.joinGame(gameId, player);
 

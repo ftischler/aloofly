@@ -41,6 +41,7 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() isRolling = new EventEmitter<boolean>();
   @Output() roundClosed = new EventEmitter<Dices>();
+  @Output() restartAttack = new EventEmitter<Dices>();
 
   rolledDices$ = new ReplaySubject<Dices | undefined>(1);
 
@@ -127,7 +128,12 @@ export class DiceCupComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     this.rolledDices$.next(newDices);
-    this.roundClosed.next(newDices);
+
+    if (unChosenDices.every(({value: dice}) => dice.value === this.attack)) {
+      this.restartAttack.next(newDices);
+    } else {
+      this.roundClosed.next(newDices);
+    }
   }
 
   takePickedAttackDicesAndCloseRound(dices: Dices, attack: number): void {

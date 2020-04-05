@@ -64,6 +64,17 @@ export class RegularRoundComponent {
     );
   }
 
+  async restartAttack(
+    ctx: GameContext,
+    currentTurnId: string,
+    currentDices: Dices,
+    allDices: Dices
+  ): Promise<void> {
+    const newAttackDices: Dices = createDices();
+    const newDices: Dices = { ...allDices, ...currentDices, ...newAttackDices };
+    await this.gameService.saveIntermediateResult(ctx, currentTurnId, newDices);
+  }
+
   async closeRegularRound(
     ctx: GameContext,
     currentTurnId: string,

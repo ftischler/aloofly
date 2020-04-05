@@ -3,7 +3,6 @@ import { createRandomId } from '../common/create-random-id';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameService } from '../services/game.service';
 import { DrinkOptions, Player } from '@aloofly/mws30-models';
-import { createPlayer } from '../common/create-player';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -15,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CreateGameComponent {
   formGroup = new FormGroup({
-    roomName: new FormControl('', Validators.maxLength(20)),
+    roomName: new FormControl('', [Validators.required, Validators.maxLength(20)]),
     playerName: new FormControl('', [
       Validators.maxLength(20),
       Validators.required
@@ -31,7 +30,7 @@ export class CreateGameComponent {
   async createGame(): Promise<void> {
     const gameId: string = createRandomId();
     const { playerName, roomName: name } = this.formGroup.value;
-    const player: Player = createPlayer(playerName);
+    const player: Player = this.gameService.createPlayer(playerName);
 
     const {
       amountPerDrink,

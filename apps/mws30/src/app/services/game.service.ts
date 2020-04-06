@@ -5,7 +5,7 @@ import { createGame } from '../common/create-game';
 
 import 'firebase/database';
 import { Observable } from 'rxjs';
-import { debounceTime, filter, map, take } from 'rxjs/operators';
+import { debounceTime, filter, map, repeat, repeatWhen, retryWhen, take } from 'rxjs/operators';
 import { DB_KEY } from '../common/db-key';
 import { calculateInitialResult } from '../common/calculate-initial-result';
 import { createDices } from '../common/create-dices';
@@ -25,6 +25,7 @@ export class GameService {
 
   getGameContexts(): Observable<GameContext[]> {
     return this.getGames().pipe(
+      repeat(2),
       filter<Games>(Boolean),
       map(games => getGameContexts(games, this.localStorage.getItem(MWS30_PLAYER_ID) || undefined))
     );

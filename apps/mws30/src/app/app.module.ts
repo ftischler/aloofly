@@ -15,6 +15,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import firebaseConfig from '../../firebase.config.json';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatRippleModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -36,7 +42,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     }),
     StoreModule.forRoot({ router: routerReducer }),
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatRippleModule,
+    MatListModule
   ],
   bootstrap: [AppComponent]
 })

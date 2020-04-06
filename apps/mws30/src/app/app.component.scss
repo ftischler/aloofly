@@ -1,3 +1,7 @@
+@import "variables";
+
+$footer-height: 20px;
+
 :host {
   max-width: 100vw;
   overflow-x: hidden;
@@ -14,9 +18,36 @@ header {
   padding: 15px 15px 30px 15px;
 }
 
+header {
+  mat-toolbar {
+    display: flex;
+  }
+}
+
+mat-drawer-container {
+  height: calc(100% - 64px);
+
+  @media #{$mat-xs} {
+    height: calc(100% - 56px);
+  }
+
+  .sidemenu {
+    width: 100%;
+    margin-right: 30px;
+  }
+
+  a:not(.active) {
+    background-color: #393939;
+  }
+
+  a.active {
+    background-color: #4c4c4c;
+  }
+}
+
 footer {
   z-index: 1;
-  height: 20px;
+  height: $footer-height;
   display: flex;
   position: fixed;
   bottom: 0;

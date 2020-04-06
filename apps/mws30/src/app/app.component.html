@@ -1,11 +1,47 @@
 <header>
   <mat-toolbar color="primary">
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
     <h1>MWS 30 🐕🎲🎲🎲🎲🎲🎲</h1>
   </mat-toolbar>
 </header>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
-<footer>
-  <small>© 2020 Florian Tischler & Lukas Wikete</small>
-</footer>
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="over">
+    <mat-nav-list class="sidemenu">
+      <a mat-list-item
+         routerLink="/"
+         (click)="drawer.close()"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         matLine
+         matRipple>
+        🎲 Neues Spiel
+      </a>
+      <a mat-list-item
+         routerLink="/rules"
+         (click)="drawer.close()"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         matLine
+         matRipple>
+        📜 Spielregeln
+      </a>
+      <a mat-list-item
+         routerLink="/overview"
+         (click)="drawer.close()"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         matLine
+         matRipple>
+        ⏱ Meine Spiele
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+  <footer>
+    <small>© 2020 Florian Tischler & Lukas Wikete</small>
+  </footer>
+</mat-drawer-container>

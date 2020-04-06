@@ -1,7 +1,6 @@
 import { GameContext, Games, Player } from '@aloofly/mws30-models';
 
 export function getGameContexts(games: Games, playerId?: string): GameContext[] {
-  console.log(games, playerId);
   if (!playerId) {
     return [];
   }

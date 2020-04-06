@@ -19,8 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,8 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatSidenavModule,
     MatRippleModule,
-    MatListModule
+    MatListModule,
+    MatTooltipModule
   ],
   bootstrap: [AppComponent]
 })

@@ -72,6 +72,12 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  async updateManual(): Promise<void> {
+    if (this.swUpdate.isEnabled) {
+      await this.activateUpdate();
+    }
+  }
+
   async activateUpdate(): Promise<void> {
     await this.swUpdate.activateUpdate();
     this.document.location.reload();

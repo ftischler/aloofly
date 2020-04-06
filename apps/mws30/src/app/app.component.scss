@@ -11,17 +11,15 @@ header {
   top: 0;
   position: sticky;
   width: 100%;
-  z-index: 1;
+  z-index: 99;
+
+  mat-toolbar {
+    display: flex;
+  }
 }
 
 .container {
   padding: 15px 15px 30px 15px;
-}
-
-header {
-  mat-toolbar {
-    display: flex;
-  }
 }
 
 mat-drawer-container {
@@ -46,7 +44,7 @@ mat-drawer-container {
 }
 
 footer {
-  z-index: 1;
+  z-index: 99;
   height: $footer-height;
   display: flex;
   position: fixed;

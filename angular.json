@@ -138,7 +138,8 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": ["apps/api/src/assets"],
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {
@@ -236,13 +237,9 @@
               "apps/mws30/src/assets/dice.min.css",
               "apps/mws30/src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/inobounce/inobounce.min.js"
-            ],
+            "scripts": ["node_modules/inobounce/inobounce.min.js"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "apps/mws30/src/styles"
-              ]
+              "includePaths": ["apps/mws30/src/styles"]
             }
           },
           "configurations": {

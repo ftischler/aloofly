@@ -170,8 +170,6 @@ export class GameService {
   ): Promise<void> {
     const { game, player } = ctx;
 
-    console.log(dices);
-
     await this.angularFireDatabase
       .list<Turn>(`/${DB_KEY}/${game.id}/players/${player.id}/turns`)
       .update(turnId, { dices });

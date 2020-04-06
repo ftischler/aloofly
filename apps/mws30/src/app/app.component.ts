@@ -9,6 +9,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'mws30-root',
@@ -45,6 +46,10 @@ export class AppComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       )
-      .subscribe(() => window.location.reload());
+      .subscribe(() => this.reloadPage());
+  }
+
+  reloadPage(): void {
+    window.location.reload()
   }
 }

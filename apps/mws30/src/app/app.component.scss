@@ -1,7 +1,5 @@
 @import "variables";
 
-$footer-height: 20px;
-
 :host {
   max-width: 100vw;
   overflow: auto;
@@ -16,11 +14,17 @@ header {
 
   mat-toolbar {
     display: flex;
+    justify-content: space-between;
+
+    div {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 
 .container {
-  padding: 15px 15px 30px 15px;
+  padding: 15px 15px 50px 15px;
 }
 
 mat-drawer-container {
@@ -46,7 +50,7 @@ mat-drawer-container {
 
 footer {
   z-index: 99;
-  height: $footer-height;
+  height: 40px;
   display: flex;
   position: fixed;
   bottom: 0;
@@ -56,6 +60,6 @@ footer {
   flex-direction: row-reverse;
 
   small {
-    margin: 0 10px;
+    margin: 10px;
   }
 }

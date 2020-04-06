@@ -1,9 +1,16 @@
 <header>
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <h1>MWS 30 🐕🎲🎲🎲🎲🎲🎲</h1>
+    <div>
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>MWS 30 🐕🎲🎲🎲🎲🎲🎲</h1>
+    </div>
+    <div>
+      <button mat-icon-button (click)="reloadPage()">
+        <mat-icon>update</mat-icon>
+      </button>
+    </div>
   </mat-toolbar>
 </header>
 <mat-drawer-container autosize>

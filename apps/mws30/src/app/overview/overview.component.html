@@ -1,7 +1,3 @@
-<button mat-stroked-button color="accent" routerLink="/">
-  <mat-icon>arrow_back_ios</mat-icon>
-  <span>Zurück</span>
-</button>
 <p>Hier werden alle deine Spiele gezeigt, die du auf diesem Gerät gespielt hast. Falls sie noch aktiv sind kannst du sie hier wieder aufnehmen.</p>
 <ng-container *ngIf="games$ | async; else loading">
   <ng-container *ngIf="gameContexts$ | async as ctxs; else noGames">
@@ -27,7 +23,7 @@
     </ng-container>
   </ng-container>
   <ng-template #noGames>
-    <p>Es sind noch keine Spiele vorhanden.</p>
+    <p>Es sind zurzeit keine Spiele vorhanden.</p>
   </ng-template>
 </ng-container>
 <ng-template #loading>

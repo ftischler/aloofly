@@ -7,8 +7,12 @@
       <h1>MWS 30 🐕🎲🎲🎲🎲🎲🎲</h1>
     </div>
     <div>
-      <button mat-icon-button (click)="reloadPage()" matTooltip="App-Update"
-              matTooltipPosition="below">
+      <button
+        mat-icon-button
+        (click)="activateUpdate()"
+        matTooltip="App-Update"
+        matTooltipPosition="below"
+      >
         <mat-icon>update</mat-icon>
       </button>
     </div>
@@ -17,31 +21,37 @@
 <mat-drawer-container autosize>
   <mat-drawer #drawer mode="over">
     <mat-nav-list class="sidemenu">
-      <a mat-list-item
-         routerLink="/"
-         (click)="drawer.close()"
-         routerLinkActive="active"
-         [routerLinkActiveOptions]="{exact: true}"
-         matLine
-         matRipple>
+      <a
+        mat-list-item
+        routerLink="/"
+        (click)="drawer.close()"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        matLine
+        matRipple
+      >
         🎲 Neues Spiel
       </a>
-      <a mat-list-item
-         routerLink="/rules"
-         (click)="drawer.close()"
-         routerLinkActive="active"
-         [routerLinkActiveOptions]="{exact: true}"
-         matLine
-         matRipple>
+      <a
+        mat-list-item
+        routerLink="/rules"
+        (click)="drawer.close()"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        matLine
+        matRipple
+      >
         📜 Spielregeln
       </a>
-      <a mat-list-item
-         routerLink="/overview"
-         (click)="drawer.close()"
-         routerLinkActive="active"
-         [routerLinkActiveOptions]="{exact: true}"
-         matLine
-         matRipple>
+      <a
+        mat-list-item
+        routerLink="/overview"
+        (click)="drawer.close()"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        matLine
+        matRipple
+      >
         ⏱ Meine Spiele
       </a>
     </mat-nav-list>

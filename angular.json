@@ -236,7 +236,9 @@
               "apps/mws30/src/assets/dice.min.css",
               "apps/mws30/src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/inobounce/inobounce.min.js"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "apps/mws30/src/styles"

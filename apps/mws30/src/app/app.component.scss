@@ -4,6 +4,7 @@ $footer-height: 20px;
 
 :host {
   max-width: 100vw;
+  overflow: auto;
   overflow-x: hidden;
 }
 

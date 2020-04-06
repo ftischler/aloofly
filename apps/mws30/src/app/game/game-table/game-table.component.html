@@ -3,7 +3,6 @@
   <ng-template #noName>
     <h1>Hallo {{ ctx.player.name }} 🎲</h1>
   </ng-template>
-  <mat-divider></mat-divider>
   <ng-container *ngIf="ctx.game?.players as players">
     <mws30-notepad *ngIf="players | objectValues" [ctx]="ctx"></mws30-notepad>
   </ng-container>

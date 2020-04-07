@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { GameService } from '../services/game.service';
 import { Observable, of } from 'rxjs';
 import { GameContext, Games } from '@aloofly/mws30-models';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'mws30-overview',
@@ -19,6 +19,7 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
     this.games$ = this.gameService.getGames();
     this.gameContexts$ = this.gameService.getGameContexts().pipe(
+      tap(console.log),
       catchError(() => of([]))
     );
   }

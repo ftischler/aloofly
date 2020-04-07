@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
@@ -21,6 +21,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
 
 @NgModule({
   declarations: [
@@ -49,6 +53,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatRippleModule,
     MatListModule,
     MatTooltipModule
+  ],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'de'}
   ],
   bootstrap: [AppComponent]
 })

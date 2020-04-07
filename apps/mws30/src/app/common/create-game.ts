@@ -5,7 +5,9 @@ export function createGame(
   gameId: string,
   player: Player,
   name: string = '',
-  drinkOptions: DrinkOptions = {}
+  drinkOptions: DrinkOptions = {
+    paymentOption: 'none'
+  }
 ): Partial<Game> {
   return {
     createdAt: Date.now(),

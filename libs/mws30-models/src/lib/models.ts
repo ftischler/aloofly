@@ -2,13 +2,16 @@ export interface Games {
   [key: string]: Game;
 }
 
+export type PaymentOption = 'none' | 'payPalMe' | 'payPalMoneyPool';
+
 export interface DrinkOptions {
   amountPerDrink?: number;
   nameOfKneipeOrWirt?: string;
-  payPalDonationLink?: string;
+  payPalLink?: string;
+  paymentOption: PaymentOption;
 }
 
-export interface Game {
+export interface Game extends DrinkOptions {
   id: string;
   name?: string;
   status: 'created' | 'running' | 'finished';
@@ -16,9 +19,6 @@ export interface Game {
   loserPlayerId?: string;
   createdAt: number;
   createdBy: string;
-  payPalDonationLink?: string;
-  nameOfKneipeOrWirt?: string;
-  amountPerDrink: number;
   url?: string;
   chat?: ChatMessage[];
   turnNumber: number;

@@ -1,5 +1,5 @@
 <h2>Neues Spiel anlegen</h2>
-<form [formGroup]="formGroup" (submit)="createGame()">
+<form [formGroup]="formGroup" (submit)="createGame(checkbox.checked)">
   <mat-form-field>
     <input
       matInput
@@ -11,7 +11,7 @@
     />
     <mat-error>Bitte gib einen Namen ein</mat-error>
   </mat-form-field>
-  <br>
+  <br />
   <mat-form-field>
     <input
       matInput
@@ -29,7 +29,7 @@
     Eine Gaststätte unterstützen
   </mat-checkbox>
   <br />
-  <ng-container *ngIf="checkbox.checked">
+  <div [hidden]="!checkbox.checked">
     <mat-form-field>
       <input
         matInput
@@ -37,6 +37,7 @@
         placeholder="Name von Kneipe oder Wirt"
         formControlName="nameOfKneipeOrWirt"
         maxlength="20"
+        [required]="checkbox.checked"
       />
     </mat-form-field>
     <br />
@@ -44,24 +45,44 @@
       <input
         matInput
         type="number"
+        min="0"
+        step="0.5"
         placeholder="Spende pro Getränk in €"
         formControlName="amountPerDrink"
+        [required]="checkbox.checked"
       />
+      <mat-error>Bitte gib eine gültige Zahl ein</mat-error>
     </mat-form-field>
     <br />
     <mat-form-field>
+      <mat-label>Spendenkonto Typ</mat-label>
+      <mat-select formControlName="paymentOption" [required]="checkbox.checked">
+        <mat-option
+          *ngFor="let paymentOption of paymentOptions"
+          [value]="paymentOption.value"
+        >
+          {{ paymentOption.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Paypal-URL</mat-label>
       <input
         matInput
         type="text"
-        placeholder="Paypal.me-Link"
-        formControlName="payPalDonationLink"
+        placeholder="https://www.paypal.com/..."
+        formControlName="payPalLink"
+        [required]="checkbox.checked"
       />
     </mat-form-field>
-  </ng-container>
+  </div>
   <br />
   <br />
   <div class="actions">
-    <button mat-stroked-button color="accent" type="submit">Jetzt Spiel anlegen</button>
+    <button mat-stroked-button color="accent" type="submit">
+      Jetzt Spiel anlegen
+    </button>
     <button mat-stroked-button routerLink="/rules">Spielregeln anzeigen</button>
     <button mat-stroked-button routerLink="/overview">Meine Spiele</button>
   </div>

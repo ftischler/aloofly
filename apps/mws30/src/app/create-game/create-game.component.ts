@@ -1,10 +1,47 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { createRandomId } from '../common/create-random-id';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
 import { GameService } from '../services/game.service';
-import { DrinkOptions, Player } from '@aloofly/mws30-models';
+import { DrinkOptions, PaymentOption, Player } from '@aloofly/mws30-models';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  takeUntil
+} from 'rxjs/operators';
+
+interface PaymentOptionFormControl extends FormControl {
+  value: PaymentOption;
+  patchValue: (
+    value: PaymentOption,
+    options?: {
+      onlySelf?: boolean;
+      emitEvent?: boolean;
+      emitModelToViewChange?: boolean;
+      emitViewToModelChange?: boolean;
+    }
+  ) => void;
+}
+
+function positiveNumberValidator(
+  control: AbstractControl
+): ValidationErrors | null {
+  return +control.value > 0 ? null : { positiveNumberError: true };
+}
 
 @Component({
   selector: 'mws30-create-game',
@@ -12,22 +49,71 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./create-game.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateGameComponent {
+export class CreateGameComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   formGroup = new FormGroup({
-    roomName: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+    roomName: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(20)
+    ]),
     playerName: new FormControl('', [
       Validators.maxLength(20),
       Validators.required
     ]),
-    support: new FormControl(),
+    support: new FormControl(false),
     nameOfKneipeOrWirt: new FormControl('', Validators.maxLength(20)),
-    amountPerDrink: new FormControl(''),
-    payPalDonationLink: new FormControl('')
+    amountPerDrink: new FormControl(0.5, positiveNumberValidator),
+    paymentOption: new FormControl('payPalMe' as PaymentOption),
+    payPalLink: new FormControl('')
   });
 
-  constructor(private gameService: GameService, private router: Router, private matSnackBar: MatSnackBar) {}
+  paymentOptions: { value: PaymentOption; viewValue: string }[] = [
+    {
+      value: 'payPalMe',
+      viewValue: 'PayPal.me'
+    },
+    {
+      value: 'payPalMoneyPool',
+      viewValue: 'PayPal MoneyPool'
+    }
+  ];
 
-  async createGame(): Promise<void> {
+  constructor(
+    private gameService: GameService,
+    private router: Router,
+    private matSnackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    const payPalLinkControl: FormControl = this.formGroup.get(
+      'payPalLink'
+    ) as FormControl;
+    const paymentOptionControl: PaymentOptionFormControl = this.formGroup.get(
+      'paymentOption'
+    ) as PaymentOptionFormControl;
+
+    payPalLinkControl.valueChanges
+      .pipe(
+        filter(Boolean),
+        debounceTime(200),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((value: string) => {
+        if (value.includes('paypal.me')) {
+          paymentOptionControl.patchValue('payPalMe');
+        } else if (value.includes('/pools/')) {
+          paymentOptionControl.patchValue('payPalMoneyPool');
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
+  async createGame(withPayment: boolean = false): Promise<void> {
     const gameId: string = createRandomId();
     const { playerName, roomName: name } = this.formGroup.value;
     const player: Player = this.gameService.createPlayer(playerName);
@@ -35,22 +121,28 @@ export class CreateGameComponent {
     const {
       amountPerDrink,
       nameOfKneipeOrWirt,
-      payPalDonationLink
+      paymentOption,
+      payPalLink
     }: DrinkOptions = this.formGroup.value;
 
     const drinkOptions: DrinkOptions | undefined =
-      amountPerDrink && nameOfKneipeOrWirt && payPalDonationLink
+      amountPerDrink && nameOfKneipeOrWirt && payPalLink
         ? {
             amountPerDrink,
             nameOfKneipeOrWirt,
-            payPalDonationLink
+            payPalLink,
+            paymentOption: withPayment ? paymentOption : 'none'
           }
         : undefined;
 
     if (this.formGroup.value.support && !drinkOptions) {
-      this.matSnackBar.open('Du musst alle Eingabefelder ausfüllen um deine Kneipe zu unterstürzen.', 'Okay', {
-        duration: 2000
-      });
+      this.matSnackBar.open(
+        'Du musst alle Eingabefelder ausfüllen um deine Kneipe zu unterstürzen.',
+        'Okay',
+        {
+          duration: 2000
+        }
+      );
     }
 
     if (this.formGroup.valid) {

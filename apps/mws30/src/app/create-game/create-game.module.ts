@@ -11,12 +11,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RulesModule } from '../rules/rules.module';
-
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [
-    CreateGameComponent
-  ],
+  declarations: [CreateGameComponent],
   imports: [
     CommonModule,
     CreateGameRoutingModule,
@@ -26,7 +24,8 @@ import { RulesModule } from '../rules/rules.module';
     MatButtonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ]
 })
-export class CreateGameModule { }
+export class CreateGameModule {}

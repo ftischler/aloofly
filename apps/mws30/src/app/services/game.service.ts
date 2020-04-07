@@ -1,11 +1,28 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Dices, DrinkOptions, Game, GameContext, Games, Player, Players, Turn } from '@aloofly/mws30-models';
+import {
+  Dices,
+  DrinkOptions,
+  Game,
+  GameContext,
+  Games,
+  Player,
+  Players,
+  Turn
+} from '@aloofly/mws30-models';
 import { createGame } from '../common/create-game';
 
 import 'firebase/database';
 import { Observable } from 'rxjs';
-import { debounceTime, filter, map, repeat, repeatWhen, retryWhen, take } from 'rxjs/operators';
+import {
+  debounceTime,
+  filter,
+  map,
+  repeat,
+  repeatWhen,
+  retryWhen,
+  take
+} from 'rxjs/operators';
 import { DB_KEY } from '../common/db-key';
 import { calculateInitialResult } from '../common/calculate-initial-result';
 import { createDices } from '../common/create-dices';
@@ -17,7 +34,10 @@ import { getGameContexts } from '../common/get-game-contexts';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
-  constructor(private angularFireDatabase: AngularFireDatabase, private localStorage: LocalStorage) {}
+  constructor(
+    private angularFireDatabase: AngularFireDatabase,
+    private localStorage: LocalStorage
+  ) {}
 
   getGames(): Observable<Games | null> {
     return this.angularFireDatabase.object<Games>('games').valueChanges();
@@ -27,12 +47,18 @@ export class GameService {
     return this.getGames().pipe(
       repeat(2),
       filter<Games>(Boolean),
-      map(games => getGameContexts(games, this.localStorage.getItem(MWS30_PLAYER_ID) || undefined))
+      map(games =>
+        getGameContexts(
+          games,
+          this.localStorage.getItem(MWS30_PLAYER_ID) || undefined
+        )
+      )
     );
   }
 
   createPlayer(playerName): Player {
-    const id: string | undefined = this.localStorage.getItem(MWS30_PLAYER_ID) || undefined;
+    const id: string | undefined =
+      this.localStorage.getItem(MWS30_PLAYER_ID) || undefined;
     const player: Player = createPlayer(playerName, id);
 
     if (!id) {
@@ -50,9 +76,7 @@ export class GameService {
     return this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${gameId}`)
       .valueChanges()
-      .pipe(
-        filter<Game>(Boolean)
-      );
+      .pipe(filter<Game>(Boolean));
   }
 
   async createGame(
@@ -242,9 +266,21 @@ export class GameService {
   }
 
   async restartGame({ game, player }: GameContext): Promise<void> {
-    const gameId: string = game.id;
+    const {
+      payPalLink,
+      paymentOption,
+      nameOfKneipeOrWirt,
+      amountPerDrink,
+      name,
+      id: gameId
+    } = game;
     const newGame: Partial<Game> = {
-      ...createGame(gameId, player),
+      ...createGame(gameId, player, name, {
+        paymentOption,
+        payPalLink,
+        amountPerDrink,
+        nameOfKneipeOrWirt
+      }),
       createdBy: game.createdBy,
       status: 'running',
       players: keyValuesToObject(
@@ -269,6 +305,6 @@ export class GameService {
   async payGame(game: Game): Promise<void> {
     await this.angularFireDatabase
       .object<Game>(`/${DB_KEY}/${game.id}`)
-      .update({isPayed: true});
+      .update({ isPayed: true });
   }
 }

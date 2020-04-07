@@ -14,13 +14,12 @@ export class OverviewComponent implements OnInit {
   games$: Observable<Games | null> | undefined;
   gameContexts$: Observable<GameContext[]> | undefined;
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
     this.games$ = this.gameService.getGames();
-    this.gameContexts$ = this.gameService.getGameContexts().pipe(
-      tap(console.log),
-      catchError(() => of([]))
-    );
+    this.gameContexts$ = this.gameService
+      .getGameContexts()
+      .pipe(catchError(() => of([])));
   }
 }

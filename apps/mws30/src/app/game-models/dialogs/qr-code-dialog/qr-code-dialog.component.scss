@@ -1,0 +1,15 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  margin-bottom: 1em;
+
+  p {
+    margin-bottom: 2em;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+}

@@ -18,6 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RegularRoundComponent } from './regular-round/regular-round.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     GameModelsModule,
     ClipboardModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ]
 })
 export class GameModule {}

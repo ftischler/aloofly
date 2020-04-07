@@ -1,5 +1,6 @@
 <ng-container *ngIf="ctx$ | async as ctx">
-  <img src="/assets/svg/qr.svg" height="30px" class="qr-code" alt="qr-code" role="link" (click)="openQrCode()">
+  <img src="/assets/svg/qr.svg" height="30px" class="qr-code" alt="qr-code" role="link" (click)="openQrCode()"
+       matTooltip="Am Handy weiterspielen">
   <h1 *ngIf="ctx.game.name; else noName">{{ ctx.game.name }} 🎲</h1>
   <ng-template #noName>
     <h1>Hallo {{ ctx.player.name }} 🎲</h1>

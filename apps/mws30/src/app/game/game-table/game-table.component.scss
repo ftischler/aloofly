@@ -1,3 +1,17 @@
+@import "variables";
+
 mat-divider {
   margin: var(--mat-divider-margin);
+}
+
+.qr-code {
+  color: #fff;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  cursor: pointer;
+
+  @media #{$mat-xs} {
+    display: none;
+  }
 }

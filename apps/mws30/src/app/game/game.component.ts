@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { GameService } from '../services/game.service';
 import { Game, GameContext, Player } from '@aloofly/mws30-models';
 import { RouterFacade } from '../+state/router.facade';
@@ -12,7 +12,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./game.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameComponent {
+export class GameComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
+  @ViewChild('qrCode') qrCodeCanvas: ElementRef<HTMLCanvasElement>;
+
   gameId$: Observable<string> = this.routerFacade.routeParams$.pipe(
     filter(Boolean),
     map(({ gameId }) => gameId)
@@ -48,6 +52,16 @@ export class GameComponent {
     private gameService: GameService,
     private matSnackBar: MatSnackBar
   ) {}
+
+  ngOnInit(): void {
+    this.ctx$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(({player}) => this.gameService.setLocalPlayerId(player.id));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
 
   async startGame(gameId: string): Promise<void> {
     await this.gameService.startGame(gameId);

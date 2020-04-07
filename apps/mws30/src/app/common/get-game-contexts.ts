@@ -1,21 +1,14 @@
-import { GameContext, Games, Player } from '@aloofly/mws30-models';
+import { GameContext, Games } from '@aloofly/mws30-models';
 
-export function getGameContexts(games: Games, playerId?: string): GameContext[] {
-  if (!playerId) {
-    return [];
-  }
+export function getGameContexts(games: Games, playerId?: string, playerIds: string[] = []): GameContext[] {
+  const allPlayerIds: string[] = [...(playerId ? [playerId] : []), ...playerIds ];
 
   return Object.values(games).reduce((acc, curr) => {
-    const player: Player | undefined = curr.players[playerId];
-    if (player) {
-      const ctx: GameContext = {
-        game: curr,
-        player
-      };
+    const ctxs: GameContext[] = allPlayerIds.map(id => ({
+      player: curr.players[id],
+      game: curr
+    }));
 
-      return [...acc, ctx];
-    } else {
-      return acc;
-    }
+    return [...acc, ...ctxs.filter(({player}) => !!player)];
   }, [] as GameContext[]);
 }

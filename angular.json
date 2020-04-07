@@ -237,7 +237,10 @@
               "apps/mws30/src/assets/dice.min.css",
               "apps/mws30/src/styles.scss"
             ],
-            "scripts": ["node_modules/inobounce/inobounce.min.js"],
+            "scripts": [
+              "node_modules/inobounce/inobounce.min.js",
+              "node_modules/qrcode/build/qrcode.js"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": ["apps/mws30/src/styles"]
             }

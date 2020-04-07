@@ -22,6 +22,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { registerLocaleData } from '@angular/common';
+
 import localeDe from '@angular/common/locales/de';
 
 registerLocaleData(localeDe);

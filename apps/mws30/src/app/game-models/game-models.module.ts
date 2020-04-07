@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { QrCodeDialogComponent } from './dialogs/qr-code-dialog/qr-code-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MatDividerModule } from '@angular/material/divider';
     NotepadComponent,
     DiceCupComponent,
     DiceCupViewComponent,
-    DiceCupViewDialogComponent
+    DiceCupViewDialogComponent,
+    QrCodeDialogComponent
   ],
   imports: [
     CommonModule,

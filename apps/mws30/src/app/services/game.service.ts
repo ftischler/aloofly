@@ -28,7 +28,7 @@ import { calculateInitialResult } from '../common/calculate-initial-result';
 import { createDices } from '../common/create-dices';
 import { objectToKeyValues } from '../common/object-to-key-values';
 import { keyValuesToObject } from '../common/key-values-to-object';
-import { LocalStorage, MWS30_PLAYER_ID } from '../common/local-storage';
+import { LocalStorage, MWS30_PLAYER_ID, MWS30_PLAYER_IDS } from '../common/local-storage';
 import { createPlayer } from '../common/create-player';
 import { getGameContexts } from '../common/get-game-contexts';
 
@@ -43,22 +43,42 @@ export class GameService {
     return this.angularFireDatabase.object<Games>('games').valueChanges();
   }
 
+  getLocalPlayerId(): string | undefined {
+    return this.localStorage.getItem(MWS30_PLAYER_ID) || undefined;
+  }
+
+  getLocalPlayerIds(): string[] {
+    const playerIdsRaw: string | undefined = this.localStorage.getItem(MWS30_PLAYER_IDS) || undefined;
+    return playerIdsRaw ? JSON.parse(playerIdsRaw) : [];
+  }
+
+  setLocalPlayerId(playerId: string): void {
+    const localPlayerIds: string[] = this.getLocalPlayerIds();
+    if (playerId !== this.getLocalPlayerId() && !localPlayerIds.includes(playerId)) {
+      const newLocalPlayerIds: string[] = [...localPlayerIds, playerId];
+      this.localStorage.setItem(MWS30_PLAYER_IDS, JSON.stringify(newLocalPlayerIds));
+    }
+  }
+
   getGameContexts(): Observable<GameContext[]> {
+    const playerId: string | undefined = this.getLocalPlayerId();
+    const playerIds: string[] = this.getLocalPlayerIds();
+
     return this.getGames().pipe(
       repeat(2),
       filter<Games>(Boolean),
       map(games =>
         getGameContexts(
           games,
-          this.localStorage.getItem(MWS30_PLAYER_ID) || undefined
+          playerId,
+          playerIds
         )
       )
     );
   }
 
   createPlayer(playerName): Player {
-    const id: string | undefined =
-      this.localStorage.getItem(MWS30_PLAYER_ID) || undefined;
+    const id: string | undefined = this.localStorage.getItem(MWS30_PLAYER_ID) || undefined;
     const player: Player = createPlayer(playerName, id);
 
     if (!id) {

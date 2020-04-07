@@ -53,6 +53,7 @@
     "core-js": "^2.5.4",
     "firebase": ">= 5.5.7 <8",
     "inobounce": "^0.2.0",
+    "qrcode": "^1.4.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
     "zone.js": "^0.10.2"

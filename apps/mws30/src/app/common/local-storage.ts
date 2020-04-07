@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 export const MWS30_PLAYER_ID = 'MWS30_PLAYER_ID';
+export const MWS30_PLAYER_IDS = 'MWS30_PLAYER_IDS';
 
 @Injectable({providedIn: 'root', useFactory: () => localStorage})
 export abstract class LocalStorage implements Storage {

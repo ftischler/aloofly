@@ -4,7 +4,7 @@
     <ng-container *ngIf="ctxs.length; else noGames">
       <mat-list>
         <ng-container *ngFor="let ctx of ctxs">
-          <mat-list-item *ngIf="ctx.game.status === 'running'">
+          <mat-list-item *ngIf="ctx.game.status !== 'finished'">
             <p class="start-game" role="button" [routerLink]="['/', ctx.game.id, ctx.player.id]">
               <span>🎲&nbsp;</span>
               <span *ngIf="ctx.game.name; else noName">{{ctx.game.name}}</span>

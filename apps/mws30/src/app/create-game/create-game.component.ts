@@ -27,7 +27,7 @@ import {
 interface PaymentOptionFormControl extends FormControl {
   value: PaymentOption;
   patchValue: (
-    value: PaymentOption,
+    paymentOption: PaymentOption,
     options?: {
       onlySelf?: boolean;
       emitEvent?: boolean;
@@ -128,7 +128,7 @@ export class CreateGameComponent implements OnInit, OnDestroy {
     const drinkOptions: DrinkOptions | undefined =
       amountPerDrink && nameOfKneipeOrWirt && payPalLink
         ? {
-            amountPerDrink,
+            amountPerDrink: withPayment ? amountPerDrink : 0,
             nameOfKneipeOrWirt,
             payPalLink,
             paymentOption: withPayment ? paymentOption : 'none'

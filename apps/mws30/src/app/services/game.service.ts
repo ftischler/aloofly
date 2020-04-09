@@ -296,10 +296,10 @@ export class GameService {
     } = game;
     const newGame: Partial<Game> = {
       ...createGame(gameId, player, name, {
-        paymentOption,
-        payPalLink,
-        amountPerDrink,
-        nameOfKneipeOrWirt
+        paymentOption: paymentOption || 'none',
+        payPalLink: payPalLink || '',
+        amountPerDrink: amountPerDrink || 0,
+        nameOfKneipeOrWirt: nameOfKneipeOrWirt || ''
       }),
       createdBy: game.createdBy,
       status: 'running',

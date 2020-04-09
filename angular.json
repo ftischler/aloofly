@@ -372,6 +372,115 @@
           }
         }
       }
+    },
+    "glasspiel": {
+      "root": "apps/glasspiel",
+      "sourceRoot": "apps/glasspiel/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/glasspiel",
+            "index": "apps/glasspiel/src/index.html",
+            "main": "apps/glasspiel/src/main.tsx",
+            "polyfills": "apps/glasspiel/src/polyfills.ts",
+            "tsConfig": "apps/glasspiel/tsconfig.app.json",
+            "assets": [
+              "apps/glasspiel/src/favicon.ico",
+              "apps/glasspiel/src/assets"
+            ],
+            "styles": [
+              "apps/glasspiel/src/styles.scss",
+              "apps/glasspiel/src/styles/dice.min.css"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/glasspiel/src/environments/environment.ts",
+                  "with": "apps/glasspiel/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "glasspiel:build",
+            "port": 3000
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "glasspiel:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/glasspiel/tsconfig.app.json",
+              "apps/glasspiel/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/glasspiel/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/glasspiel/jest.config.js",
+            "tsConfig": "apps/glasspiel/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "glasspiel-e2e": {
+      "root": "apps/glasspiel-e2e",
+      "sourceRoot": "apps/glasspiel-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/glasspiel-e2e/cypress.json",
+            "tsConfig": "apps/glasspiel-e2e/tsconfig.e2e.json",
+            "devServerTarget": "glasspiel:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "glasspiel:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/glasspiel-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/glasspiel-e2e/**"]
+          }
+        }
+      }
     }
   },
   "cli": {
@@ -384,6 +493,20 @@
     },
     "@nrwl/angular:library": {
       "unitTestRunner": "jest"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "tslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "tslint"
+      }
     }
   },
   "defaultProject": "aloofly"

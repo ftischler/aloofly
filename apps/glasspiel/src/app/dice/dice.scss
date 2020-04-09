@@ -1,0 +1,17 @@
+.dice {
+  margin: 0.5vw;
+  border: transparent solid 1px;
+
+  $small-font: calc(100vw / 8);
+  $big-font: 8vw;
+
+  font-size: $big-font;
+
+  &.active {
+    cursor: pointer;
+  }
+
+  &.picked {
+    border: #fef5e3 solid 1px;
+  }
+}

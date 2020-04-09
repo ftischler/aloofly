@@ -33,6 +33,13 @@
     },
     "mws30-models": {
       "tags": []
+    },
+    "glasspiel": {
+      "tags": []
+    },
+    "glasspiel-e2e": {
+      "tags": [],
+      "implicitDependencies": ["glasspiel"]
     }
   }
 }

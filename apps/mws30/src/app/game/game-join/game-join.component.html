@@ -1,5 +1,7 @@
 <div *ngIf="game$ | async as game">
-  <h1>Spiel beitreten <span *ngIf="game.name">im Raum {{game.name}}</span></h1>
+  <h1>
+    Spiel beitreten <span *ngIf="game.name">im Raum {{ game.name }}</span>
+  </h1>
   <ng-container *ngIf="game.status === 'created'; else gameRunning">
     <form [formGroup]="formGroup" (submit)="submit(game.id)">
       <mat-form-field>
@@ -9,6 +11,7 @@
           placeholder="Spielername"
           formControlName="playerName"
           maxlength="20"
+          required
         />
       </mat-form-field>
       <br />

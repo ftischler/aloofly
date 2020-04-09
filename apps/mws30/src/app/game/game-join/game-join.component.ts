@@ -26,7 +26,10 @@ export class GameJoinComponent {
   );
 
   formGroup = new FormGroup({
-    playerName: new FormControl('', Validators.maxLength(20))
+    playerName: new FormControl('', [
+      Validators.maxLength(20),
+      Validators.required
+    ])
   });
 
   constructor(

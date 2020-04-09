@@ -38,12 +38,14 @@ export class GameJoinComponent {
   ) {}
 
   async submit(gameId: string): Promise<void> {
-    const { playerName } = this.formGroup.value;
+    if (this.formGroup.valid) {
+      const { playerName } = this.formGroup.value;
 
-    const player = this.gameService.createPlayer(playerName);
+      const player = this.gameService.createPlayer(playerName);
 
-    await this.gameService.joinGame(gameId, player);
+      await this.gameService.joinGame(gameId, player);
 
-    await this.router.navigate([gameId, player.id]);
+      await this.router.navigate([gameId, player.id]);
+    }
   }
 }

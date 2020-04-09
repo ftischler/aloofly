@@ -6,7 +6,10 @@ export function createGame(
   player: Player,
   name: string = '',
   drinkOptions: DrinkOptions = {
-    paymentOption: 'none'
+    paymentOption: 'none',
+    payPalLink: '',
+    amountPerDrink: 0,
+    nameOfKneipeOrWirt: ''
   }
 ): Partial<Game> {
   return {

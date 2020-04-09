@@ -4,7 +4,6 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { createPlayer } from '../../common/create-player';
 import { Game } from '@aloofly/mws30-models';
 import { RouterFacade } from '../../+state/router.facade';
 
